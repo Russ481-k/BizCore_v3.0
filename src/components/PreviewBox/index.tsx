@@ -1,12 +1,11 @@
 import { Box, BoxProps, Flex } from "@chakra-ui/react";
 import { ReactNode, useEffect, useRef } from "react";
 
-import previewImage from "assets/img/preview2.png";
-
 interface PreviewBoxProps {
   channelType: string;
   children: ReactNode;
 }
+
 function PreviewBox({
   channelType,
   children,
@@ -27,7 +26,7 @@ function PreviewBox({
         bgColor={
           channelType ? `channel.${channelType.toLowerCase()}.bg` : "white"
         }
-        bgImage={previewImage}
+        bgImage={""}
         bgRepeat="no-repeat"
         bgSize="100% auto"
         borderTopRadius="1.6rem"

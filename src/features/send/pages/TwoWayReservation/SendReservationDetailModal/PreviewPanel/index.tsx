@@ -1,7 +1,6 @@
 import { Box, Divider, Heading, Image, Text } from "@chakra-ui/react";
 import React from "react";
 
-import preview from "assets/img/preview.png";
 import { Section, TipText } from "components";
 
 interface PreviewPanelProps {
@@ -35,7 +34,7 @@ function PreviewPanel({
       <Divider />
       <Box overflowY="hidden" height="600px">
         <Box
-          backgroundImage={preview}
+          backgroundImage={""}
           backgroundRepeat="no-repeat"
           backgroundSize="274px"
           height="480px"

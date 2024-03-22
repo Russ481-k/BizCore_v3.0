@@ -1,8 +1,6 @@
 import { Box, Divider, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import React from "react";
 
-import mobytalkProfile from "assets/img/mobytalkProfile.png";
-import preview from "assets/img/preview.png";
 import { Section, TipText } from "components";
 import Buttons from "type/Buttons";
 
@@ -29,7 +27,7 @@ function PreviewPanel({ buttons, messageContents }: PreviewPanelProps) {
       <Divider />
       <Box overflowY="hidden" height="400px">
         <Box
-          backgroundImage={preview}
+          backgroundImage={""}
           backgroundRepeat="no-repeat"
           backgroundSize="274px"
           height="450px"
@@ -59,7 +57,7 @@ function PreviewPanel({ buttons, messageContents }: PreviewPanelProps) {
                     borderRadius="12px"
                     borderWidth={1}
                     height="50px"
-                    src={mobytalkProfile}
+                    src={""}
                     width="50px"
                   />
                   <Text fontWeight={700}>모비톡</Text>

@@ -4,7 +4,6 @@ import {
   Center,
   Divider,
   Flex,
-  Image,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -116,11 +115,6 @@ function ReplacementCodeInfoModal({ setOpen }: ReplacementCodeInfoModalProps) {
                   다음과 같이 엑셀 혹은 수신 대상자에 치환코드 값 등록
                 </Text>
               </Flex>
-              <Image
-                mx={8}
-                src={require("../../assets/img/ExcelExample.png")}
-                alt="excel-example"
-              />
               <Flex align="center">
                 <Center
                   backgroundColor="primary.500"

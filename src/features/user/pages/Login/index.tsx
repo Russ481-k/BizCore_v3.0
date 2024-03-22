@@ -5,16 +5,15 @@ import {
   Checkbox,
   FormControl,
   FormErrorMessage,
-  Heading,
+  Image,
   Input,
-  Text,
   useToast,
   VStack,
 } from "@chakra-ui/react";
 import { Controller, useForm, useFormState } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { LogoIcon, ToastMessage } from "components";
+import { ToastMessage } from "components";
 import { authLoginThunk, useCheckPwd } from "features/user";
 import authService from "libs/authService";
 import message from "libs/message";
@@ -106,14 +105,7 @@ function Login() {
     <Center h="100vh">
       <Box as="form" w="400px" onSubmit={onSubmitLogin}>
         <VStack spacing={4}>
-          <LogoIcon />
-          <Heading fontWeight="400" size="sm">
-            Welcome!
-            <Text as="strong" color="primary.700" fontWeight="600" pl={1}>
-              통합 메시지 시스템
-            </Text>
-            에 오신것을 환영합니다.
-          </Heading>
+          <Image alt="logo" src={require("assets/img/logo.png")} />
         </VStack>
         <VStack alignItems="flex-start" mt={12} spacing={2.5} w="100%">
           <FormControl isInvalid={!!errors?.userId}>

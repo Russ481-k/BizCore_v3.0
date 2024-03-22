@@ -113,7 +113,7 @@ function SidebarContent({
             top="104px"
           >
             <Text color="primary.700" fontWeight="600" whiteSpace="nowrap">
-              {isFold ? "" : "통합 메시징 시스템"}
+              {isFold ? "" : "BizCore_v3.0"}
             </Text>
             <IconButton
               animate={{

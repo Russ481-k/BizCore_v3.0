@@ -17,7 +17,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import { TipText, CustomModal } from "components";
-import preview from "assets/img/preview.png";
 
 interface AutoTestModalProps {
   onClose: () => void;
@@ -140,7 +139,7 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
               </HStack>
               <Box overflowY="hidden" height="540px">
                 <Box
-                  backgroundImage={preview}
+                  backgroundImage={""}
                   backgroundRepeat="no-repeat"
                   backgroundSize="274px"
                   height="450px"

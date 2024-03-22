@@ -15,7 +15,6 @@ export { default as GuideIcon } from "./Icons/GuideIcon";
 export { default as HandleBarIcon } from "./Icons/HandleBarIcon";
 export { default as ImageIcon } from "./Icons/ImageIcon";
 export { default as LetterIcon } from "./Icons/LetterIcon";
-export { default as LogoIcon } from "./Icons/LogoIcon";
 export { default as LogoutIcon } from "./Icons/LogoutIcon";
 export { default as MailIcon } from "./Icons/MailIcon";
 export { default as MenuIcon } from "./Icons/MenuIcon";

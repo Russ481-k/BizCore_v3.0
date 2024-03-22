@@ -101,7 +101,7 @@ function PreviewPanel({
                   borderRadius="12px"
                   borderWidth={1}
                   height="50px"
-                  src={mobytalkProfile}
+                  src={""}
                   width="50px"
                 />
                 <Text fontWeight={700}>모비톡</Text>

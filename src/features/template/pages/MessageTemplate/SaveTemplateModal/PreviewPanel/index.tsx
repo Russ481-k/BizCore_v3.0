@@ -34,7 +34,7 @@ function PreviewPanel({
       <Divider />
       <Box overflowY="hidden" height="700px">
         <Box
-          backgroundImage={preview}
+          backgroundImage={""}
           backgroundRepeat="no-repeat"
           backgroundSize="274px"
           height="550px"
