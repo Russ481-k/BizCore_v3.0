@@ -1,0 +1,72 @@
+name: test server deploy
+
+defaults:
+  run:
+    shell: bash -ieo pipefail {0}
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: [mobytech, dev]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: nvm version check
+        run: nvm -v
+
+      - name: Build with yarn
+        run: |
+          yarn
+          yarn build:test
+      - name: create nginx.conf
+        run: |
+          cat << EOF > ./.deploy/nginx.conf
+          server {
+            listen 3000;
+            server_name localhost;
+
+            location / {
+              root /usr/share/nginx/html;
+              index index.html;
+              try_files \$uri /index.html;
+            }
+          }
+          EOF
+
+      - name: Build Docker image
+        run: docker build -t mobytalk_frontend -f ./.deploy/Dockerfile .
+
+      - name: create docker-compose.yml
+        run: |
+          cat << EOF > docker-compose.yml
+          version: "3"
+
+          networks:
+              dev:
+                  external: true
+
+          services:
+              mobytalk_frontend:
+                  container_name: mobytalk_frontend
+                  image: mobytalk_frontend
+                  restart: always
+                  labels:
+                      - "traefik.enable=true"
+                      - "traefik.docker.network=dev"
+                      - "traefik.http.routers.mobytalk_frontend.tls=true"
+                      - "traefik.http.routers.mobytalk_frontend.rule=Host(\`dev.mobytalk.co.kr\`)"
+                      - "traefik.http.routers.mobytalk_frontend.tls.certresolver=myresolver"
+                      - "traefik.http.services.mobytalk_frontend.loadbalancer.server.port=3000"
+                  networks:
+                      - dev
+          EOF
+
+      - name: Run Docker container
+        run: |
+          docker-compose up -d
