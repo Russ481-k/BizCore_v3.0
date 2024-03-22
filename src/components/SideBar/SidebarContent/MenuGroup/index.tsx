@@ -57,8 +57,8 @@ function MenuGroup({
       <Popover placement="right-start" gutter={20} isOpen={isOpen}>
         <MenuItem
           alignItems="center"
-          backgroundColor={isOpen ? "primary.700" : "unset"}
-          color="gray.700"
+          backgroundColor={isOpen ? "primary.600" : "unset"}
+          color="gray.500"
           display="flex"
           height={isFold ? "36px" : "46px"}
           justifyContent={isFold ? "center" : "space-between"}
@@ -66,11 +66,11 @@ function MenuGroup({
           py={2}
           transition=".3s"
           _active={{
-            backgroundColor: "primary.800",
+            backgroundColor: "primary.900",
             color: "white",
           }}
           _hover={{
-            backgroundColor: "primary.700",
+            backgroundColor: "primary.800",
             color: "white",
           }}
           onClick={onToggle}
@@ -111,7 +111,12 @@ function MenuGroup({
         </MenuItem>
         {isFold ? (
           <Portal>
-            <PopoverContent width="200px" borderRadius="0.75rem" mt="-8px">
+            <PopoverContent
+              width="200px"
+              borderColor="primary.200"
+              borderRadius="0.75rem"
+              mt="-8px"
+            >
               <PopoverBody px={5}>
                 {menus
                   .filter((menuItem) => menuItem.groupMenuId === groupId)
@@ -150,7 +155,7 @@ function MenuGroup({
                 .sort()
                 .map((menuItem) => (
                   <MenuItem
-                    color="gray.800"
+                    color="gray.400"
                     height="38px"
                     key={`menuItem-${menuItem.id}`}
                     menuItem={menuItem}
@@ -159,11 +164,11 @@ function MenuGroup({
                     py={2}
                     to={menuItem.programPath}
                     _active={{
-                      color: "primary.700",
+                      color: "gray.200",
                       fontWeight: "700",
                     }}
                     _hover={{
-                      color: "primary.700",
+                      color: "gray.300",
                       fontWeight: "700",
                     }}
                     onClick={onMenuClose}

@@ -11,10 +11,10 @@ import { CaretIcon, Section } from "components";
 import BarChartPanel from "../BarChartPanel";
 import PieChartPanel from "../PieChartPanel";
 
-function SendStatusByChannel({ ...props }: BoxProps) {
+function SalesOpportunityStatus({ ...props }: BoxProps) {
   const {
-    isOpen: isSendStatusByChannelOpen,
-    onToggle: onSendStatusByChannelToggle,
+    isOpen: isSalesOpportunityStatusOpen,
+    onToggle: onSalesOpportunityStatusToggle,
   } = useDisclosure({ defaultIsOpen: true });
 
   return (
@@ -23,20 +23,20 @@ function SendStatusByChannel({ ...props }: BoxProps) {
         justifyContent="space-between"
         mr={2}
         cursor="pointer"
-        onClick={onSendStatusByChannelToggle}
+        onClick={onSalesOpportunityStatusToggle}
       >
-        <Heading size="sm">채널별 발송 현황</Heading>
+        <Heading size="sm">영업기회 현황</Heading>
         <CaretIcon
           color="gray.900"
           transform={
-            isSendStatusByChannelOpen ? "rotate(0deg)" : "rotate(180deg)"
+            isSalesOpportunityStatusOpen ? "rotate(0deg)" : "rotate(180deg)"
           }
           transition=".15s"
           cursor="pointer"
         />
       </Flex>
       <Divider />
-      <Collapse in={isSendStatusByChannelOpen}>
+      <Collapse in={isSalesOpportunityStatusOpen}>
         <Flex gap={4}>
           <Flex flexDirection="column" minHeight="200px" width="40%">
             <PieChartPanel data={[]} />
@@ -50,4 +50,4 @@ function SendStatusByChannel({ ...props }: BoxProps) {
   );
 }
 
-export default SendStatusByChannel;
+export default SalesOpportunityStatus;

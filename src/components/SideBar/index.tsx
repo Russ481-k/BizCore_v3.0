@@ -1,6 +1,6 @@
 import { Drawer, DrawerContent, DrawerOverlay } from "@chakra-ui/react";
 
-import SidebarContent from "./SidebarContent";
+import SideBarContent from "./SideBarContent";
 
 interface SideBarProps {
   isMenuOpen: boolean;
@@ -17,11 +17,11 @@ function SideBar({
 }: SideBarProps) {
   return (
     <>
-      <SidebarContent isFold={isSidebarFold} onFold={onSideBarToggle} />
+      <SideBarContent isFold={isSidebarFold} onFold={onSideBarToggle} />
       <Drawer isOpen={isMenuOpen} onClose={onMenuClose} placement="left">
         <DrawerOverlay />
         <DrawerContent maxWidth="240px">
-          <SidebarContent onClose={onMenuClose} />
+          <SideBarContent onClose={onMenuClose} />
         </DrawerContent>
       </Drawer>
     </>

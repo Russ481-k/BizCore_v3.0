@@ -66,6 +66,7 @@
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.4",
     "react-test-renderer": "^18.2.0",
+    "serve": "^14.2.1",
     "typescript": "4.9.5"
   },
   "lint-staged": {
@@ -78,13 +79,11 @@
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "start": "react-scripts start",
-    "start:test_backend_1": "REACT_APP_API_URL=http://172.30.1.100:8091 react-scripts start",
-    "start:test_backend_2": "REACT_APP_API_URL=http://172.30.1.51:8091 react-scripts start",
-    "start:test": "REACT_APP_API_URL=https://dev.mobytalk.co.kr react-scripts start",
-    "start:prod": "REACT_APP_API_URL=https://api.mobytalk.co.kr react-scripts start",
+    "start:test": "REACT_APP_API_URL=http://192.168.1.76:21 react-scripts start",
+    "start:prod": "REACT_APP_API_URL=http://192.168.1.76:21/api react-scripts start",
     "build": "react-scripts build",
-    "build:test": "REACT_APP_API_URL=https://dev.mobytalk.co.kr react-scripts build",
-    "build:prod": "REACT_APP_API_URL=https://api.mobytalk.co.kr react-scripts build",
+    "build:test": "REACT_APP_API_URL=http://192.168.1.76:21 react-scripts build",
+    "build:prod": "REACT_APP_API_URL=http://192.168.1.76:21/api react-scripts build",
     "test": "react-scripts test"
   },
   "version": "0.1.0",

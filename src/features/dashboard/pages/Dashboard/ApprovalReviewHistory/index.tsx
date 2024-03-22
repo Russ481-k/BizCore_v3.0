@@ -9,11 +9,12 @@ import {
 
 import { CaretIcon, Section } from "components";
 import BarChartPanel from "../BarChartPanel";
+import PieChartPanel from "../PieChartPanel";
 
-function SendStatusByReservation({ ...props }: BoxProps) {
+function ApprovalReviewHistory({ ...props }: BoxProps) {
   const {
-    isOpen: isSendStatusByReservationOpen,
-    onToggle: onSendStatusByReservationToggle,
+    isOpen: isApprovalReviewHistoryOpen,
+    onToggle: onApprovalReviewHistoryToggle,
   } = useDisclosure({ defaultIsOpen: true });
 
   return (
@@ -22,22 +23,25 @@ function SendStatusByReservation({ ...props }: BoxProps) {
         justifyContent="space-between"
         mr={2}
         cursor="pointer"
-        onClick={onSendStatusByReservationToggle}
+        onClick={onApprovalReviewHistoryToggle}
       >
-        <Heading size="sm">예약 발송 현황</Heading>
+        <Heading size="sm">결재 검토 내역</Heading>
         <CaretIcon
           color="gray.900"
           transform={
-            isSendStatusByReservationOpen ? "rotate(0deg)" : "rotate(180deg)"
+            isApprovalReviewHistoryOpen ? "rotate(0deg)" : "rotate(180deg)"
           }
           transition=".15s"
           cursor="pointer"
         />
       </Flex>
       <Divider />
-      <Collapse in={isSendStatusByReservationOpen}>
+      <Collapse in={isApprovalReviewHistoryOpen}>
         <Flex gap={4}>
-          <Flex flexDirection="column" minHeight="200px" width="100%">
+          <Flex flexDirection="column" minHeight="200px" width="40%">
+            <PieChartPanel data={[]} />
+          </Flex>
+          <Flex flexDirection="column" minHeight="200px" width="60%">
             <BarChartPanel data={[]} />
           </Flex>
         </Flex>
@@ -46,4 +50,4 @@ function SendStatusByReservation({ ...props }: BoxProps) {
   );
 }
 
-export default SendStatusByReservation;
+export default ApprovalReviewHistory;

@@ -35,9 +35,9 @@ function AppLayout() {
           height="calc(100vh - 64px)"
           id="main"
           overflowY="scroll"
-          pl="22px"
-          pr={2}
-          py={5}
+          pl={3}
+          pr={0}
+          py={3}
         >
           <Outlet />
         </Box>

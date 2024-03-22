@@ -81,7 +81,7 @@ function SidebarContent({
         as={motion.div}
         initial={{ width: 0 }}
         exit={{ width: 0 }}
-        background="gray.100"
+        background="primary.700"
         borderColor="gray.300"
         borderRightWidth="1px"
         pt="64px"
@@ -93,13 +93,11 @@ function SidebarContent({
         zIndex={99}
         {...props}
       >
-        <Box paddingTop="130px">
+        <Box paddingTop="92px">
           <Flex
             animate={{
-              backgroundColor: isFold ? "transparent" : "white",
-              borderColor: isFold
-                ? "transparent"
-                : "var(--chakra-colors-gray-300)",
+              backgroundColor: isFold ? "transparent" : "primary.700",
+              borderColor: isFold ? "transparent" : "primary.400",
             }}
             as={motion.div}
             align="center"
@@ -110,9 +108,9 @@ function SidebarContent({
             right="0"
             position="absolute"
             pl={4}
-            top="104px"
+            top="90px"
           >
-            <Text color="primary.700" fontWeight="600" whiteSpace="nowrap">
+            <Text color="gray.100" fontWeight="600" whiteSpace="nowrap">
               {isFold ? "" : "BizCore_v3.0"}
             </Text>
             <IconButton
@@ -124,10 +122,10 @@ function SidebarContent({
               }}
               aria-label="menu fold button"
               as={motion.button}
-              backgroundColor="white"
-              borderColor="gray.300"
+              backgroundColor="primary.900"
+              borderColor="primary.400"
               borderWidth="1px"
-              color="gray.700"
+              color="gray.200"
               position="absolute"
               left="initial !important"
               width="40px"

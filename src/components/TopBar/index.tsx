@@ -83,7 +83,7 @@ function TopBar({ onMenuClick }: TopBarProps) {
       left={0}
     >
       <Link to="/">
-        <Image src={logo} />
+        <Image src={logo} width={200} height={12} />
       </Link>
       <Flex align="center" flex={1} gap={6} justify="end">
         <Flex align="center" gap={3}>

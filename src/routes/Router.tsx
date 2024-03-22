@@ -11,7 +11,7 @@ import { getCookie } from "storage/cookie";
 import {
   AppLayout,
   AuthenticLayout,
-  NonAuthenticLayout,
+  // NonAuthenticLayout,
   ErrorPage401,
   ErrorPage403,
   ErrorPage404,
@@ -41,7 +41,7 @@ import {
   ChangePwdPage,
   CommonCodePage,
   DefaultPage,
-  LoginPage,
+  // LoginPage,
   PermissionPage,
   StaffContactPage,
   UserManagePage,
@@ -69,9 +69,9 @@ function Router() {
           }
           path="/"
         />
-        <Route element={<NonAuthenticLayout />}>
+        {/* <Route element={<NonAuthenticLayout />}>
           <Route element={<LoginPage />} path="/login" />
-        </Route>
+        </Route> */}
         <Route element={<AuthenticLayout />}>
           <Route element={<ChangePwdPage />} path="/change-pwd" />
           <Route element={<AppLayout />}>
