@@ -14,7 +14,7 @@ interface User {
   wiredPhoneNumber?: string | null;
   wiredPhoneNumberPlus?: string | null;
   crsPhoneNumber?: string | null;
-  isMobytalk?: boolean | null;
+  isBizCore?: boolean | null;
   ssoLoginId?: string;
   password?: string;
   sendAuthorization: SendAuth;

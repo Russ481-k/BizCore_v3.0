@@ -126,7 +126,7 @@ function DeptGroupsTreePannel({
       >
         <Button
           alignItems="center"
-          bgColor={selectedDeptGroup.isMobytalk === null ? "gray.200" : "white"}
+          bgColor={selectedDeptGroup.isBizCore === null ? "gray.200" : "white"}
           borderRadius={0}
           fontWeight="600"
           justifyContent="flex-start"
@@ -146,11 +146,11 @@ function DeptGroupsTreePannel({
             openDetailModal={openDetailModal}
           />
           <DeptGroupAccordionItem
-            items={deptGroupsData?.mobytalkBody}
+            items={deptGroupsData?.BizCoreBody}
             selectedDept={selectedDept}
             selectedDeptGroup={selectedDeptGroup}
             thisGroup={ADDITION}
-            totalCnt={deptGroupsData?.mobytalkTotal}
+            totalCnt={deptGroupsData?.BizCoreTotal}
             onItemSelect={handleDeptOnClick}
             openAddModal={openAddModal}
             openDeleteModal={openDeleteModal}

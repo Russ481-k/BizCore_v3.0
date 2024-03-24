@@ -16,7 +16,7 @@ function useGetUsers(
       params.permissionId,
       params.keyword,
       params.targetColumn,
-      params.isMobytalk,
+      params.isBizCore,
       params.currentPage,
       params.pageSize,
     ],

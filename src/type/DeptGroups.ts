@@ -2,9 +2,9 @@ import Department from "./Department";
 
 interface DeptGroups {
   eminwonBody: Department[] | null;
-  mobytalkBody: Department[] | null;
+  BizCoreBody: Department[] | null;
   eminwonTotal: number;
-  mobytalkTotal: number;
+  BizCoreTotal: number;
   deptTotalCount: number;
 }
 

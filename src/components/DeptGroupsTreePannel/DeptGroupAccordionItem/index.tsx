@@ -43,10 +43,10 @@ function DeptGroupAccordionItem({
 }: DeptGroupAccordionItemProps) {
   const handleSelectedItem = useCallback(
     (item: Department) => {
-      const selectedMobytalk: boolean =
-        selectedDeptGroup.isMobytalk === thisGroup.isMobytalk &&
+      const selectedBizCore: boolean =
+        selectedDeptGroup.isBizCore === thisGroup.isBizCore &&
         selectedDept?.deptCode === item.deptCode;
-      return selectedMobytalk;
+      return selectedBizCore;
     },
     [thisGroup, selectedDeptGroup, selectedDept]
   );
@@ -59,7 +59,7 @@ function DeptGroupAccordionItem({
             <AccordionButton
               alignItems="center"
               bgColor={
-                selectedDeptGroup.isMobytalk === thisGroup.isMobytalk
+                selectedDeptGroup.isBizCore === thisGroup.isBizCore
                   ? "gray.200"
                   : "white"
               }
@@ -81,10 +81,10 @@ function DeptGroupAccordionItem({
               />
               {thisGroup.groupName} ({totalCnt ?? 0})
             </AccordionButton>
-            {selectedDeptGroup.isMobytalk && (
+            {selectedDeptGroup.isBizCore && (
               <ManageButtonGroup
                 show={
-                  selectedDeptGroup.isMobytalk === thisGroup.isMobytalk &&
+                  selectedDeptGroup.isBizCore === thisGroup.isBizCore &&
                   !!!selectedDept?.deptCode
                 }
                 openAddModal={openAddModal}
@@ -116,7 +116,7 @@ function DeptGroupAccordionItem({
                 >
                   <Text
                     maxWidth={
-                      selectedDeptGroup.isMobytalk
+                      selectedDeptGroup.isBizCore
                         ? handleSelectedItem(item)
                           ? "calc(100% - 6.5rem)"
                           : "90%"
@@ -131,7 +131,7 @@ function DeptGroupAccordionItem({
                   </Text>
                   <Text ms={1}>({item.userCnt ?? 0})</Text>
                 </Button>
-                {selectedDeptGroup.isMobytalk ? (
+                {selectedDeptGroup.isBizCore ? (
                   <ManageButtonGroup
                     show={handleSelectedItem(item)}
                     type="department"

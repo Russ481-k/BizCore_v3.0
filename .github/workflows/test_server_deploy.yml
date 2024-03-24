@@ -40,7 +40,7 @@ jobs:
           EOF
 
       - name: Build Docker image
-        run: docker build -t mobytalk_frontend -f ./.deploy/Dockerfile .
+        run: docker build -t BizCore_frontend -f ./.deploy/Dockerfile .
 
       - name: create docker-compose.yml
         run: |
@@ -52,17 +52,17 @@ jobs:
                   external: true
 
           services:
-              mobytalk_frontend:
-                  container_name: mobytalk_frontend
-                  image: mobytalk_frontend
+              BizCore_frontend:
+                  container_name: BizCore_frontend
+                  image: BizCore_frontend
                   restart: always
                   labels:
                       - "traefik.enable=true"
                       - "traefik.docker.network=dev"
-                      - "traefik.http.routers.mobytalk_frontend.tls=true"
-                      - "traefik.http.routers.mobytalk_frontend.rule=Host(\`dev.mobytalk.co.kr\`)"
-                      - "traefik.http.routers.mobytalk_frontend.tls.certresolver=myresolver"
-                      - "traefik.http.services.mobytalk_frontend.loadbalancer.server.port=3000"
+                      - "traefik.http.routers.BizCore_frontend.tls=true"
+                      - "traefik.http.routers.BizCore_frontend.rule=Host(\`dev.BizCore.co.kr\`)"
+                      - "traefik.http.routers.BizCore_frontend.tls.certresolver=myresolver"
+                      - "traefik.http.services.BizCore_frontend.loadbalancer.server.port=3000"
                   networks:
                       - dev
           EOF

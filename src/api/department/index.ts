@@ -4,7 +4,7 @@ import { department } from "api/url";
 export interface AddDeptParams {
   deptName: string;
   managementDept: string | null;
-  isMobytalk: boolean;
+  isBizCore: boolean;
 }
 export interface AddDeptResponse {
   status: string;
@@ -17,7 +17,7 @@ export function addDeptAPI(params: AddDeptParams): Promise<AddDeptResponse> {
     data: {
       deptName: params.deptName ?? null,
       managementDept: params.managementDept ?? null,
-      isMobytalk: params.isMobytalk ?? null,
+      isBizCore: params.isBizCore ?? null,
     },
   }).then((response) => response.data);
 }
@@ -26,7 +26,7 @@ export interface ChangeDeptParams {
   deptName: string;
   deptCode: string;
   managementDept: string | null;
-  isMobytalk: boolean;
+  isBizCore: boolean;
 }
 export interface ChangeDeptResponse {
   status: string;
@@ -41,7 +41,7 @@ export function changeDeptAPI(
     data: {
       deptName: params.deptName ?? null,
       managementDept: params.managementDept ?? null,
-      isMobytalk: params.isMobytalk ?? null,
+      isBizCore: params.isBizCore ?? null,
     },
   }).then((response) => response.data);
 }

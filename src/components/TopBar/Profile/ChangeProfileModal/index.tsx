@@ -123,7 +123,7 @@ function ChangeProfileModal({
         userId: myProfile.userId,
         userName: myProfile.userName,
         deptName: myProfile.deptName,
-        isMobytalk: myProfile.isMobytalk,
+        isBizCore: myProfile.isBizCore,
         positionName: myProfile.positionName,
         status: myProfile.status,
         authName: myProfile.authName,
@@ -169,7 +169,7 @@ function ChangeProfileModal({
                       <InfoElement label="아이디">
                         <Text fontSize="sm">{defaultValues.userId}</Text>
                       </InfoElement>
-                      {defaultValues.isMobytalk && (
+                      {defaultValues.isBizCore && (
                         <InfoElement label="비밀번호">
                           <Button
                             size="sm"
@@ -190,7 +190,7 @@ function ChangeProfileModal({
                             <Input
                               maxW={240}
                               placeholder="이름을 입력하세요."
-                              readOnly={!defaultValues.isMobytalk}
+                              readOnly={!defaultValues.isBizCore}
                               size="sm"
                               {...methods.register("userName", {
                                 required: message.userName.required,
@@ -226,7 +226,7 @@ function ChangeProfileModal({
                           <Input
                             maxW={240}
                             placeholder="휴대폰 번호를 입력하세요."
-                            readOnly={!defaultValues.isMobytalk}
+                            readOnly={!defaultValues.isBizCore}
                             size="sm"
                             {...methods.register("wirelessPhoneNumber", {
                               validate: (v: string | null | undefined) => {

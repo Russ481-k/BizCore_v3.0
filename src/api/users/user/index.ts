@@ -37,7 +37,7 @@ export function addUserAPI(params: User): Promise<AddUserResponse> {
       wiredPhoneNumber: params.wiredPhoneNumber ?? null,
       wiredPhoneNumberPlus: params.wiredPhoneNumberPlus ?? null,
       crsPhoneNumber: params.crsPhoneNumber ?? null,
-      isMobytalk: params.isMobytalk ?? null,
+      isBizCore: params.isBizCore ?? null,
       sendAuthorization: {
         isSmsUse: params.sendAuthorization.isSmsUse ?? null,
         isLmsUse: params.sendAuthorization.isLmsUse ?? null,
@@ -72,7 +72,7 @@ export interface ChangeUserParams {
   wiredPhoneNumber?: string | null;
   wiredPhoneNumberPlus?: string | null;
   crsPhoneNumber?: string | null;
-  isMobytalk?: boolean | null;
+  isBizCore?: boolean | null;
   sendAuthorization: SendAuth;
   sendCountRequest: SendCount;
 }
@@ -96,7 +96,7 @@ export function changeUserAPI(
       wiredPhoneNumber: params.wiredPhoneNumber ?? null,
       wiredPhoneNumberPlus: params.wiredPhoneNumberPlus ?? null,
       crsPhoneNumber: params.crsPhoneNumber ?? null,
-      isMobytalk: params.isMobytalk ?? null,
+      isBizCore: params.isBizCore ?? null,
       sendAuthorization: {
         isSmsUse: params.sendAuthorization.isSmsUse ?? null,
         isLmsUse: params.sendAuthorization.isLmsUse ?? null,

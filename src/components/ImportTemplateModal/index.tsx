@@ -641,7 +641,7 @@ function ImportTemplateModal({
                         <>
                           <Flex alignItems="center" gap={2}>
                             <Image
-                              alt="mobytalk-profile"
+                              alt="BizCore-profile"
                               borderColor="gray.500"
                               borderRadius="12px"
                               borderWidth={1}

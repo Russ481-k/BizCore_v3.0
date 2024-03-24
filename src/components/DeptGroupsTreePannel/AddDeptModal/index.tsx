@@ -96,7 +96,7 @@ function AddDeptModal({ isOpen, onRefetch, setModalOpen }: AddDeptModalProps) {
       {
         deptName: data.deptName,
         managementDept: null,
-        isMobytalk: true,
+        isBizCore: true,
       },
       {
         onError: (error) => {

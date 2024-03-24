@@ -26,7 +26,7 @@ interface Message {
     crsPhoneNumber: string;
     wirelessPhoneNumber: string;
     status: string;
-    isMobytalk: boolean;
+    isBizCore: boolean;
     exitDate: string;
     permissions: {
       permissionsId: number;

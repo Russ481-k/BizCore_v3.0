@@ -167,7 +167,7 @@ function ManageUserModal({
         wiredPhoneNumber: wiredPhoneNumberParam ?? null,
         wiredPhoneNumberPlus: wiredPhoneNumberPlusParam ?? null,
         crsPhoneNumber: crsPhoneNumberParam ?? null,
-        isMobytalk: userData?.isMobytalk,
+        isBizCore: userData?.isBizCore,
         sendAuthorization: {
           isSmsUse: data.sendAuthorization.isSmsUse,
           isLmsUse: data.sendAuthorization.isLmsUse,

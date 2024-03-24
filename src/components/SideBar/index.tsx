@@ -5,6 +5,7 @@ import SideBarContent from "./SideBarContent";
 interface SideBarProps {
   isMenuOpen: boolean;
   isSidebarFold: boolean;
+  tabIndex: number;
   onMenuClose: () => void;
   onSideBarToggle: () => void;
 }
@@ -12,12 +13,17 @@ interface SideBarProps {
 function SideBar({
   isMenuOpen,
   isSidebarFold,
+  tabIndex,
   onMenuClose,
   onSideBarToggle,
 }: SideBarProps) {
   return (
     <>
-      <SideBarContent isFold={isSidebarFold} onFold={onSideBarToggle} />
+      <SideBarContent
+        isFold={isSidebarFold}
+        tabIndex={tabIndex}
+        onFold={onSideBarToggle}
+      />
       <Drawer isOpen={isMenuOpen} onClose={onMenuClose} placement="left">
         <DrawerOverlay />
         <DrawerContent maxWidth="240px">

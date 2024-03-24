@@ -4,7 +4,7 @@ interface UserListItem {
   userName: string;
   positionName: string;
   deptName: string;
-  isMobytalk: boolean;
+  isBizCore: boolean;
   authName: string;
   isSmsUnlimited: boolean;
   isLmsUnlimited: boolean;

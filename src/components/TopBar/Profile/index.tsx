@@ -37,7 +37,7 @@ function Profile() {
   const onSubmitLogoutModal = () => {
     onCloseLogoutModal();
     authService.logout();
-    if (!myProfile.isMobytalk) {
+    if (!myProfile.isBizCore) {
       window.close();
     }
   };
@@ -97,7 +97,7 @@ function Profile() {
                 onClick={() => handleLogoutButtonClick()}
               >
                 <LogoutIcon mr="5px" />
-                {myProfile.isMobytalk ? "로그아웃" : "시스템종료"}
+                {myProfile.isBizCore ? "로그아웃" : "시스템종료"}
               </Button>
             </PopoverFooter>
           </PopoverContent>
@@ -112,7 +112,7 @@ function Profile() {
         isOpen={logoutModalOpen}
         onClose={onCloseLogoutModal}
         onSubmit={onSubmitLogoutModal}
-        text={myProfile.isMobytalk ? "로그아웃" : "시스템 종료"}
+        text={myProfile.isBizCore ? "로그아웃" : "시스템 종료"}
       />
     </>
   );

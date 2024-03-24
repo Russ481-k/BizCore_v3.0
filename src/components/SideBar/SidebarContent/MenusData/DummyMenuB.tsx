@@ -1,6 +1,6 @@
 import Menu from "type/Menu";
 
-export const dummyMenu: Array<Menu> = [
+export const dummyMenuB: Array<Menu> = [
   {
     createDate: "2023-04-10 02:10:48",
     groupMenuId: 0,
@@ -448,11 +448,11 @@ export const dummyMenu: Array<Menu> = [
     groupMenuId: 7,
     icon: null,
     id: 35,
-    name: "MobyTalk 환경 설정",
+    name: "BizCore 환경 설정",
     order: 29,
     programId: 28,
     programName: null,
-    programPath: "/system/mobytalk-setting",
+    programPath: "/system/BizCore-setting",
     updateDate: "2023-04-10 02:10:48",
     useYN: "N",
   },
@@ -461,7 +461,7 @@ export const dummyMenu: Array<Menu> = [
     groupMenuId: 7,
     icon: null,
     id: 36,
-    name: "MobyTalk 메뉴 관리",
+    name: "BizCore 메뉴 관리",
     order: 30,
     programId: 29,
     programName: null,

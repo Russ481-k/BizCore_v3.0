@@ -11,7 +11,7 @@ import { getCookie } from "storage/cookie";
 import {
   AppLayout,
   AuthenticLayout,
-  // NonAuthenticLayout,
+  NonAuthenticLayout,
   ErrorPage401,
   ErrorPage403,
   ErrorPage404,
@@ -41,14 +41,14 @@ import {
   ChangePwdPage,
   CommonCodePage,
   DefaultPage,
-  // LoginPage,
+  LoginPage,
   PermissionPage,
   StaffContactPage,
   UserManagePage,
 } from "routes/user";
 import {
   MenuSettingPage,
-  MobytalkSettingPage,
+  BizCoreSettingPage,
   TwoWaySettingPage,
   UMSPage,
   SystemCodePage,
@@ -69,9 +69,9 @@ function Router() {
           }
           path="/"
         />
-        {/* <Route element={<NonAuthenticLayout />}>
+        <Route element={<NonAuthenticLayout />}>
           <Route element={<LoginPage />} path="/login" />
-        </Route> */}
+        </Route>
         <Route element={<AuthenticLayout />}>
           <Route element={<ChangePwdPage />} path="/change-pwd" />
           <Route element={<AppLayout />}>
@@ -134,10 +134,7 @@ function Router() {
             <Route element={<Outlet />} path="/system">
               <Route element={<UMSPage />} path="ums" />
               <Route element={<TwoWaySettingPage />} path="two-way-setting" />
-              <Route
-                element={<MobytalkSettingPage />}
-                path="mobytalk-setting"
-              />
+              <Route element={<BizCoreSettingPage />} path="BizCore-setting" />
               <Route element={<MenuSettingPage />} path="menu-setting" />
               <Route element={<SystemCodePage />} path="system-code" />
             </Route>

@@ -1,1 +1,1 @@
-# mobytalk_frontend
+# BizCore_frontend

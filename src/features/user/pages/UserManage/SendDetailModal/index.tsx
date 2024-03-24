@@ -138,7 +138,7 @@ function SendDetailModal({
           wiredPhoneNumber: userData.wiredPhoneNumber,
           wiredPhoneNumberPlus: userData.wiredPhoneNumberPlus,
           crsPhoneNumber: userData.crsPhoneNumber,
-          isMobytalk: true,
+          isBizCore: true,
           sendAuthorization: {
             isSmsUse: userData.sendAuthorization.isSmsUse,
             isLmsUse: userData.sendAuthorization.isLmsUse,

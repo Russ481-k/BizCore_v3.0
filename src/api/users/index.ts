@@ -9,7 +9,7 @@ export interface GetUsersParams {
   permissionId: number | null;
   keyword: string | null;
   targetColumn: string | null;
-  isMobytalk: boolean | null;
+  isBizCore: boolean | null;
   currentPage?: number | null;
   pageSize?: number;
 }
@@ -33,7 +33,7 @@ export function getUsersAPI(params: GetUsersParams): Promise<GetUsersResponse> {
       permissionId: params.permissionId ?? null,
       keyword: params.keyword ?? null,
       targetColumn: params.targetColumn ?? null,
-      isMobytalk: params.isMobytalk ?? null,
+      isBizCore: params.isBizCore ?? null,
       currentPage: params.currentPage ?? null,
       pageSize: params.pageSize ?? 10,
     },

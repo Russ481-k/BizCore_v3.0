@@ -41,6 +41,8 @@ const theme = extendTheme({
       700: "#302C7F",
       800: "#302c7f",
       900: "#2b2772",
+      1000: "#1f1b5e",
+      1100: "#1b1757",
     },
     red: {
       light: "#FFF4F4",

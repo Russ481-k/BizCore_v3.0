@@ -95,7 +95,7 @@ const initialState: UserState = {
     userId: "",
     userName: "",
     deptName: "",
-    isMobytalk: false,
+    isBizCore: false,
     positionName: "",
     status: "",
     authName: "",
@@ -177,7 +177,7 @@ export const { actions, reducer } = createSlice({
       state.profile.userId = data.userId;
       state.profile.userName = data.userName;
       state.profile.deptName = data.deptName;
-      state.profile.isMobytalk = data.isMobytalk;
+      state.profile.isBizCore = data.isBizCore;
       state.profile.positionName = data.positionName;
       state.profile.status = data.status;
       state.profile.authName = data.authName;

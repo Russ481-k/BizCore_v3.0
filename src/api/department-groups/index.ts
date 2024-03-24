@@ -6,9 +6,9 @@ export interface GetDeptGroupsResponse {
   status: string;
   data: {
     eminwonBody: Array<Department> | null;
-    mobytalkBody: Array<Department> | null;
+    BizCoreBody: Array<Department> | null;
     eminwonTotal: number;
-    mobytalkTotal: number;
+    BizCoreTotal: number;
     deptTotalCount: number;
   };
   message: string;

@@ -3,7 +3,7 @@ interface MyProfile {
   userId: string;
   userName: string;
   deptName: string;
-  isMobytalk: boolean;
+  isBizCore: boolean;
   positionName: string;
   status: string;
   authName: string;

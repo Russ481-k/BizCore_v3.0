@@ -1,4 +1,4 @@
-import { Flex, Image } from "@chakra-ui/react";
+import { Flex, Image, Tab, TabIndicator, TabList } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,18 +17,22 @@ import Profile from "./Profile";
 import SendCountPopover from "./SendCountPopover";
 
 import logo from "assets/img/logo.png";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface TopBarProps {
+  isFold: boolean;
+  tabIndex: number;
   onMenuClick: () => void;
 }
 
 const usedCrsService: boolean = true;
 
-function TopBar({ onMenuClick }: TopBarProps) {
+function TopBar({ isFold, tabIndex, onMenuClick }: TopBarProps) {
   const [channelList, setChannelList] = useState<Option[]>([]);
   const [isChannelUsagePercent, setIsChannelUsagePercent] = useState<
     "100" | "70" | null
   >(null);
+  const [tabIndicatorLeft, setTabIndicatorLeft] = useState<string>("254px");
 
   const mySendData = useAppSelector((state) => state.user.sendData);
 
@@ -53,6 +57,16 @@ function TopBar({ onMenuClick }: TopBarProps) {
     setIsChannelUsagePercent(maxPercent);
   };
 
+  const onTabIndicatorChange = (tabIndex: number, isFold: boolean) => {
+    if (tabIndex === 0) {
+      setTabIndicatorLeft(isFold ? "86px !important" : "254px !important");
+    } else if (tabIndex === 1) {
+      setTabIndicatorLeft(isFold ? "187px !important" : "355px !important");
+    } else if (tabIndex === 2) {
+      setTabIndicatorLeft(isFold ? "288px !important" : "456px !important");
+    }
+  };
+
   useEffect(() => {
     if (usedCrsService) {
       setChannelList(CHANNEL_OPTION);
@@ -66,6 +80,10 @@ function TopBar({ onMenuClick }: TopBarProps) {
       checkChannelUsagePercentage(mySendData.sendCountRequest);
     }
   }, [mySendData]);
+
+  useEffect(() => {
+    onTabIndicatorChange(tabIndex, isFold);
+  }, [tabIndex, isFold]);
 
   return (
     <Flex
@@ -82,9 +100,45 @@ function TopBar({ onMenuClick }: TopBarProps) {
       top={0}
       left={0}
     >
-      <Link to="/">
-        <Image src={logo} width={200} height={12} />
-      </Link>
+      <AnimatePresence>
+        <Flex
+          animate={{
+            width: isFold ? 48 : 216,
+          }}
+          as={motion.div}
+        >
+          <Link to="/">
+            <Image
+              as={motion.img}
+              float="left"
+              src={logo}
+              objectFit="cover"
+              objectPosition="left"
+              height={12}
+            />
+          </Link>
+        </Flex>
+      </AnimatePresence>
+      <Flex px={4}>
+        <TabList>
+          <Tab fontSize={20} fontWeight={600}>
+            업무관리
+          </Tab>
+          <Tab fontSize={20} fontWeight={600}>
+            회계관리
+          </Tab>
+          <Tab fontSize={20} fontWeight={600}>
+            일정관리
+          </Tab>
+        </TabList>
+        <TabIndicator
+          mt="55px"
+          left={tabIndicatorLeft}
+          height="4px"
+          width="100px !important"
+          bg="primary.600"
+        />
+      </Flex>
       <Flex align="center" flex={1} gap={6} justify="end">
         <Flex align="center" gap={3}>
           <AlarmButton

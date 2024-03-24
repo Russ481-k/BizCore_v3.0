@@ -131,7 +131,7 @@ function UserManage() {
       permissionId: searchPermissionId,
       keyword: searchKeyword,
       targetColumn: searchTargetColumn,
-      isMobytalk: selectedDeptGroup.isMobytalk,
+      isBizCore: selectedDeptGroup.isBizCore,
       currentPage,
       pageSize: batchSize,
     },
@@ -585,7 +585,7 @@ function UserManage() {
       )}
       {selectedUser && (
         <ManageUserModal
-          isModify={selectedUser.isMobytalk ?? false}
+          isModify={selectedUser.isBizCore ?? false}
           isOpen={manageUserModalOpen}
           permissionOptions={permissionOptions}
           userData={userData}

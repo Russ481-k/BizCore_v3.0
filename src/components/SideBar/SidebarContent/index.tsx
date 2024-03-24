@@ -1,26 +1,39 @@
-import { Box, Flex, IconButton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  TabPanel,
+  TabPanels,
+  Text,
+} from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 
 import { CaretIcon, MenuIcon } from "components";
 import { useAppSelector } from "storage/redux/hooks";
-import { dummyMenu } from "./DummyMenu";
+import { dummyMenuA } from "./MenusData/DummyMenuA";
+import { dummyMenuB } from "./MenusData/DummyMenuB";
+import { dummyMenuC } from "./MenusData/DummyMenuC";
 import MenuGroup from "./MenuGroup";
+import Menu from "type/Menu";
 
 interface SidebarContentProps {
   isFold: boolean;
+  tabIndex?: number;
   onClose: () => void;
   onFold: () => void;
 }
 
 const defaultProps = {
   isFold: false,
+  tabIndex: 0,
   onClose() {},
   onFold() {},
 };
 
 function SidebarContent({
   isFold,
+  tabIndex,
   onClose,
   onFold,
   ...props
@@ -29,7 +42,16 @@ function SidebarContent({
   const [rank, setRank] = useState<number>(0);
 
   const groupedMenus = useMemo(() => {
-    const permissionMenus = dummyMenu?.map((menu) => {
+    let Menus: Menu[] = [];
+    if (tabIndex === 0) {
+      Menus = dummyMenuA;
+    } else if (tabIndex === 1) {
+      Menus = dummyMenuB;
+    } else if (tabIndex === 2) {
+      Menus = dummyMenuC;
+    }
+
+    const permissionMenus = Menus.map((menu) => {
       return {
         ...menu,
         useYN:
@@ -53,7 +75,7 @@ function SidebarContent({
         }))
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) ?? []
     );
-  }, [rank]);
+  }, [rank, tabIndex]);
 
   useEffect(() => {
     switch (userAuthName) {
@@ -93,11 +115,11 @@ function SidebarContent({
         zIndex={99}
         {...props}
       >
-        <Box paddingTop="92px">
+        <Box paddingTop="80px">
           <Flex
             animate={{
-              backgroundColor: isFold ? "transparent" : "primary.700",
-              borderColor: isFold ? "transparent" : "primary.400",
+              backgroundColor: isFold ? "transparent" : "#302C7F",
+              borderColor: isFold ? "transparent" : "#6e6ba5",
             }}
             as={motion.div}
             align="center"
@@ -105,13 +127,26 @@ function SidebarContent({
             borderWidth="1px"
             h="54px"
             left="20px"
-            right="0"
+            right="-1px"
             position="absolute"
             pl={4}
             top="90px"
           >
-            <Text color="gray.100" fontWeight="600" whiteSpace="nowrap">
-              {isFold ? "" : "BizCore_v3.0"}
+            <Text
+              color="white"
+              fontSize="20"
+              fontWeight="600"
+              whiteSpace="nowrap"
+            >
+              {isFold ? (
+                ""
+              ) : (
+                <TabPanels>
+                  <TabPanel>업무관리</TabPanel>
+                  <TabPanel>회계관리</TabPanel>
+                  <TabPanel>일정관리</TabPanel>
+                </TabPanels>
+              )}
             </Text>
             <IconButton
               animate={{
@@ -131,12 +166,12 @@ function SidebarContent({
               width="40px"
               icon={isFold ? <MenuIcon /> : <CaretIcon direction="LEFT" />}
               _active={{
-                backgroundColor: "primary.300",
-                color: "primary.500",
+                backgroundColor: "primary.1000",
+                color: "white",
               }}
               _hover={{
-                backgroundColor: "primary.100",
-                color: "primary.700",
+                backgroundColor: "primary.1100",
+                color: "gray.100",
               }}
               onClick={onFold}
             />
@@ -146,23 +181,57 @@ function SidebarContent({
             direction="column"
             as={motion.div}
             animate={{
-              paddingLeft: isFold ? "16px" : "20px",
-              paddingRight: isFold ? "16px" : "20px",
+              paddingLeft: isFold ? "0" : "2px",
+              paddingRight: isFold ? "0" : "2px",
             }}
           >
-            {groupedMenus.map((menuItem) =>
-              menuItem.menus.length > 0 ? (
-                <MenuGroup
-                  groupId={menuItem.id}
-                  groupName={menuItem.name}
-                  icon={menuItem.icon}
-                  isFold={isFold}
-                  key={`menu-${menuItem.id}`}
-                  menus={menuItem.menus}
-                  onMenuClose={onClose}
-                />
-              ) : null
-            )}
+            <TabPanels>
+              <TabPanel>
+                {groupedMenus.map((menuItem) =>
+                  menuItem.menus.length > 0 ? (
+                    <MenuGroup
+                      groupId={menuItem.id}
+                      groupName={menuItem.name}
+                      icon={menuItem.icon}
+                      isFold={isFold}
+                      key={`menu-${menuItem.id}`}
+                      menus={menuItem.menus}
+                      onMenuClose={onClose}
+                    />
+                  ) : null
+                )}
+              </TabPanel>
+              <TabPanel>
+                {groupedMenus.map((menuItem) =>
+                  menuItem.menus.length > 0 ? (
+                    <MenuGroup
+                      groupId={menuItem.id}
+                      groupName={menuItem.name}
+                      icon={menuItem.icon}
+                      isFold={isFold}
+                      key={`menu-${menuItem.id}`}
+                      menus={menuItem.menus}
+                      onMenuClose={onClose}
+                    />
+                  ) : null
+                )}
+              </TabPanel>
+              <TabPanel>
+                {groupedMenus.map((menuItem) =>
+                  menuItem.menus.length > 0 ? (
+                    <MenuGroup
+                      groupId={menuItem.id}
+                      groupName={menuItem.name}
+                      icon={menuItem.icon}
+                      isFold={isFold}
+                      key={`menu-${menuItem.id}`}
+                      menus={menuItem.menus}
+                      onMenuClose={onClose}
+                    />
+                  ) : null
+                )}
+              </TabPanel>
+            </TabPanels>
           </Flex>
         </Box>
       </Box>

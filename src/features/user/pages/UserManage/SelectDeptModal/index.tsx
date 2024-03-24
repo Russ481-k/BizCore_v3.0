@@ -60,7 +60,7 @@ function SelectDeptModal({
           break;
         case "addition":
           setThisGroup(ADDITION);
-          setThisGroupsData(data.mobytalkBody);
+          setThisGroupsData(data.BizCoreBody);
           break;
         default:
           setThisGroup(null);
