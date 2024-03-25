@@ -79,7 +79,7 @@
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "start": "REACT_APP_API_URL=http://192.168.1.76:5000 react-scripts start",
-    "start:test": "REACT_APP_API_URL=http://localhost:5000 react-scripts start",
+    "start:test": "REACT_APP_API_URL=http://127.0.0.1:5000 react-scripts start",
     "start:prod": "REACT_APP_API_URL=http://192.168.1.76:21/api react-scripts start",
     "build": "REACT_APP_API_URL=http://192.168.1.76:5000 react-scripts build",
     "build:test": "REACT_APP_API_URL=http://192.168.1.76:21 react-scripts build",
