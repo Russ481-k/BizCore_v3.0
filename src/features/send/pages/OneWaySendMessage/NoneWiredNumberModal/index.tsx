@@ -24,8 +24,7 @@ function NoneWiredNumberModal({ onClose }: NoneWiredNumberModalProps) {
         <ModalBody>
           <Flex display="block" fontSize="14px">
             <Text>
-              문자 메시지를 발송하기 위한 발신번호가 등록되지 않아 문자 메시지를
-              발송할 수 없습니다.
+              문자 메시지를 하기 위한 발신번호가 등록되지 않아 문자 메시지를 할 수 없습니다.
             </Text>
             <Text>관리자에게 문의하시기 바랍니다</Text>
           </Flex>

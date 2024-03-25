@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Input,
-  Skeleton,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Input, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { format } from "date-fns";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -142,25 +133,12 @@ function OneWayAutoSendStatus() {
     setEnableQuery(true);
   };
   const handleFormSubmit = methods.handleSubmit(
-    ({
-      sendDate,
-      sendChannel,
-      searchType,
-      sortType,
-      receiveStatusType,
-      keyword,
-    }) => {
+    ({ sendDate, sendChannel, searchType, sortType, receiveStatusType, keyword }) => {
       if (sendDateOption === "select") {
         setStartSendDate(
-          sendDate?.[0]
-            ? `${format(sendDate[0], "yyyy-MM-dd")} 00:00:00.000`
-            : null
+          sendDate?.[0] ? `${format(sendDate[0], "yyyy-MM-dd")} 00:00:00.000` : null
         );
-        setEndSendDate(
-          sendDate?.[1]
-            ? `${format(sendDate[1], "yyyy-MM-dd")} 23:59:59.999`
-            : null
-        );
+        setEndSendDate(sendDate?.[1] ? `${format(sendDate[1], "yyyy-MM-dd")} 23:59:59.999` : null);
       } else {
         setStartSendDate(null);
         setEndSendDate(null);
@@ -207,16 +185,13 @@ function OneWayAutoSendStatus() {
 
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="자동안내 발송 현황" />
+      <CustomCard isHeader="안내  현황" />
       <Box>
-        <CollapseSection
-          headerTitle="자동안내 발송 목록"
-          borderBottomRadius={0}
-        >
+        <CollapseSection headerTitle="안내  목록" borderBottomRadius={0}>
           <FormProvider {...methods}>
             <InfoBox>
               <Flex>
-                <InfoElement label="발송일">
+                <InfoElement label="일">
                   <RangeDatePicker
                     name="sendDate"
                     option={sendDateOption}
@@ -251,7 +226,7 @@ function OneWayAutoSendStatus() {
                 </InfoElement>
               </Flex>
               <Flex>
-                <InfoElement flex={1} label="발송 채널">
+                <InfoElement flex={1} label=" 채널">
                   <CustomSelect
                     codes={sendChannelOption}
                     placeholder="전체"
@@ -285,11 +260,7 @@ function OneWayAutoSendStatus() {
               </Flex>
             </InfoBox>
             <Flex justifyContent="flex-end">
-              <Button
-                isLoading={isLoading}
-                variant="primaryBlue"
-                onClick={handleFormSubmit}
-              >
+              <Button isLoading={isLoading} variant="primaryBlue" onClick={handleFormSubmit}>
                 조회
               </Button>
             </Flex>
@@ -325,7 +296,7 @@ function OneWayAutoSendStatus() {
                   justifyContent="space-between"
                 >
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송채널
+                    채널
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
                     구분
@@ -343,7 +314,7 @@ function OneWayAutoSendStatus() {
                     수신상태
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송일
+                    일
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
@@ -356,55 +327,13 @@ function OneWayAutoSendStatus() {
                         justifyContent="space-between"
                         key={messages?.[i].id + "-" + i + "-messages-skeleton"}
                       >
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={2}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={5}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
+                        <Skeleton flex={1} height="20px" mx={4} my={2} textAlign="center" />
+                        <Skeleton flex={1} height="20px" mx={4} my={2} textAlign="center" />
+                        <Skeleton flex={1} height="20px" mx={4} my={2} textAlign="center" />
+                        <Skeleton flex={2} height="20px" mx={4} my={2} textAlign="center" />
+                        <Skeleton flex={5} height="20px" mx={4} my={2} textAlign="center" />
+                        <Skeleton flex={1} height="20px" mx={4} my={2} textAlign="center" />
+                        <Skeleton flex={1} height="20px" mx={4} my={2} textAlign="center" />
                       </Flex>
                     ))}
                   {totalCount === 0 ? (

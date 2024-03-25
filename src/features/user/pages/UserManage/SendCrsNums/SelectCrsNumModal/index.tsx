@@ -67,7 +67,7 @@ function SelectCrsNumModal({
   return (
     <CustomModal isOpen={isOpen} onClose={onClose}>
       <ModalContent minW="740px">
-        <ModalHeader>양방향 메시지 발신번호 목록</ModalHeader>
+        <ModalHeader> 메시지 발신번호 목록</ModalHeader>
         <ModalCloseButton type="button" />
         <ModalBody>
           <VStack align="stretch" spacing={3}>
@@ -97,7 +97,7 @@ function SelectCrsNumModal({
                 <Thead>
                   <Tr>
                     <Th width="60px">No</Th>
-                    <Th>양방향 발신번호</Th>
+                    <Th> 발신번호</Th>
                     <Th width="15%">사용</Th>
                   </Tr>
                 </Thead>
@@ -113,9 +113,7 @@ function SelectCrsNumModal({
                               variant="primaryBlue"
                               size="sm"
                               isDisabled={bizNumbers.includes(item.bizNumber)}
-                              onClick={() =>
-                                handleUseButtonClick(item.bizNumber)
-                              }
+                              onClick={() => handleUseButtonClick(item.bizNumber)}
                             >
                               사용
                             </Button>
@@ -124,10 +122,7 @@ function SelectCrsNumModal({
                       );
                     })
                   ) : (
-                    <NoDataTr
-                      colspan={5}
-                      text="조회된 양방향 발신번호가 없습니다."
-                    />
+                    <NoDataTr colspan={5} text="조회된  발신번호가 없습니다." />
                   )}
                 </Tbody>
               </Table>

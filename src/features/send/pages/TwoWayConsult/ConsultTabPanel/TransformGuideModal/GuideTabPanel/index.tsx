@@ -1,12 +1,4 @@
-import {
-  Button,
-  Flex,
-  HStack,
-  Radio,
-  RadioGroup,
-  TabPanel,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Flex, HStack, Radio, RadioGroup, TabPanel, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import { ChannelTag, InfoBox, InfoElement } from "components";
@@ -20,12 +12,7 @@ interface GuideTabPanelProps {
   setAutoSend: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function GuideTabPanel({
-  autoSend,
-  messageText,
-  messageImage,
-  setAutoSend,
-}: GuideTabPanelProps) {
+function GuideTabPanel({ autoSend, messageText, messageImage, setAutoSend }: GuideTabPanelProps) {
   // ㅇㅋ 각자 하나씩 가질 state
   const [msgByteCurrent, setMsgByteCurrent] = useState<number>(0);
   const [msgChannel, setMsgChannel] = useState<string>("SMS");
@@ -63,7 +50,7 @@ function GuideTabPanel({
     <TabPanel>
       <VStack align="stretch" spacing={3}>
         <InfoBox>
-          <InfoElement label="안내 메시지 자동 발송" labelWidth="190px">
+          <InfoElement label="안내 메시지 " labelWidth="190px">
             <RadioGroup
               flexShrink={0}
               me={2}
@@ -87,11 +74,7 @@ function GuideTabPanel({
               <VStack align="flex-start" spacing={2}>
                 <Flex align="center" justify="space-between" w="100%">
                   <ChannelTag channelType={msgChannel} hasTooltip />
-                  <Button
-                    variant="textGray"
-                    size="sm"
-                    onClick={handlePreviewButtonClick}
-                  >
+                  <Button variant="textGray" size="sm" onClick={handlePreviewButtonClick}>
                     미리보기
                   </Button>
                 </Flex>

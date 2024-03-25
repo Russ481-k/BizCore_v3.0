@@ -109,12 +109,9 @@ function SendDetailModal({
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isUse, setIsUse] = useState<RecordBooleanProps>(defalutBooleanProps);
-  const [isUnlimited, setIsUnlimited] =
-    useState<RecordBooleanProps>(defalutBooleanProps);
-  const [limitCount, setLimitCount] =
-    useState<RecordNumberOrNullProps>(defalutNullProps);
-  const [useCount, setUseCount] =
-    useState<RecordNumberProps>(defalutNumberProps);
+  const [isUnlimited, setIsUnlimited] = useState<RecordBooleanProps>(defalutBooleanProps);
+  const [limitCount, setLimitCount] = useState<RecordNumberOrNullProps>(defalutNullProps);
+  const [useCount, setUseCount] = useState<RecordNumberProps>(defalutNumberProps);
 
   const handleRemainCount = useCallback((limit: number | null, use: number) => {
     if (limit !== null) {
@@ -163,13 +160,13 @@ function SendDetailModal({
           onError: (error) => {
             toast({
               render: () => (
-                <ToastMessage title="당월 발송량 수정 오류" type="ERROR">
+                <ToastMessage title="당월 량 수정 오류" type="ERROR">
                   {error.message}
                   <br />
-                  당월 발송량 수정 중 오류가 발생하였습니다.
+                  당월 량 수정 중 오류가 발생하였습니다.
                   <br />
-                  당월 발송량 수정을 다시 진행 하세요. 본 오류가 계속 발생하는
-                  경우 시스템 관리자에게 문의하기 바랍니다.
+                  당월 량 수정을 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템 관리자에게
+                  문의하기 바랍니다.
                 </ToastMessage>
               ),
             });
@@ -177,8 +174,8 @@ function SendDetailModal({
           onSuccess: () => {
             toast({
               render: () => (
-                <ToastMessage title="당월 발송량 수정 완료" type="SUCCESS">
-                  당월 발송량을 정상적으로 수정하였습니다.
+                <ToastMessage title="당월 량 수정 완료" type="SUCCESS">
+                  당월 량을 정상적으로 수정하였습니다.
                 </ToastMessage>
               ),
             });
@@ -269,7 +266,7 @@ function SendDetailModal({
   return (
     <CustomModal isOpen={isOpen} onClose={onClose}>
       <ModalContent as="form" minW="900px">
-        <ModalHeader>당월 발송량 상세</ModalHeader>
+        <ModalHeader>당월 량 상세</ModalHeader>
         <ModalCloseButton type="button" />
         <ModalBody>
           {isLoading && (
@@ -282,16 +279,13 @@ function SendDetailModal({
               <VStack align="stretch" spacing={2}>
                 <TipText
                   hasBg
-                  text="당월 발송량을 조정 하신 다음 하단의 [수정] 버튼을 클릭하여 저장하세요."
+                  text="당월 량을 조정 하신 다음 하단의 [수정] 버튼을 클릭하여 저장하세요."
                 />
                 <InfoBox>
                   <InfoElement label="상태" labelWidth="130px">
                     <Text fontSize="sm">
                       {userData.status
-                        ? convertCodeToName(
-                            USERS_OPTION.STATUS,
-                            userData.status
-                          )
+                        ? convertCodeToName(USERS_OPTION.STATUS, userData.status)
                         : "-"}
                     </Text>
                   </InfoElement>
@@ -306,23 +300,20 @@ function SendDetailModal({
               <VStack align="stretch" spacing={2}>
                 <Flex align="flex-end" justify="space-between">
                   <Text fontWeight="600" size="xl">
-                    당월 발송량
+                    당월 량
                   </Text>
-                  <TipText
-                    size="sm"
-                    text="당월 발송량 조정시 해당월에만 적용됩니다."
-                  />
+                  <TipText size="sm" text="당월 량 조정시 해당월에만 적용됩니다." />
                 </Flex>
                 <FormProvider {...methods}>
                   <CustomTableContainer>
                     <Table>
                       <Thead>
                         <Tr>
-                          <Th width="160px">발송 매체</Th>
-                          <Th width="130px">기본 월 발송량</Th>
-                          <Th width="130px">당월 발송된량</Th>
-                          <Th width="130px">남은 발송량</Th>
-                          <Th>당월 발송량 조정</Th>
+                          <Th width="160px"> 매체</Th>
+                          <Th width="130px">기본 월 량</Th>
+                          <Th width="130px">당월 된량</Th>
+                          <Th width="130px">남은 량</Th>
+                          <Th>당월 량 조정</Th>
                         </Tr>
                       </Thead>
                       <Tbody>
@@ -361,7 +352,7 @@ function SendDetailModal({
                             },
                           },
                           {
-                            name: "양방향",
+                            name: "",
                             code: "crs",
                             registerNames: {
                               unlimited: "isCrsUnlimited",
@@ -371,7 +362,7 @@ function SendDetailModal({
                         ].map((item) => {
                           return (
                             <Tr key={`month-send-count-${item.code}`}>
-                              <Th>{item.name} 발송량</Th>
+                              <Th>{item.name} 량</Th>
                               <Td>
                                 {isUse[item.code]
                                   ? isUnlimited[item.code]
@@ -381,10 +372,7 @@ function SendDetailModal({
                               </Td>
                               <Td>{useCount[item.code] || "-"}</Td>
                               <Td>
-                                {handleRemainCount(
-                                  limitCount[item.code],
-                                  useCount[item.code]
-                                )}
+                                {handleRemainCount(limitCount[item.code], useCount[item.code])}
                               </Td>
                               <Td>
                                 {isUse[item.code] ? (
@@ -409,32 +397,30 @@ function SendDetailModal({
                 <VStack align="stretch" spacing={0.5}>
                   <Flex align="flex-start">
                     <Text as="strong" flexShrink={0} me={1}>
-                      기본 월 발송량:
+                      기본 월 량:
                     </Text>
-                    <Text>매월 1일 초기화되는 운영자의 월 발송량입니다.</Text>
+                    <Text>매월 1일 초기화되는 운영자의 월 량입니다.</Text>
                   </Flex>
                   <Flex align="flex-start">
                     <Text as="strong" flexShrink={0} me={1}>
-                      당월 발송된량:
+                      당월 된량:
                     </Text>
-                    <Text>운영자가 당월 발송한 수입니다.</Text>
+                    <Text>운영자가 당월 한 수입니다.</Text>
                   </Flex>
                   <Flex align="flex-start">
                     <Text as="strong" flexShrink={0} me={1}>
                       남은 방송량:
                     </Text>
-                    <Text>운영자가 당월 발송 가능한 남은 수입니다.</Text>
+                    <Text>운영자가 당월 가능한 남은 수입니다.</Text>
                   </Flex>
                   <Flex align="flex-start">
                     <Text as="strong" flexShrink={0} me={1}>
-                      당월 발송량 조정:
+                      당월 량 조정:
                     </Text>
                     <Text>
-                      당월에 한하여 발송량을 조정할 수 있으며, 당월 발송량보다
-                      작은 수를 등록하시면
+                      당월에 한하여 량을 조정할 수 있으며, 당월 량보다 작은 수를 등록하시면
                       <br />
-                      해당 운영자는 발송할 수 없습니다. (남은 발송량 = 당월
-                      발송량 조정 – 당월 발송량)
+                      해당 운영자는 할 수 없습니다. (남은 량 = 당월 량 조정 – 당월 량)
                     </Text>
                   </Flex>
                 </VStack>

@@ -29,12 +29,12 @@ function DeleteReservedMessageCheckModal({
   return (
     <CustomModal isOpen onClose={onClose}>
       <ModalContent minW="420px">
-        <ModalHeader>양방향 예약 발송 취소</ModalHeader>
+        <ModalHeader> 예약 취소</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex flexDirection="column" fontSize="14px">
-            <Text>예약 발송을 취소하면 복구할 수 없습니다.</Text>
-            <Text>양방향 예약 발송을 취소하시겠습니까?</Text>
+            <Text>예약 을 취소하면 복구할 수 없습니다.</Text>
+            <Text> 예약 을 취소하시겠습니까?</Text>
           </Flex>
         </ModalBody>
         <ModalFooter justifyContent="space-between">
@@ -43,11 +43,8 @@ function DeleteReservedMessageCheckModal({
             <Button variant="textGray" onClick={onClose}>
               취소
             </Button>
-            <Button
-              variant="primaryBlue"
-              onClick={handleDeleteReservationButtonClick}
-            >
-              양방향 예약 발송 취소
+            <Button variant="primaryBlue" onClick={handleDeleteReservationButtonClick}>
+              예약 취소
             </Button>
           </Flex>
         </ModalFooter>

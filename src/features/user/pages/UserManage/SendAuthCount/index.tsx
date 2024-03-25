@@ -10,13 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import {
-  Controller,
-  FieldError,
-  useFormContext,
-  useFormState,
-  useWatch,
-} from "react-hook-form";
+import { Controller, FieldError, useFormContext, useFormState, useWatch } from "react-hook-form";
 
 import message from "libs/message";
 
@@ -50,8 +44,7 @@ function SendAuthCount({
   const isUseName: `sendAuthorization.${string}` = `sendAuthorization.${useName}`;
   const isUnlimitedName: `sendAuthorization.${string}` = `sendAuthorization.${unlimitedName}`;
   const limitCountName: `sendCountRequest.${string}` = `sendCountRequest.${countName}`;
-  const { control, register, resetField, setValue } =
-    useFormContext<SendAuthType>();
+  const { control, register, resetField, setValue } = useFormContext<SendAuthType>();
   const isUseWatch = useWatch({ control, name: isUseName });
   const isUnlimitedWatch = useWatch({ control, name: isUnlimitedName });
   const { errors } = useFormState({ control, name: limitCountName }) as {
@@ -98,7 +91,7 @@ function SendAuthCount({
         <Flex align="flex-start">
           {!justUnlimited && (
             <Text fontSize="sm" lineHeight="26px" ms={4}>
-              월 발송량
+              월 량
             </Text>
           )}
           <Controller
@@ -113,10 +106,10 @@ function SendAuthCount({
               >
                 <HStack h="28px" spacing={2}>
                   <Radio colorScheme="primary" value="true">
-                    무제한 발송
+                    무제한
                   </Radio>
                   <Radio colorScheme="primary" value="false">
-                    제한 발송
+                    제한
                   </Radio>
                 </HStack>
               </RadioGroup>
@@ -128,11 +121,7 @@ function SendAuthCount({
             flex={1}
             isInvalid={!!errors?.sendCountRequest?.[countName]}
             ms={2}
-            pb={
-              justUnlimited && !!errors?.sendCountRequest?.[countName]
-                ? "1rem"
-                : "inherit"
-            }
+            pb={justUnlimited && !!errors?.sendCountRequest?.[countName] ? "1rem" : "inherit"}
           >
             <Input
               isDisabled={isUnlimitedWatch}
@@ -151,9 +140,7 @@ function SendAuthCount({
                 },
               })}
               onChange={(e) => {
-                const value = Number(
-                  e.target.value.replace(/(?<=^-)0+|^0+/, "")
-                );
+                const value = Number(e.target.value.replace(/(?<=^-)0+|^0+/, ""));
                 setValue(limitCountName, value ?? null);
               }}
             />

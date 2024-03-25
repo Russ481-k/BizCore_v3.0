@@ -110,11 +110,8 @@ function AddUserModal({
     name: "sendAuthorization",
   });
 
-  const [changedDept, setChangedDept] = useState<Department | null>(
-    selectedDept
-  );
-  const [selectDeptModalOpen, setSelectDeptModalOpen] =
-    useState<boolean>(false);
+  const [changedDept, setChangedDept] = useState<Department | null>(selectedDept);
+  const [selectDeptModalOpen, setSelectDeptModalOpen] = useState<boolean>(false);
   const handleChangeDeptButtonClick = () => {
     setSelectDeptModalOpen(true);
   };
@@ -149,19 +146,13 @@ function AddUserModal({
   const handleSubmitButtonClick = methods.handleSubmit((data) => {
     const deptCodeParam = changedDept?.deptCode;
     const permissionIdParam = Number(data.permissionsId);
-    const positionNameParam = convertCodeToName(
-      USERS_OPTION.POSITION,
-      data.positionCode
-    );
-    const wiredPhoneNumberParam =
-      data?.wiredPhoneNumbers?.[0].number.toString();
+    const positionNameParam = convertCodeToName(USERS_OPTION.POSITION, data.positionCode);
+    const wiredPhoneNumberParam = data?.wiredPhoneNumbers?.[0].number.toString();
     let wiredPhoneNumberPlusParam = "";
     let crsPhoneNumberParam = "";
 
     if (data?.wiredPhoneNumbers && data.wiredPhoneNumbers.length > 1) {
-      wiredPhoneNumberPlusParam = convertNumbersToJSON(
-        data.wiredPhoneNumbers.slice(1)
-      );
+      wiredPhoneNumberPlusParam = convertNumbersToJSON(data.wiredPhoneNumbers.slice(1));
     }
     if (data?.crsPhoneNumbers && data.crsPhoneNumbers.length > 0) {
       crsPhoneNumberParam = convertNumbersToJSON(data.crsPhoneNumbers);
@@ -208,8 +199,8 @@ function AddUserModal({
                 <br />
                 운영자 등록 중 오류가 발생하였습니다.
                 <br />
-                운영자 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
-                시스템 관리자에게 문의하기 바랍니다.
+                운영자 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템 관리자에게
+                문의하기 바랍니다.
               </ToastMessage>
             ),
           });
@@ -265,7 +256,7 @@ function AddUserModal({
           <ModalBody>
             <TipText
               hasBg
-              text="신규 등록할 운영자의 정보와 발송매체별 권한 정보를 입력하신 후
+              text="신규 등록할 운영자의 정보와 매체별 권한 정보를 입력하신 후
               [등록] 버튼을 클릭하세요."
             />
             <FormProvider {...methods}>
@@ -297,12 +288,7 @@ function AddUserModal({
                         {methods.formState.errors.userId?.message}
                       </FormErrorMessage>
                       {isFetching && (
-                        <FormHelperText
-                          fontSize="xs"
-                          fontWeight="500"
-                          mt={1}
-                          color="blue.400"
-                        >
+                        <FormHelperText fontSize="xs" fontWeight="500" mt={1} color="blue.400">
                           {message.doubleCheck}
                         </FormHelperText>
                       )}
@@ -315,9 +301,7 @@ function AddUserModal({
                     />
                   </InfoElement>
                   <InfoElement label="이름" required>
-                    <FormControl
-                      isInvalid={!!methods.formState.errors?.userName?.message}
-                    >
+                    <FormControl isInvalid={!!methods.formState.errors?.userName?.message}>
                       <Flex align="center">
                         <Input
                           maxW={240}
@@ -339,16 +323,10 @@ function AddUserModal({
                     </FormControl>
                   </InfoElement>
                   <InfoElement label="직급(직책)" required>
-                    <FormControl
-                      isInvalid={
-                        !!methods.formState.errors?.positionCode?.message
-                      }
-                    >
+                    <FormControl isInvalid={!!methods.formState.errors?.positionCode?.message}>
                       <CustomSelect
                         codes={USERS_OPTION.POSITION}
-                        isInvalid={
-                          !!methods.formState.errors?.positionCode?.message
-                        }
+                        isInvalid={!!methods.formState.errors?.positionCode?.message}
                         maxW={250}
                         placeholder="직급을 선택하세요."
                         size="sm"
@@ -377,16 +355,10 @@ function AddUserModal({
                     </Flex>
                   </InfoElement>
                   <InfoElement label="권한" required>
-                    <FormControl
-                      isInvalid={
-                        !!methods.formState.errors?.permissionsId?.message
-                      }
-                    >
+                    <FormControl isInvalid={!!methods.formState.errors?.permissionsId?.message}>
                       <CustomSelect
                         codes={permissionOptions}
-                        isInvalid={
-                          !!methods.formState.errors?.permissionsId?.message
-                        }
+                        isInvalid={!!methods.formState.errors?.permissionsId?.message}
                         maxW={250}
                         placeholder="권한을 선택하세요."
                         size="sm"
@@ -401,9 +373,7 @@ function AddUserModal({
                   </InfoElement>
                   <InfoElement label="휴대폰 번호">
                     <FormControl
-                      isInvalid={
-                        !!methods.formState.errors?.wirelessPhoneNumber?.message
-                      }
+                      isInvalid={!!methods.formState.errors?.wirelessPhoneNumber?.message}
                     >
                       <Input
                         maxW={240}
@@ -411,8 +381,7 @@ function AddUserModal({
                         size="sm"
                         {...methods.register("wirelessPhoneNumber", {
                           validate: (v: string | null | undefined) => {
-                            if (v === "" || v === null || v === undefined)
-                              return true;
+                            if (v === "" || v === null || v === undefined) return true;
                             return (
                               pattern.phoneNumber.mobile.test(v) ||
                               pattern.phoneNumber.tel.test(v) ||
@@ -426,9 +395,7 @@ function AddUserModal({
                             methods.setValue(
                               "wirelessPhoneNumber",
                               formatter.contactFormatter(
-                                e.target.value
-                                  .replace(/[^0-9]/g, "")
-                                  .substring(0, 11)
+                                e.target.value.replace(/[^0-9]/g, "").substring(0, 11)
                               )
                             ),
                         })}
@@ -442,11 +409,11 @@ function AddUserModal({
                 <VStack align="stretch" spacing={2}>
                   <Flex align="flex-end" justify="space-between">
                     <Text fontWeight="600" size="xl">
-                      발송매체별 권한
+                      매체별 권한
                     </Text>
                     <TipText
                       size="sm"
-                      text="단문/장문/멀티/알림톡 중 1개 이상의 발송매체를 사용하기 위해 발신번호가 등록되어야 합니다."
+                      text="단문/장문/멀티/알림톡 중 1개 이상의 매체를 사용하기 위해 발신번호가 등록되어야 합니다."
                     />
                   </Flex>
                   <InfoBox>
@@ -492,28 +459,23 @@ function AddUserModal({
                   <VStack align="stretch" spacing={2}>
                     <Flex align="flex-end" justify="space-between">
                       <Text fontWeight="600" size="xl">
-                        양방향 메시지 권한
+                        메시지 권한
                       </Text>
                       <TipText
                         size="sm"
-                        text="양방향 메시지를 사용하기 위해 양방향 발신번호가  등록되어야 합니다."
+                        text=" 메시지를 사용하기 위해  발신번호가  등록되어야 합니다."
                       />
                     </Flex>
                     <InfoBox>
                       <InfoElement
                         label={
                           <>
-                            <Text
-                              as="span"
-                              fontSize="sm"
-                              fontWeight="normal"
-                              whiteSpace="nowrap"
-                            >
-                              양방향 사용권한
+                            <Text as="span" fontSize="sm" fontWeight="normal" whiteSpace="nowrap">
+                              사용권한
                             </Text>
                             <QuestionMarkTooltip
                               placement="bottom-start"
-                              text="양방향 메시지에서 자동발송되는 회수는 월 발송량에서 제외됩니다."
+                              text=" 메시지에서 되는 회수는 월 량에서 제외됩니다."
                             />
                           </>
                         }

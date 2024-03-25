@@ -24,12 +24,7 @@ import {
   ToastMessage,
 } from "components";
 import AutoTestModal from "components/TwoWayInputPanel/AutoTestModal";
-import {
-  useAddNode,
-  useChangeInfoNode,
-  useChangeNode,
-  useGetTwoWayScenario,
-} from "features/send";
+import { useAddNode, useChangeInfoNode, useChangeNode, useGetTwoWayScenario } from "features/send";
 import Scenario from "type/Scenario";
 import InfoNodeTabsPanel from "./InfoNodeTabsPanel";
 import NodeInputPanel from "./NodeInputPanel";
@@ -63,48 +58,32 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
   const [imageURL, setImageURL] = useState<string | null>(null);
   const [isAutoTestModalOpen, setAutoTestModalOpen] = useState<boolean>(false);
   const [isInfoNode, setInfoNode] = useState<boolean>(true);
-  const [replacementInfoModalOpen, setReplacementInfoModalOpen] =
-    useState<boolean>(false);
+  const [replacementInfoModalOpen, setReplacementInfoModalOpen] = useState<boolean>(false);
   const [reset, setReset] = useState<boolean>(false);
   const [selectedNode, setSelectedNode] = useState<Scenario | null>(null);
-  const [scenarioNodeArray, setScenarioNodeArray] = useState<Array<Scenario>>(
-    []
-  );
+  const [scenarioNodeArray, setScenarioNodeArray] = useState<Array<Scenario>>([]);
   const [addedNodeArray, setAddedNodeArray] = useState<Array<Scenario>>([]);
   const [changedNodeArray, setChangedNodeArray] = useState<Array<Scenario>>([]);
   const [infoNodeArray, setInfoNodeArray] = useState<Array<Scenario>>([]);
-  const [isResetCheckModalOpen, setResetCheckModalOpen] =
-    useState<boolean>(false);
-  const [isBackwardCheckModalOpen, setBackwardCheckModalOpen] =
-    useState<boolean>(false);
-  const [isSaveScenarioEnable, setSaveScenarioEnable] =
-    useState<boolean>(false);
-  const [isSaveAutoReplyEnable, setSaveAutoReplyEnable] =
-    useState<boolean>(false);
+  const [isResetCheckModalOpen, setResetCheckModalOpen] = useState<boolean>(false);
+  const [isBackwardCheckModalOpen, setBackwardCheckModalOpen] = useState<boolean>(false);
+  const [isSaveScenarioEnable, setSaveScenarioEnable] = useState<boolean>(false);
+  const [isSaveAutoReplyEnable, setSaveAutoReplyEnable] = useState<boolean>(false);
   const [isSaveCloseEnable, setSaveCloseEnable] = useState<boolean>(false);
-  const [isSaveExceptionEnable, setSaveExceptionEnable] =
-    useState<boolean>(false);
+  const [isSaveExceptionEnable, setSaveExceptionEnable] = useState<boolean>(false);
   const [isSaveExpiredEnable, setSaveExpiredEnable] = useState<boolean>(false);
   const [isNodeChanged, setNodeChanged] = useState<boolean>(false);
   const [isInfoNodeChanged, setInfoNodeChanged] = useState<boolean>(false);
   const [isUseChanged, setUseChanged] = useState<boolean>(false);
-  const {
-    autoReply,
-    close,
-    exception,
-    expired,
-    scenarios,
-    isUse,
-    serviceName,
-    filePath,
-  } = useGetTwoWayScenario(
-    {
-      groupId,
-    },
-    {
-      enabled: !!groupId,
-    }
-  );
+  const { autoReply, close, exception, expired, scenarios, isUse, serviceName, filePath } =
+    useGetTwoWayScenario(
+      {
+        groupId,
+      },
+      {
+        enabled: !!groupId,
+      }
+    );
 
   const { mutate: changeInfoNode } = useChangeInfoNode();
   const { mutate: changeNode } = useChangeNode();
@@ -136,15 +115,10 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
     },
     [methods, setChannel, setContentsByteCount, setContentsStringLimit]
   );
-  const handleAddNodeButtonClick = (
-    id: string | null,
-    depth: number,
-    replyId: string | null
-  ) => {
+  const handleAddNodeButtonClick = (id: string | null, depth: number, replyId: string | null) => {
     const timeStamp = new Date().getTime().toString();
     const parentNodeCounter =
-      scenarioNodeArray.filter((node) => (node.depth ?? 0) === depth).length +
-      1;
+      scenarioNodeArray.filter((node) => (node.depth ?? 0) === depth).length + 1;
     const childNodeCounter = scenarioNodeArray.filter(
       (node) =>
         (node.depth ?? 0) === (depth ?? 0) + 1 &&
@@ -170,9 +144,7 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
       scenarioNodeArray.push(addedNodeWithOutReplyId);
       setAddedNodeArray([...addedNodeArray, addedNodeWithOutReplyId]);
     } else {
-      const index = scenarioNodeArray.findIndex(
-        (node) => node.id === selectedNode?.id
-      );
+      const index = scenarioNodeArray.findIndex((node) => node.id === selectedNode?.id);
       const addedNodeWithReplyId = {
         id: timeStamp,
         replyId: "",
@@ -184,11 +156,7 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
         title: `노드 ${childNodeCounter}`,
         file: null,
       };
-      scenarioNodeArray.splice(
-        Number(index) + Number(childNodeCounter),
-        0,
-        addedNodeWithReplyId
-      );
+      scenarioNodeArray.splice(Number(index) + Number(childNodeCounter), 0, addedNodeWithReplyId);
       setAddedNodeArray([...addedNodeArray, addedNodeWithReplyId]);
     }
     setScenarioNodeArray([...scenarioNodeArray]);
@@ -209,15 +177,11 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
     const index = scenarioNodeArray.findIndex((node) => node.id === id);
     if (
       !!scenarioNodeArray[index].replyId?.length &&
-      (scenarioNodeArray[index].replyId !==
-        scenarioNodeArray[index + 1]?.parentReplyId ||
+      (scenarioNodeArray[index].replyId !== scenarioNodeArray[index + 1]?.parentReplyId ||
         !scenarioNodeArray[index + 1])
     ) {
       const title = scenarioNodeArray[index].title;
-      setDeletedNodeId([
-        ...deletedNodeId,
-        scenarioNodeArray[index].replyId ?? "",
-      ]);
+      setDeletedNodeId([...deletedNodeId, scenarioNodeArray[index].replyId ?? ""]);
       scenarioNodeArray.splice(index, 1);
       setScenarioNodeArray([...scenarioNodeArray]);
       setNodeChanged(true);
@@ -421,10 +385,7 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
     setInfoNodeArray([...infoNodeArray]);
     setInfoNodeChanged(true);
   };
-  const handleScenarioNodeArrayChange = (
-    nodeArray: Scenario[],
-    index: number
-  ) => {
+  const handleScenarioNodeArrayChange = (nodeArray: Scenario[], index: number) => {
     setScenarioNodeArray([...nodeArray]);
     setChangedNodeArray([...changedNodeArray, nodeArray[index]]);
     setNodeChanged(true);
@@ -674,16 +635,16 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
     <CollapseSection
       header={
         <Flex justifyContent="space-between" gap={5}>
-          <Heading size="sm">자동안내 시나리오 편집기</Heading>
+          <Heading size="sm">안내 시나리오 편집기</Heading>
           <TipText
             size="sm"
-            text="양방향 자동안내 시나리오를 변경하신 후 아래의 [자동안내 시나리오 저장] 버튼을 클릭하여 적용하세요."
+            text=" 안내 시나리오를 변경하신 후 아래의 [안내 시나리오 저장] 버튼을 클릭하여 적용하세요."
           />
         </Flex>
       }
     >
       <InfoBox>
-        <InfoElement label="자동안내 사용여부">
+        <InfoElement label="안내 사용여부">
           <Flex justifyContent="space-between" width="100%">
             <CustomSelect
               codes={[
@@ -725,7 +686,7 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
             </Button>
           </Flex>
         </InfoElement>
-        <InfoElement label="자동안내 시나리오명" required>
+        <InfoElement label="안내 시나리오명" required>
           <FormControl isInvalid={!!methods.formState.errors.scenarioTitle}>
             <Input
               isDisabled={disabled}
@@ -735,22 +696,20 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
               {...methods.register("scenarioTitle", {
                 required: {
                   value: true,
-                  message: "자동안내 시나리오명을 입력하세요.",
+                  message: "안내 시나리오명을 입력하세요.",
                 },
                 minLength: {
                   value: 2,
-                  message: "2~20자 이내로 자동안내 시나리오명을 입력하세요.",
+                  message: "2~20자 이내로 안내 시나리오명을 입력하세요.",
                 },
                 maxLength: {
                   value: 20,
-                  message: "2~20자 이내로 자동안내 시나리오명을 입력하세요.",
+                  message: "2~20자 이내로 안내 시나리오명을 입력하세요.",
                 },
               })}
             />
             {methods.formState.errors.scenarioTitle && (
-              <FormErrorMessage>
-                {methods.formState.errors.scenarioTitle.message}
-              </FormErrorMessage>
+              <FormErrorMessage>{methods.formState.errors.scenarioTitle.message}</FormErrorMessage>
             )}
           </FormControl>
         </InfoElement>
@@ -768,14 +727,9 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
                         message: "응답 유효시간을 입력하세요.",
                       },
                       onBlur: (e) =>
-                        methods.setValue(
-                          "expiredTime",
-                          e.target.value.replace(/[^0-9]/g, "")
-                        ),
+                        methods.setValue("expiredTime", e.target.value.replace(/[^0-9]/g, "")),
                       validate: {
-                        min: (v) =>
-                          Number(v) >= 1 ||
-                          "1분 이상 입력하세요.(숫자만입력가능합니다.)",
+                        min: (v) => Number(v) >= 1 || "1분 이상 입력하세요.(숫자만입력가능합니다.)",
                       },
                     })}
                   />
@@ -789,7 +743,7 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
               </InputGroup>
               <TipText
                 size="sm"
-                text="메시지 발송 후 입력된 응답 유효시간동안 답변이 없는 경우
+                text="전송 후 입력된 응답 유효시간동안 답변이 없는 경우
                 자동종료됩니다."
               />
             </Flex>
@@ -849,34 +803,27 @@ function ScenarioEditor({ groupId, onReset }: ScenarioEditorProps) {
       </Flex>
       <Flex justifyContent="space-between">
         <Button variant="secondaryBlue" onClick={handleBackwardButtonClick}>
-          자동안내 시나리오 목록
+          안내 시나리오 목록
         </Button>
         <Flex gap={2}>
-          <Button
-            isDisabled={disabled}
-            variant="secondaryBlue"
-            onClick={handleAutoTestButtonClick}
-          >
-            자동안내 시나리오 테스트
+          <Button isDisabled={disabled} variant="secondaryBlue" onClick={handleAutoTestButtonClick}>
+            안내 시나리오 테스트
           </Button>
           <Button
             isDisabled={
-              !isSaveScenarioEnable ||
-              (!isNodeChanged && !isInfoNodeChanged && !isUseChanged)
+              !isSaveScenarioEnable || (!isNodeChanged && !isInfoNodeChanged && !isUseChanged)
             }
             variant="primaryBlue"
             onClick={handelSaveScenarioButtonClick}
           >
-            자동안내 시나리오 저장
+            안내 시나리오 저장
           </Button>
         </Flex>
       </Flex>
       {replacementInfoModalOpen && (
         <ReplacementCodeInfoModal setOpen={setReplacementInfoModalOpen} />
       )}
-      {isAutoTestModalOpen && (
-        <AutoTestModal onClose={handleAutoTestModalClose} />
-      )}
+      {isAutoTestModalOpen && <AutoTestModal onClose={handleAutoTestModalClose} />}
       {isResetCheckModalOpen && (
         <ResetCheckModal
           onClose={handleResetCheckModalClose}

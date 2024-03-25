@@ -24,8 +24,7 @@ import LogoutModal from "./LogoutModal";
 function Profile() {
   const myProfile = useAppSelector((state) => state.user.profile);
 
-  const [changeProfileModalOpen, setChangeProfileModalOpen] =
-    useState<boolean>(false);
+  const [changeProfileModalOpen, setChangeProfileModalOpen] = useState<boolean>(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
 
   const handleLogoutButtonClick = () => {
@@ -97,7 +96,7 @@ function Profile() {
                 onClick={() => handleLogoutButtonClick()}
               >
                 <LogoutIcon mr="5px" />
-                {myProfile.isBizCore ? "로그아웃" : "시스템종료"}
+                로그아웃
               </Button>
             </PopoverFooter>
           </PopoverContent>
@@ -112,7 +111,7 @@ function Profile() {
         isOpen={logoutModalOpen}
         onClose={onCloseLogoutModal}
         onSubmit={onSubmitLogoutModal}
-        text={myProfile.isBizCore ? "로그아웃" : "시스템 종료"}
+        text="로그아웃"
       />
     </>
   );

@@ -13,7 +13,7 @@ import { KEYWORD } from "features/send";
 
 interface TransformModalProps {
   isOpen: boolean;
-  transTo: "A" | "C"; // A:자동안내 / C:문자상담
+  transTo: "A" | "C"; // A:안내 / C:문자상담
   setCurrentSendType: React.Dispatch<React.SetStateAction<"A" | "C">>;
   setModalOpen: (open: boolean) => void;
 }
@@ -26,19 +26,19 @@ function TransformModal({
 }: TransformModalProps) {
   const onSubmit = () => {
     if (transTo === "A") {
-      console.log("자동안내로 전환!");
+      console.log("안내로 전환!");
       setCurrentSendType("A");
-      // 자동안내 전환 완료
-      // 자동안내로 정상적으로 전환되었습니다.
-      // PreviewBox에 '자동안내로 전환' 출력
-      // 버튼 '자동안내로 전환' 으로 변경
+      // 안내 전환 완료
+      // 안내로 정상적으로 전환되었습니다.
+      // PreviewBox에 '안내로 전환' 출력
+      // 버튼 '안내로 전환' 으로 변경
     } else {
       console.log("문자상담으로 전환!");
       setCurrentSendType("C");
       // 문자상담 전환 완료
       // 문자상담으로 정상적으로 전환되었습니다
       // PreviewBox에 '문자상담으로 전환' 출력
-      // 버튼 '자동안내로 전환' 으로 변경
+      // 버튼 '안내로 전환' 으로 변경
       // 현재구분 '문자상담' 으로 변경
       // 문자메세지 입력영역 활성화
     }
@@ -50,22 +50,18 @@ function TransformModal({
   return (
     <CustomModal isOpen={isOpen} onClose={onClose}>
       <ModalContent minW="420px">
-        <ModalHeader>
-          {transTo === "A" ? KEYWORD.TRANSFORM_ToA : KEYWORD.TRANSFORM_ToC}
-        </ModalHeader>
+        <ModalHeader>{transTo === "A" ? KEYWORD.TRANSFORM_ToA : KEYWORD.TRANSFORM_ToC}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {transTo === "A" ? (
             <Text>
-              자동안내 전환시 자동안내 시나리오의 처음부터 진행됩니다.
+              안내 전환시 안내 시나리오의 처음부터 진행됩니다.
               <br />
               <br />
-              자동안내로 전환하시겠습니까?
+              안내로 전환하시겠습니까?
             </Text>
           ) : (
-            <Text>
-              진행중인 자동안내를 종료하고 문자상담으로 전환하시겠습니까?
-            </Text>
+            <Text>진행중인 안내를 종료하고 문자상담으로 전환하시겠습니까?</Text>
           )}
         </ModalBody>
         <ModalFooter gap={2}>

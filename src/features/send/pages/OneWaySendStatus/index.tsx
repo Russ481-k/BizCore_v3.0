@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Input,
-  Skeleton,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Input, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { format } from "date-fns";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -38,12 +29,9 @@ function OneWaySendStatus() {
     keyword: string | null;
   }>({ mode: "onChange" });
   const [all, setAll] = useState<string | null>(null);
-  const [changeMessageModalData, setChangeMessageModalData] =
-    useState<Message | null>(null);
+  const [changeMessageModalData, setChangeMessageModalData] = useState<Message | null>(null);
   const [channelType, setChannelType] = useState<string | null>(null);
-  const [createDateOption, setCreateDateOption] = useState<"all" | "select">(
-    "all"
-  );
+  const [createDateOption, setCreateDateOption] = useState<"all" | "select">("all");
   const [createId, setCreateId] = useState<string | null>(null);
   const [createUser, setCreateUser] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -133,27 +121,15 @@ function OneWaySendStatus() {
   const handleFormSubmit = methods.handleSubmit(
     ({ createDate, reqDate, sendChannel, searchType, keyword }) => {
       if (reqDateOption === "select") {
-        setStartReqDate(
-          reqDate?.[0]
-            ? `${format(reqDate[0], "yyyy-MM-dd")} 00:00:00.000`
-            : null
-        );
-        setEndReqDate(
-          reqDate?.[1]
-            ? `${format(reqDate[1], "yyyy-MM-dd")} 23:59:59.999`
-            : null
-        );
+        setStartReqDate(reqDate?.[0] ? `${format(reqDate[0], "yyyy-MM-dd")} 00:00:00.000` : null);
+        setEndReqDate(reqDate?.[1] ? `${format(reqDate[1], "yyyy-MM-dd")} 23:59:59.999` : null);
       } else {
         setStartReqDate(null);
         setEndReqDate(null);
       }
       if (createDateOption === "select") {
-        setStartCreateDate(
-          createDate?.[0] ? format(new Date(createDate[0]), "yyyy-MM-dd") : null
-        );
-        setEndCreateDate(
-          createDate?.[1] ? format(new Date(createDate[1]), "yyyy-MM-dd") : null
-        );
+        setStartCreateDate(createDate?.[0] ? format(new Date(createDate[0]), "yyyy-MM-dd") : null);
+        setEndCreateDate(createDate?.[1] ? format(new Date(createDate[1]), "yyyy-MM-dd") : null);
       } else {
         setStartCreateDate(null);
         setEndCreateDate(null);
@@ -204,13 +180,13 @@ function OneWaySendStatus() {
 
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="메시지 발송 현황" />
+      <CustomCard isHeader="전송 현황" />
       <Box>
-        <CollapseSection headerTitle="메시지 발송 목록" borderBottomRadius={0}>
+        <CollapseSection headerTitle="전송 목록" borderBottomRadius={0}>
           <FormProvider {...methods}>
             <InfoBox>
               <Flex>
-                <InfoElement flex={1} label="발송일">
+                <InfoElement flex={1} label="일">
                   <RangeDatePicker
                     name="reqDate"
                     option={reqDateOption}
@@ -230,7 +206,7 @@ function OneWaySendStatus() {
                 </InfoElement>
               </Flex>
               <Flex>
-                <InfoElement flex={1} label="발송 채널">
+                <InfoElement flex={1} label=" 채널">
                   <CustomSelect
                     codes={sendChannelOption}
                     placeholder="전체"
@@ -264,11 +240,7 @@ function OneWaySendStatus() {
             </InfoBox>
             <Flex justifyContent="flex-end">
               <></>
-              <Button
-                isLoading={isLoading}
-                variant="primaryBlue"
-                onClick={handleFormSubmit}
-              >
+              <Button isLoading={isLoading} variant="primaryBlue" onClick={handleFormSubmit}>
                 조회
               </Button>
             </Flex>
@@ -286,26 +258,14 @@ function OneWaySendStatus() {
                     url={messages(
                       "/head/excel?" +
                         (subject ? "&subject=" + subject ?? null : "") +
-                        (createUser
-                          ? "&createUser=" + createUser ?? null
-                          : "") +
+                        (createUser ? "&createUser=" + createUser ?? null : "") +
                         (createId ? "&createId=" + createId ?? null : "") +
-                        (startCreateDate
-                          ? "&startCreateDate=" + startCreateDate ?? null
-                          : "") +
-                        (endCreateDate
-                          ? "&endCreateDate=" + endCreateDate ?? null
-                          : "") +
-                        (startReqDate
-                          ? "&startReqDate=" + startReqDate ?? null
-                          : "") +
-                        (endReqDate
-                          ? "&endReqDate=" + endReqDate ?? null
-                          : "") +
+                        (startCreateDate ? "&startCreateDate=" + startCreateDate ?? null : "") +
+                        (endCreateDate ? "&endCreateDate=" + endCreateDate ?? null : "") +
+                        (startReqDate ? "&startReqDate=" + startReqDate ?? null : "") +
+                        (endReqDate ? "&endReqDate=" + endReqDate ?? null : "") +
                         (all ? "&all=" + all ?? null : "") +
-                        (channelType
-                          ? "&channelType=" + channelType ?? null
-                          : "") +
+                        (channelType ? "&channelType=" + channelType ?? null : "") +
                         "&status=P"
                     )}
                   />
@@ -328,25 +288,25 @@ function OneWaySendStatus() {
                   justifyContent="space-between"
                 >
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송채널
+                    채널
                   </Text>
                   <Text flex={4} px={4} py={2} textAlign="center">
                     메시지 제목 (내용)
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송 상태
+                    상태
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송 일시
+                    일시
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송수
+                    수
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송성공
+                    성공
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송실패
+                    실패
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
                     담당자
@@ -363,12 +323,7 @@ function OneWaySendStatus() {
                         borderBottomWidth={1}
                         height="38px"
                         justifyContent="space-between"
-                        key={
-                          messageStatusData?.[i].id +
-                          "-" +
-                          i +
-                          "-messages-skeleton"
-                        }
+                        key={messageStatusData?.[i].id + "-" + i + "-messages-skeleton"}
                       >
                         <Skeleton flex={1} height="20px" mx={4} my={2} />
                         <Skeleton flex={4} height="20px" mx={4} my={2} />
@@ -409,9 +364,7 @@ function OneWaySendStatus() {
                         }}
                       >
                         <Text flex={1} px={4} py={2} textAlign="center">
-                          <ChannelTag
-                            channelType={message?.channelType ?? "SMS"}
-                          />
+                          <ChannelTag channelType={message?.channelType ?? "SMS"} />
                         </Text>
                         <Text
                           color="primary.500"
@@ -429,7 +382,7 @@ function OneWaySendStatus() {
                         </Text>
                         <Text flex={1} textAlign="center" px={4} py={2}>
                           {message.status === "R" && "대기"}
-                          {message.status === "P" && "발송완료"}
+                          {message.status === "P" && "완료"}
                           {message.status === "C" && "취소"}
                         </Text>
                         <Text flex={1} textAlign="center" px={4} py={2}>

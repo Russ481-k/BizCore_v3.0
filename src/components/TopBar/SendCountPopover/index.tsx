@@ -46,20 +46,13 @@ const defalutNullProps = {
   crs: null,
 };
 
-function SendCountRequest({
-  channelList,
-  isChannelUsagePercent,
-  data,
-}: SendCountRequestProps) {
+function SendCountRequest({ channelList, isChannelUsagePercent, data }: SendCountRequestProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [isUse, setIsUse] = useState<RecordBooleanProps>(defalutBooleanProps);
-  const [isUnlimited, setIsUnlimited] =
-    useState<RecordBooleanProps>(defalutBooleanProps);
-  const [limitCount, setLimitCount] =
-    useState<RecordNumberOrNullProps>(defalutNullProps);
-  const [useCount, setUseCount] =
-    useState<RecordNumberProps>(defalutNumberProps);
+  const [isUnlimited, setIsUnlimited] = useState<RecordBooleanProps>(defalutBooleanProps);
+  const [limitCount, setLimitCount] = useState<RecordNumberOrNullProps>(defalutNullProps);
+  const [useCount, setUseCount] = useState<RecordNumberProps>(defalutNumberProps);
 
   useEffect(() => {
     if (data) {
@@ -179,7 +172,7 @@ function SendCountRequest({
           <TipText
             hasBg
             size="sm"
-            text="발송량의 추가가 필요한 경우 관리자(1500-1234)에게 문의해주시기 바랍니다."
+            text="량의 추가가 필요한 경우 관리자(1500-1234)에게 문의해주시기 바랍니다."
           />
         </Box>
       )}

@@ -642,11 +642,11 @@ const theme = extendTheme({
         display: "block",
         borderRadius: "0.75rem",
         "&.active": {
-          background: "white",
+          background: "primary.900",
           pointerEvents: "none",
           ".chakra-text": {
-            color: "primary.700",
-            fontWeight: "700",
+            color: "white",
+            fontWeight: "500",
           },
         },
       },

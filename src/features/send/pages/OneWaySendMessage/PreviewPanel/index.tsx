@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import { Section, TipText, WarningIcon } from "components";
@@ -139,14 +131,11 @@ function PreviewPanel({
           문자 템플릿 등록
         </Button>
       </Flex>
-      <TipText
-        size="sm"
-        text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다."
-      />
+      <TipText size="sm" text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다." />
       {isAvailableSend ? (
         <Flex flexDirection="column" gap={3} p={4}>
           <Heading height="22px" size="sm">
-            메시지 발송
+            전송
           </Heading>
           <Flex flexDirection="column" gap={2} height="80px">
             <Button
@@ -156,7 +145,7 @@ function PreviewPanel({
               variant="primaryBlue"
               width="100%"
             >
-              즉시 발송
+              즉시
             </Button>
             <Button
               as="label"
@@ -165,35 +154,24 @@ function PreviewPanel({
               variant="secondaryBlue"
               width="100%"
             >
-              예약 발송
+              예약
             </Button>
           </Flex>
         </Flex>
       ) : (
         !isAvailableSend && (
-          <Flex
-            backgroundColor="gray.100"
-            borderRadius="12px"
-            flexDirection="column"
-            gap={3}
-            p={4}
-          >
+          <Flex backgroundColor="gray.100" borderRadius="12px" flexDirection="column" gap={3} p={4}>
             <Heading height="18px" size="sm">
               <WarningIcon color="red.500" mr={2} />
-              {channel} 메시지 발송건 {subjectCount - (isAvailableCount ?? 0)}건
-              부족
+              {channel} 전송건 {subjectCount - (isAvailableCount ?? 0)}건 부족
             </Heading>
             <Flex flexDirection="column" gap={1} height="80px">
               <Text fontSize="xs">등록 수신 대상자 수 : {subjectCount} 명</Text>
               <Text fontSize="xs">
-                당월 잔여 {channel} 발송건 : {isAvailableCount}건
+                당월 잔여 {channel} 건 : {isAvailableCount}건
               </Text>
-              <Text fontSize="xs">
-                당월 {channel} 발송건이 부족하여 메시지를 발송할 수 없습니다.
-              </Text>
-              <Text fontSize="xs">
-                관리자 (1500-1234)에게 문의하여 주시기 바랍니다.
-              </Text>
+              <Text fontSize="xs">당월 {channel} 건이 부족하여 메시지를 할 수 없습니다.</Text>
+              <Text fontSize="xs">관리자 (1500-1234)에게 문의하여 주시기 바랍니다.</Text>
             </Flex>
           </Flex>
         )

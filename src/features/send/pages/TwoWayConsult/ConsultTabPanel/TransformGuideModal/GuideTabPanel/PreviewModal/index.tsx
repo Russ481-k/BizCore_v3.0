@@ -9,13 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import {
-  ChannelTag,
-  CustomModal,
-  PreviewBox,
-  PreviewMessage,
-  TipText,
-} from "components";
+import { ChannelTag, CustomModal, TipText } from "components";
 
 interface PreviewModalProps {
   channel: string;
@@ -25,14 +19,8 @@ interface PreviewModalProps {
   setModalOpen: (open: boolean) => void;
 }
 
-function PreviewModal({
-  channel,
-  context,
-  imgURL,
-  isOpen,
-  setModalOpen,
-}: PreviewModalProps) {
-  const [messageData, setMessageData] = useState([
+function PreviewModal({ channel, context, imgURL, isOpen, setModalOpen }: PreviewModalProps) {
+  const [, setMessageData] = useState([
     {
       callType: "S",
       message: context,
@@ -60,23 +48,7 @@ function PreviewModal({
         <ModalBody>
           <VStack spacing={4}>
             <ChannelTag channelType={channel} />
-            <PreviewBox channelType={channel}>
-              {messageData?.length > 0 &&
-                messageData.map((msg, i) => {
-                  return (
-                    <PreviewMessage
-                      key={`preview-msg-${i}`}
-                      type="S"
-                      text={msg.message}
-                      filePath={msg.filePath ?? null}
-                    />
-                  );
-                })}
-            </PreviewBox>
-            <TipText
-              size="sm"
-              text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다."
-            />
+            <TipText size="sm" text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다." />
           </VStack>
         </ModalBody>
         <ModalFooter gap={2}>

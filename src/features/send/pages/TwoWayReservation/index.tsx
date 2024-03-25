@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Input,
-  Skeleton,
-  Tag,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Input, Skeleton, Tag, Text, VStack } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -37,13 +27,9 @@ function TwoWayReservation() {
     keyword: string | null;
   }>({ mode: "onChange" });
   const [all, setAll] = useState<string | null>(null);
-  const [changeMessageModalData, setChangeMessageModalData] = useState<
-    number | null
-  >(null);
+  const [changeMessageModalData, setChangeMessageModalData] = useState<number | null>(null);
   const [channelType, setChannelType] = useState<string | null>(null);
-  const [createDateOption, setCreateDateOption] = useState<"all" | "select">(
-    "all"
-  );
+  const [createDateOption, setCreateDateOption] = useState<"all" | "select">("all");
   const [createId, setCreateId] = useState<string | null>(null);
   const [createUser, setCreateUser] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -135,27 +121,15 @@ function TwoWayReservation() {
   const handleFormSubmit = methods.handleSubmit(
     ({ createDate, reqDate, sendChannel, sendType, searchType, keyword }) => {
       if (reqDateOption === "select") {
-        setStartReqDate(
-          reqDate?.[0]
-            ? `${format(reqDate[0], "yyyy-MM-dd")} 00:00:00.000`
-            : null
-        );
-        setEndReqDate(
-          reqDate?.[1]
-            ? `${format(reqDate[1], "yyyy-MM-dd")} 23:59:59.999`
-            : null
-        );
+        setStartReqDate(reqDate?.[0] ? `${format(reqDate[0], "yyyy-MM-dd")} 00:00:00.000` : null);
+        setEndReqDate(reqDate?.[1] ? `${format(reqDate[1], "yyyy-MM-dd")} 23:59:59.999` : null);
       } else {
         setStartReqDate(null);
         setEndReqDate(null);
       }
       if (createDateOption === "select") {
-        setStartCreateDate(
-          createDate?.[0] ? format(new Date(createDate[0]), "yyyy-MM-dd") : null
-        );
-        setEndCreateDate(
-          createDate?.[1] ? format(new Date(createDate[1]), "yyyy-MM-dd") : null
-        );
+        setStartCreateDate(createDate?.[0] ? format(new Date(createDate[0]), "yyyy-MM-dd") : null);
+        setEndCreateDate(createDate?.[1] ? format(new Date(createDate[1]), "yyyy-MM-dd") : null);
       } else {
         setStartCreateDate(null);
         setEndCreateDate(null);
@@ -206,16 +180,13 @@ function TwoWayReservation() {
 
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="양방향 예약 발송 관리" />
+      <CustomCard isHeader=" 예약  관리" />
       <Box>
-        <CollapseSection
-          headerTitle="양방향 예약 발송 목록"
-          borderBottomRadius={0}
-        >
+        <CollapseSection headerTitle=" 예약  목록" borderBottomRadius={0}>
           <FormProvider {...methods}>
             <InfoBox>
               <Flex>
-                <InfoElement flex={1} label="예약 발송일">
+                <InfoElement flex={1} label="예약 일">
                   <RangeDatePicker
                     name="reqDate"
                     option={reqDateOption}
@@ -235,7 +206,7 @@ function TwoWayReservation() {
                 </InfoElement>
               </Flex>
               <Flex>
-                <InfoElement flex={1} label="발송 채널">
+                <InfoElement flex={1} label=" 채널">
                   <CustomSelect
                     codes={sendChannelOption}
                     placeholder="전체"
@@ -245,12 +216,12 @@ function TwoWayReservation() {
                     })}
                   />
                 </InfoElement>
-                <InfoElement flex={1} label="발송 구분">
+                <InfoElement flex={1} label=" 구분">
                   <CustomSelect
                     codes={[
                       {
                         code: "A",
-                        name: "자동안내",
+                        name: "안내",
                       },
                       {
                         code: "C",
@@ -287,11 +258,7 @@ function TwoWayReservation() {
               </InfoElement>
             </InfoBox>
             <Flex justifyContent="flex-end">
-              <Button
-                isLoading={isLoading}
-                variant="primaryBlue"
-                onClick={handleFormSubmit}
-              >
+              <Button isLoading={isLoading} variant="primaryBlue" onClick={handleFormSubmit}>
                 조회
               </Button>
             </Flex>
@@ -327,19 +294,19 @@ function TwoWayReservation() {
                   justifyContent="space-between"
                 >
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송채널
+                    채널
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송구분
+                    구분
                   </Text>
                   <Text flex={4} px={4} py={2} textAlign="center">
                     메시지 제목 (내용)
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    예약 발송 일시
+                    예약 일시
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    예약 발송수
+                    예약 수
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
                     담당자
@@ -424,7 +391,7 @@ function TwoWayReservation() {
                           )}
                         </Text>
                         <Text flex={1} px={4} py={2} textAlign="center">
-                          {message.sendType === "CHATTING" && "자동안내"}
+                          {message.sendType === "CHATTING" && "안내"}
                           {message.sendType === "AUTO" && "문자상담"}
                         </Text>
                         <Text
@@ -437,9 +404,7 @@ function TwoWayReservation() {
                           _hover={{
                             textDecoration: "underline",
                           }}
-                          onClick={() =>
-                            handleChangeMessageModalData(message.id)
-                          }
+                          onClick={() => handleChangeMessageModalData(message.id)}
                         >
                           {message.subject}
                         </Text>

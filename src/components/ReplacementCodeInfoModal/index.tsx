@@ -14,13 +14,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import {
-  CustomModal,
-  InfoBox,
-  InfoElement,
-  SuccessIcon,
-  TipText,
-} from "components";
+import { CustomModal, InfoBox, InfoElement, SuccessIcon, TipText } from "components";
 
 interface ReplacementCodeInfoModalProps {
   setOpen: (isOpen: boolean) => void;
@@ -42,7 +36,7 @@ function ReplacementCodeInfoModal({ setOpen }: ReplacementCodeInfoModalProps) {
           <Flex gap={3} flexDirection="column">
             <TipText
               hasBg
-              text={`작성한 메시지의 특정 부분 (이름 등)을 수신자에 맞게 변경하여 발송하는 서비스입니다.\n[*이름*], [*휴대폰번호*], [*전화번호*]와 함께 [*1*]~[*4*]의 치환코드를 사용할 수 있으며, 각각의 치환코드는 bytes 수가 지정되어 있습니다.`}
+              text={`작성한 메시지의 특정 부분 (이름 등)을 수신자에 맞게 변경하여 하는 서비스입니다.\n[*이름*], [*휴대폰번호*], [*전화번호*]와 함께 [*1*]~[*4*]의 치환코드를 사용할 수 있으며, 각각의 치환코드는 bytes 수가 지정되어 있습니다.`}
             />
             <InfoBox>
               <InfoElement label="#{이름}" labelWidth="160px">
@@ -56,14 +50,12 @@ function ReplacementCodeInfoModal({ setOpen }: ReplacementCodeInfoModalProps) {
               </InfoElement>
               <InfoElement label="#{변수1}~#{변수4}" labelWidth="160px">
                 <Flex flexDirection="column" my={3}>
-                  <Text>
-                    단문 (SMS): 10bytes, 장문 (LMS) / 멀티 (MMS): 100bytes
-                  </Text>
+                  <Text>단문 (SMS): 10bytes, 장문 (LMS) / 멀티 (MMS): 100bytes</Text>
                   <TipText
                     mt={2}
                     size="sm"
                     text={`지정된 bytes수 이상으로 치환코드값을 등록하여 문자
-                        메시지를 발송할 수 있습니다. 단, 단문 (SMS)의 경우 지정된 bytes수 이상 사용에 따라 장문 (LMS)으로 발송될 수 있습니다.`}
+                        메시지를 할 수 있습니다. 단, 단문 (SMS)의 경우 지정된 bytes수 이상 사용에 따라 장문 (LMS)으로 될 수 있습니다.`}
                   />
                 </Flex>
               </InfoElement>
@@ -111,9 +103,7 @@ function ReplacementCodeInfoModal({ setOpen }: ReplacementCodeInfoModalProps) {
                 >
                   2
                 </Center>
-                <Text>
-                  다음과 같이 엑셀 혹은 수신 대상자에 치환코드 값 등록
-                </Text>
+                <Text>다음과 같이 엑셀 혹은 수신 대상자에 치환코드 값 등록</Text>
               </Flex>
               <Flex align="center">
                 <Center

@@ -75,12 +75,7 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
   );
 
   const handleFormSubmit = handleSubmit(
-    (data: {
-      sendStatus: string;
-      sendChannel: string;
-      resend: string;
-      keyword: string;
-    }) => {
+    (data: { sendStatus: string; sendChannel: string; resend: string; keyword: string }) => {
       setSendStatus(data.sendStatus === "ALL" ? null : Number(data.sendStatus));
       setSendChannel(data.sendChannel === "ALL" ? null : data.sendChannel);
       setResend(data.resend === "ALL" ? null : data.resend);
@@ -106,64 +101,42 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
   return (
     <CustomModal isOpen onClose={onClose}>
       <ModalContent minW="1200px">
-        <ModalHeader>발송 상세</ModalHeader>
+        <ModalHeader> 상세</ModalHeader>
         <ModalCloseButton />
         <ModalBody overflowY="auto" py={5} id="send-modal">
           <Flex flexDirection="column">
-            <CollapseSection
-              headerTitle="발송 정보"
-              borderBottomWidth={0}
-              borderBottomRadius={0}
-            >
+            <CollapseSection headerTitle=" 정보" borderBottomWidth={0} borderBottomRadius={0}>
               <InfoBox>
                 <Flex>
-                  <InfoElement flex={1} label="발송채널" labelWidth="130px">
-                    <ChannelTag
-                      channelType={sendMessageData?.channelType ?? "SMS"}
-                    />
+                  <InfoElement flex={1} label="채널" labelWidth="130px">
+                    <ChannelTag channelType={sendMessageData?.channelType ?? "SMS"} />
                   </InfoElement>
-                  <InfoElement flex={1} label="발송 일시" labelWidth="130px">
-                    <Flex
-                      alignItems="center"
-                      justifyContent="space-between"
-                      width="100%"
-                    >
+                  <InfoElement flex={1} label=" 일시" labelWidth="130px">
+                    <Flex alignItems="center" justifyContent="space-between" width="100%">
                       <Text>
                         {sendMessageData &&
-                          format(
-                            new Date(sendMessageData?.reqDate),
-                            "yyyy-MM-dd HH:mm"
-                          )}
+                          format(new Date(sendMessageData?.reqDate), "yyyy-MM-dd HH:mm")}
                       </Text>
                     </Flex>
                   </InfoElement>
                 </Flex>
                 <Flex>
                   <InfoElement flex={1} label="담당자" labelWidth="130px">
-                    <Text>
-                      {sendMessageData && sendMessageData?.createUser}
-                    </Text>
+                    <Text>{sendMessageData && sendMessageData?.createUser}</Text>
                   </InfoElement>
                   <InfoElement flex={1} label="등록 일시" labelWidth="130px">
                     {sendMessageData &&
-                      format(
-                        new Date(sendMessageData?.createDate),
-                        "yyyy-MM-dd HH:mm"
-                      )}
+                      format(new Date(sendMessageData?.createDate), "yyyy-MM-dd HH:mm")}
                   </InfoElement>
                 </Flex>
               </InfoBox>
             </CollapseSection>
-            <CollapseSection
-              headerTitle="수신 대상자 정보"
-              borderBottomWidth={0}
-              borderRadius={0}
-            >
+            <CollapseSection headerTitle="수신 대상자 정보" borderBottomWidth={0} borderRadius={0}>
               <Section flexWrap="wrap" gap={8} justifyContent="left" px={6}>
                 <Flex alignItems="center" gap={2}>
                   <SendIcon boxSize={4} fill="primary.800" />
                   <Text as="span" fontSize="sm">
-                    발송수: {totalSendLogCount ?? 0}명
+                    수: {totalSendLogCount ?? 0}명
                   </Text>
                 </Flex>
                 <Divider
@@ -197,9 +170,9 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
                   <Flex alignItems="center" gap={2}>
                     <ErrorIcon boxSize={4} fill="primary.800" />
                     <Text as="span" fontSize="sm">
-                      대체 발송 : {sendMessagesLogData?.totalResendCount ?? 0}명
-                      ( 성공 : {sendMessagesLogData?.successResendCount ?? 0}건
-                      / 실패 :{sendMessagesLogData?.failResendCount ?? 0}건 )
+                      대체 : {sendMessagesLogData?.totalResendCount ?? 0}명 ( 성공 :{" "}
+                      {sendMessagesLogData?.successResendCount ?? 0}건 / 실패 :
+                      {sendMessagesLogData?.failResendCount ?? 0}건 )
                     </Text>
                   </Flex>
                 </Flex>
@@ -218,7 +191,7 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
                       {...register("sendStatus")}
                     />
                   </InfoElement>
-                  <InfoElement flex={1} label="발송 채널" labelWidth="130px">
+                  <InfoElement flex={1} label=" 채널" labelWidth="130px">
                     <CustomSelect
                       codes={[
                         { code: "ALL", name: "전체" },
@@ -230,7 +203,7 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
                       {...register("sendChannel")}
                     />
                   </InfoElement>
-                  <InfoElement flex={1} label="대체 발송" labelWidth="130px">
+                  <InfoElement flex={1} label="대체 " labelWidth="130px">
                     <CustomSelect
                       codes={[
                         { code: "ALL", name: "전체" },
@@ -273,12 +246,7 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
                         검색결과 : {totalSendLogCount ?? 0} 건
                       </Text>
                       <Flex flex={1} gap={2} justifyContent="flex-end">
-                        <Button
-                          size="sm"
-                          type="button"
-                          variant="secondaryBlue"
-                          width="100px"
-                        >
+                        <Button size="sm" type="button" variant="secondaryBlue" width="100px">
                           엑셀 다운로드
                         </Button>
                       </Flex>
@@ -298,7 +266,7 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
                         justifyContent="space-between"
                       >
                         <Text flex={1} px={2} py={3} textAlign="center">
-                          발송채널
+                          채널
                         </Text>
                         <Text flex={1} px={2} py={3} textAlign="center">
                           이름
@@ -313,7 +281,7 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
                           수신상태
                         </Text>
                         <Text flex={1} px={2} py={3} textAlign="center">
-                          대체발송
+                          대체
                         </Text>
                       </Flex>
                       {!totalSendLogCount ? (
@@ -350,9 +318,7 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
                             </Text>
                             <Text flex={2} px={2} py={3} textAlign="center">
                               {formatter.contactFormatter(
-                                logData.phone
-                                  .replace(/[^0-9]/g, "")
-                                  .substring(0, 11)
+                                logData.phone.replace(/[^0-9]/g, "").substring(0, 11)
                               ) ?? "-"}
                             </Text>
                             <Text
@@ -369,9 +335,7 @@ function SendStatusModal({ sendMessageData, onClose }: SendStatusModalProps) {
                             <Text flex={1} px={2} py={3} textAlign="center">
                               {logData.rslt === "0" && "성공"}
                               {logData.rslt === null && "대기"}
-                              {logData.rslt !== "0" &&
-                                logData.rslt !== null &&
-                                "실패"}
+                              {logData.rslt !== "0" && logData.rslt !== null && "실패"}
                             </Text>
                             <Text flex={1} px={2} py={3} textAlign="center">
                               {logData.rsltResend ? (

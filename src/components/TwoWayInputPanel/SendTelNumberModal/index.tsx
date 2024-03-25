@@ -137,13 +137,13 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
   return (
     <CustomModal isOpen onClose={onClose}>
       <ModalContent minW="768px">
-        <ModalHeader>양방향 발신번호 변경</ModalHeader>
+        <ModalHeader> 발신번호 변경</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <CollapseSection
             borderBottomRadius={0}
             borderBottomWidth={0}
-            headerTitle="양방향 발신번호 목록"
+            headerTitle=" 발신번호 목록"
           >
             <InfoBox>
               <InfoElement flex={4} label="사용 여부" labelWidth="130px">
@@ -222,13 +222,13 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
                 justifyContent="space-between"
               >
                 <Text flex={4} px={4} py={2} textAlign="center">
-                  양방향 발신번호
+                  발신번호
                 </Text>
                 <Text flex={2} px={4} py={2} textAlign="center">
                   사용여부
                 </Text>
                 <Text flex={6} px={4} py={2} textAlign="center">
-                  자동안내 시나리오명
+                  안내 시나리오명
                 </Text>
                 <Text flex={1} px={4} py={2} textAlign="center">
                   선택
@@ -247,13 +247,7 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
                       <Skeleton flex={4} height="20px" mx={4} my={2} />
                       <Skeleton flex={2} height="20px" mx={4} my={2} />
                       <Skeleton flex={6} height="20px" mx={4} my={2} />
-                      <Skeleton
-                        flex={1}
-                        height="20px"
-                        mx={4}
-                        my={2}
-                        width="80px"
-                      />
+                      <Skeleton flex={1} height="20px" mx={4} my={2} width="80px" />
                     </Flex>
                   ))}
                 {scenarioTotalCount === 0 ? (
@@ -291,20 +285,12 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
                       <Text flex={6} px={4} py={2} textAlign="center">
                         {scenario.serviceName}
                       </Text>
-                      <Flex
-                        flex={1}
-                        px={4}
-                        py={2}
-                        textAlign="center"
-                        width="75px"
-                      >
+                      <Flex flex={1} px={4} py={2} textAlign="center" width="75px">
                         <Button
                           flex={1}
                           size="sm"
                           variant="primaryBlue"
-                          onClick={() =>
-                            handleChangeTelNumberButtonClick(scenario.bizNumber)
-                          }
+                          onClick={() => handleChangeTelNumberButtonClick(scenario.bizNumber)}
                         >
                           선택
                         </Button>

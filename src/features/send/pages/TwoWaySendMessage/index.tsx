@@ -20,9 +20,7 @@ function TwoWaySendMessage() {
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
   const [isDisabled, setDisabled] = useState<boolean>(true);
-  const [templateMsgContext, setTemplateMsgContext] = useState<string | null>(
-    null
-  );
+  const [templateMsgContext, setTemplateMsgContext] = useState<string | null>(null);
 
   const changeImageFile = useMemo(
     () => (file: File, url: string | null, index: number | null) => {
@@ -76,15 +74,7 @@ function TwoWaySendMessage() {
         });
       }
     },
-    [
-      changedIndex,
-      changeFiles,
-      imageFiles,
-      imageURLs,
-      toast,
-      setImageFiles,
-      setImageURLs,
-    ]
+    [changedIndex, changeFiles, imageFiles, imageURLs, toast, setImageFiles, setImageURLs]
   );
   const removeImageFile = (index: number) => {
     const bufImageFiles = imageFiles;
@@ -102,7 +92,7 @@ function TwoWaySendMessage() {
 
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="양방향 메시지 발송" />
+      <CustomCard isHeader=" 전송" />
       <Flex gap={3} width="100%">
         <FormProvider {...methods}>
           <TwoWayInputPanel

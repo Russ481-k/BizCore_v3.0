@@ -11,12 +11,10 @@ interface ScenarioInfoProps {
 
 function ScenarioInfo({ scenario }: ScenarioInfoProps) {
   return (
-    <CollapseSection
-      header={<Heading size="sm">자동안내 시나리오 정보</Heading>}
-    >
+    <CollapseSection header={<Heading size="sm">안내 시나리오 정보</Heading>}>
       <InfoBox>
         <Flex>
-          <InfoElement flex={1} label="양방향 발신번호">
+          <InfoElement flex={1} label=" 발신번호">
             <Text> {formatter.contactFormatter(scenario?.bizNumber)}</Text>
           </InfoElement>
           <InfoElement flex={1} label="수정(등록)일시">

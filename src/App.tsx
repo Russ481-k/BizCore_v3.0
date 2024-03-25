@@ -19,10 +19,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider
-        theme={theme}
-        toastOptions={{ defaultOptions: { position: "top-right" } }}
-      >
+      <ChakraProvider theme={theme} toastOptions={{ defaultOptions: { position: "top-right" } }}>
         <Router />
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />

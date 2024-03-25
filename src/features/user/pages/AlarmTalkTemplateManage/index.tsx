@@ -25,13 +25,9 @@ import {
   InfoElement,
   PaginationButtons,
   RangeDatePicker,
-  SaveAlarmTalkTemplateModal,
   ToastMessage,
 } from "components";
-import {
-  useDeleteAlarmTalkTemplate,
-  useGetAlarmTalkTemplatesBySearch,
-} from "features/template";
+import { useDeleteAlarmTalkTemplate, useGetAlarmTalkTemplatesBySearch } from "features/template";
 import TemplateGroup from "type/TemplateGroup";
 import AlarmTalkGroupTreePanel from "./AlarmTalkGroupTreePanel";
 import DeleteAlarmTalkTemplateModal from "./DeleteAlarmTalkTemplateModal";
@@ -48,26 +44,20 @@ function AlarmTalkTemplateManage() {
   }>({ mode: "onChange" });
 
   const [batchSize, setBatchSize] = useState<number>(10);
-  const [changeTemplateModalData, setChangeTemplateModalData] = useState<
-    number | null
-  >(null);
+  const [, setChangeTemplateModalData] = useState<number | null>(null);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([false]);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [endDate, setEndDate] = useState<string | null>(null);
-  const [importTemplateModalOpen, setImportTemplateModalOpen] =
-    useState<boolean>(false);
+  const [importTemplateModalOpen, setImportTemplateModalOpen] = useState<boolean>(false);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
-  const [refetchGroupTemplate, setRefetchGroupTemplate] =
-    useState<boolean>(false);
+  const [refetchGroupTemplate, setRefetchGroupTemplate] = useState<boolean>(false);
   const [regDateOption, setRegDateOption] = useState<"all" | "select">("all");
-  const [selectedTemplateGroup, setSelectedTemplateGroup] =
-    useState<TemplateGroup | null>(null);
+  const [selectedTemplateGroup, setSelectedTemplateGroup] = useState<TemplateGroup | null>(null);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [templateName, setTemplateName] = useState<string | null>(null);
 
-  const { mutate: deleteTemplate, isLoading: isDeleteLoading } =
-    useDeleteAlarmTalkTemplate();
+  const { mutate: deleteTemplate, isLoading: isDeleteLoading } = useDeleteAlarmTalkTemplate();
   const {
     contents: templates,
     isLoading: isTemplatesLoading,
@@ -112,13 +102,6 @@ function AlarmTalkTemplateManage() {
     setBatchSize(BatchSize);
     setEnableQuery(true);
   };
-  const handleChangeTemplateModalClose = () => {
-    setChangeTemplateModalData(null);
-  };
-  const handleChangeTemplateModalConfirm = () => {
-    setChangeTemplateModalData(null);
-    handlePageRefetch();
-  };
   const handleChangeTemplateModalData = (templateId: number) => {
     setChangeTemplateModalData(templateId);
   };
@@ -151,8 +134,8 @@ function AlarmTalkTemplateManage() {
                     <br />
                     알림톡 템플릿 삭제 중 알 수 없는 오류가 발생하였습니다.
                     <br />
-                    알림톡 템플릿 삭제를 다시 진행 하세요. 본 오류가 계속
-                    발생하는 경우 시스템 관리자에게 문의하기 바랍니다.
+                    알림톡 템플릿 삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템
+                    관리자에게 문의하기 바랍니다.
                   </ToastMessage>
                 ),
               });
@@ -239,13 +222,7 @@ function AlarmTalkTemplateManage() {
           onChange={handleTemplateGroupChange}
           onRefetch={setRefetchGroupTemplate}
         />
-        <Box
-          as="form"
-          flex={1}
-          gap={3}
-          width="100%"
-          onSubmit={handleFormSubmit}
-        >
+        <Box as="form" flex={1} gap={3} width="100%" onSubmit={handleFormSubmit}>
           <Flex flexDirection="column" width="100%">
             <CollapseSection
               borderBottomRadius={0}
@@ -329,8 +306,7 @@ function AlarmTalkTemplateManage() {
                       "/excel?" +
                         (templateName ? "&templateName=" + templateName : "") +
                         (selectedTemplateGroup?.groupTemplateId
-                          ? "&groupTemplateId=" +
-                            selectedTemplateGroup?.groupTemplateId
+                          ? "&groupTemplateId=" + selectedTemplateGroup?.groupTemplateId
                           : "") +
                         (startDate ? "&startDate=" + startDate : "") +
                         (endDate ? "&endDate=" + endDate : "")
@@ -378,12 +354,7 @@ function AlarmTalkTemplateManage() {
                         borderBottomWidth={1}
                         height="38px"
                         justifyContent="space-between"
-                        key={
-                          templates?.[i].templateId +
-                          "-" +
-                          i +
-                          "-templates-skeleton"
-                        }
+                        key={templates?.[i].templateId + "-" + i + "-templates-skeleton"}
                       >
                         <Skeleton mx={4} my={2} height="16px" width="16px" />
                         <Skeleton flex={4} height="20px" mx={4} my={2} />
@@ -422,17 +393,12 @@ function AlarmTalkTemplateManage() {
                           _hover={{
                             textDecoration: "underline",
                           }}
-                          onClick={() =>
-                            handleChangeTemplateModalData(template.templateId)
-                          }
+                          onClick={() => handleChangeTemplateModalData(template.templateId)}
                         >
                           {template.templateName}
                         </Text>
                         <Text flex={1} textAlign="center" px={4} py={2}>
-                          {format(
-                            new Date(template.createDate ?? ""),
-                            "yyyy-MM-dd"
-                          )}
+                          {format(new Date(template.createDate ?? ""), "yyyy-MM-dd")}
                         </Text>
                       </Flex>
                     ))
@@ -470,15 +436,6 @@ function AlarmTalkTemplateManage() {
             selectedTemplateGroupId={selectedTemplateGroup?.groupTemplateId}
             isChangeTemplate={false}
             onClose={handleImportTemplateModalClose}
-          />
-        )}
-        {changeTemplateModalData && (
-          <SaveAlarmTalkTemplateModal
-            selectedTemplateGroupId={selectedTemplateGroup?.groupTemplateId}
-            isChangeTemplate={true}
-            templateId={changeTemplateModalData}
-            onClose={handleChangeTemplateModalClose}
-            onConfirm={handleChangeTemplateModalConfirm}
           />
         )}
       </HStack>

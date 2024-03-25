@@ -21,9 +21,9 @@ function EndConsultModal({ isOpen, setModalOpen }: EndConsultModalProps) {
     console.log("상담 종료!");
     onClose();
     // 상담 종료 완료
-    // 양방향 상담을 정상적으로 종료하였습니다.
+    //  상담을 정상적으로 종료하였습니다.
     // 상담 종료 오류
-    // 양방향 상담 종료 중 중 알 수 없는 오류가 발생하였습니다.
+    //  상담 종료 중 중 알 수 없는 오류가 발생하였습니다.
     // 상담 종료를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
     // 시스템 관리자에게 문의하기 바랍니다.
   };
@@ -37,7 +37,7 @@ function EndConsultModal({ isOpen, setModalOpen }: EndConsultModalProps) {
         <ModalHeader>상담 종료</ModalHeader>
         <ModalCloseButton></ModalCloseButton>
         <ModalBody>
-          상담을 종료하면 추가적인 문자 메시지를 발송하거나
+          상담을 종료하면 추가적인 문자 메시지를 하거나
           <br />
           수신자로부터 문자를 회신 받을 수 없습니다.
           <br />

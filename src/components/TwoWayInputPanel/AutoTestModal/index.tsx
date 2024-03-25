@@ -31,12 +31,12 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
   //     onError: (error) => {
   //       toast({
   //         render: () => (
-  //           <ToastMessage title="양방향 발신번호 변경 오류" type="ERROR">
+  //           <ToastMessage title=" 발신번호 변경 오류" type="ERROR">
   //             <Text>
-  //               양방향 발신번호 변경 중 알 수 없는 오류가 발생하였습니다
+  //                발신번호 변경 중 알 수 없는 오류가 발생하였습니다
   //             </Text>
   //             <Text>
-  //               양방향 발신번호 변경을 다시 진행 하세요. 본 오류가 계속
+  //                발신번호 변경을 다시 진행 하세요. 본 오류가 계속
   //               발생하는 경우 시스템 관리자에게 문의하기 바랍니다.
   //             </Text>
   //           </ToastMessage>
@@ -46,11 +46,11 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
   //     onSuccess: () => {
   //       toast({
   //         render: () => (
-  //           <ToastMessage title="양방향 발신번호 변경 완료" type="SUCCESS">
-  //             <Text>양방향 발신번호 변경을 완료하였습니다.</Text>
+  //           <ToastMessage title=" 발신번호 변경 완료" type="SUCCESS">
+  //             <Text> 발신번호 변경을 완료하였습니다.</Text>
   //             <Text>
-  //               메시지 내용을 확인하신 다음 수신 대상자를 선택하여 양방향
-  //               메시지를 발송하세요.
+  //               메시지 내용을 확인하신 다음 수신 대상자를 선택하여
+  //               메시지를 하세요.
   //             </Text>
   //           </ToastMessage>
   //         ),
@@ -110,13 +110,13 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
   return (
     <CustomModal isOpen onClose={onClose}>
       <ModalContent minW="420px">
-        <ModalHeader>자동안내 시나리오 테스트</ModalHeader>
+        <ModalHeader>안내 시나리오 테스트</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex flexDirection="column" gap={3}>
             <TipText
               hasBg
-              text={`등록된 자동안내 시나리오로 양방향 문자 발송 테스트를
+              text={`등록된 안내 시나리오로  문자  테스트를
                 진행합니다.\n하단의 입력 상자에 보낼 문자 내용을 입력하세요.`}
             />
             <Flex
@@ -207,10 +207,7 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
                   </InputGroup>
                 </Flex>
                 <Divider my={2} />
-                <TipText
-                  size="sm"
-                  text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다."
-                />
+                <TipText size="sm" text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다." />
               </Box>
             </Flex>
           </Flex>

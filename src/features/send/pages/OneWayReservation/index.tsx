@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Input,
-  Skeleton,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Input, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { format } from "date-fns";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -39,13 +30,9 @@ function OneWayReservation() {
   }>({ mode: "onChange" });
 
   const [all, setAll] = useState<string | null>(null);
-  const [changeMessageModalData, setChangeMessageModalData] = useState<
-    number | null
-  >(null);
+  const [changeMessageModalData, setChangeMessageModalData] = useState<number | null>(null);
   const [channelType, setChannelType] = useState<string | null>(null);
-  const [createDateOption, setCreateDateOption] = useState<"all" | "select">(
-    "all"
-  );
+  const [createDateOption, setCreateDateOption] = useState<"all" | "select">("all");
   const [createId, setCreateId] = useState<string | null>(null);
   const [createUser, setCreateUser] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -135,27 +122,15 @@ function OneWayReservation() {
   const handleFormSubmit = methods.handleSubmit(
     ({ createDate, reqDate, sendChannel, searchType, keyword }) => {
       if (reqDateOption === "select") {
-        setStartReqDate(
-          reqDate?.[0]
-            ? `${format(reqDate[0], "yyyy-MM-dd")} 00:00:00.000`
-            : null
-        );
-        setEndReqDate(
-          reqDate?.[1]
-            ? `${format(reqDate[1], "yyyy-MM-dd")} 23:59:59.999`
-            : null
-        );
+        setStartReqDate(reqDate?.[0] ? `${format(reqDate[0], "yyyy-MM-dd")} 00:00:00.000` : null);
+        setEndReqDate(reqDate?.[1] ? `${format(reqDate[1], "yyyy-MM-dd")} 23:59:59.999` : null);
       } else {
         setStartReqDate(null);
         setEndReqDate(null);
       }
       if (createDateOption === "select") {
-        setStartCreateDate(
-          createDate?.[0] ? format(new Date(createDate[0]), "yyyy-MM-dd") : null
-        );
-        setEndCreateDate(
-          createDate?.[1] ? format(new Date(createDate[1]), "yyyy-MM-dd") : null
-        );
+        setStartCreateDate(createDate?.[0] ? format(new Date(createDate[0]), "yyyy-MM-dd") : null);
+        setEndCreateDate(createDate?.[1] ? format(new Date(createDate[1]), "yyyy-MM-dd") : null);
       } else {
         setStartCreateDate(null);
         setEndCreateDate(null);
@@ -206,13 +181,13 @@ function OneWayReservation() {
 
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="예약 발송 관리" />
+      <CustomCard isHeader="예약  관리" />
       <Box>
-        <CollapseSection headerTitle="예약 발송 목록" borderBottomRadius={0}>
+        <CollapseSection headerTitle="예약  목록" borderBottomRadius={0}>
           <FormProvider {...methods}>
             <InfoBox>
               <Flex>
-                <InfoElement flex={1} label="예약 발송일">
+                <InfoElement flex={1} label="예약 일">
                   <RangeDatePicker
                     name="reqDate"
                     option={reqDateOption}
@@ -232,7 +207,7 @@ function OneWayReservation() {
                 </InfoElement>
               </Flex>
               <Flex>
-                <InfoElement flex={1} label="발송 채널">
+                <InfoElement flex={1} label=" 채널">
                   <CustomSelect
                     codes={sendChannelOption}
                     placeholder="전체"
@@ -265,11 +240,7 @@ function OneWayReservation() {
               </Flex>
             </InfoBox>
             <Flex justifyContent="flex-end">
-              <Button
-                isLoading={isLoading}
-                variant="primaryBlue"
-                onClick={handleFormSubmit}
-              >
+              <Button isLoading={isLoading} variant="primaryBlue" onClick={handleFormSubmit}>
                 조회
               </Button>
             </Flex>
@@ -287,27 +258,15 @@ function OneWayReservation() {
                     url={messages(
                       "/reserve/excel?" +
                         (subject ? "&subject=" + subject ?? null : "") +
-                        (createUser
-                          ? "&createUser=" + createUser ?? null
-                          : "") +
+                        (createUser ? "&createUser=" + createUser ?? null : "") +
                         (createId ? "&createId=" + createId ?? null : "") +
-                        (startCreateDate
-                          ? "&startCreateDate=" + startCreateDate ?? null
-                          : "") +
-                        (endCreateDate
-                          ? "&endCreateDate=" + endCreateDate ?? null
-                          : "") +
-                        (startReqDate
-                          ? "&startReqDate=" + startReqDate ?? null
-                          : "") +
-                        (endReqDate
-                          ? "&endReqDate=" + endReqDate ?? null
-                          : "") +
+                        (startCreateDate ? "&startCreateDate=" + startCreateDate ?? null : "") +
+                        (endCreateDate ? "&endCreateDate=" + endCreateDate ?? null : "") +
+                        (startReqDate ? "&startReqDate=" + startReqDate ?? null : "") +
+                        (endReqDate ? "&endReqDate=" + endReqDate ?? null : "") +
                         (all ? "&all=" + all ?? null : "") +
                         "&sendType=R" +
-                        (channelType
-                          ? "&channelType=" + channelType ?? null
-                          : "") +
+                        (channelType ? "&channelType=" + channelType ?? null : "") +
                         "&status=R"
                     )}
                   />
@@ -330,16 +289,16 @@ function OneWayReservation() {
                   justifyContent="space-between"
                 >
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송채널
+                    채널
                   </Text>
                   <Text flex={4} px={4} py={2} textAlign="center">
                     메시지 제목 (내용)
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    예약 발송 일시
+                    예약 일시
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    예약 발송수
+                    예약 수
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
                     담당자
@@ -394,9 +353,7 @@ function OneWayReservation() {
                         }}
                       >
                         <Text flex={1} px={4} py={2} textAlign="center">
-                          <ChannelTag
-                            channelType={message?.channelType ?? "SMS"}
-                          />
+                          <ChannelTag channelType={message?.channelType ?? "SMS"} />
                         </Text>
                         <Text
                           color="primary.500"
@@ -408,9 +365,7 @@ function OneWayReservation() {
                           _hover={{
                             textDecoration: "underline",
                           }}
-                          onClick={() =>
-                            handleChangeMessageModalData(message.id)
-                          }
+                          onClick={() => handleChangeMessageModalData(message.id)}
                         >
                           {message.subject}
                         </Text>

@@ -18,12 +18,7 @@ interface ConfirmSendModalProps {
   onSubmit: () => void;
 }
 
-function ConfirmSendModal({
-  channel,
-  isOpen,
-  onClose,
-  onSubmit,
-}: ConfirmSendModalProps) {
+function ConfirmSendModal({ channel, isOpen, onClose, onSubmit }: ConfirmSendModalProps) {
   const handleChannelText = useCallback((channel: string) => {
     switch (channel) {
       case "SMS":
@@ -48,7 +43,7 @@ function ConfirmSendModal({
             <Text as="span" fontWeight="600" color="black">
               &nbsp;{handleChannelText(channel)}&nbsp;
             </Text>
-            메시지 내용으로 문자를 발송하시겠습니까?
+            메시지 내용으로 문자를 하시겠습니까?
           </Text>
         </ModalBody>
         <ModalFooter gap={2}>

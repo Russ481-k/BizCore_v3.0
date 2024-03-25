@@ -26,14 +26,11 @@ function BackwardCheckModal({ onConfirm, onClose }: BackwardCheckModalProps) {
   return (
     <CustomModal isOpen onClose={onClose}>
       <ModalContent>
-        <ModalHeader>자동안내 시나리오 목록</ModalHeader>
+        <ModalHeader>안내 시나리오 목록</ModalHeader>
         <ModalCloseButton />
         <ModalBody overflowY="auto" pb={0}>
           <Flex flexDirection="column" fontSize="14px">
-            <Text>
-              자동안내 시나리오 목록으로 이동하면 기존의 시나리오로
-              초기화됩니다.
-            </Text>
+            <Text>안내 시나리오 목록으로 이동하면 기존의 시나리오로 초기화됩니다.</Text>
             <Text>수정중인 시나리오는 복구할 수 없습니다.</Text>
             <Text>목록으로 이동하시겠습니까?</Text>
           </Flex>

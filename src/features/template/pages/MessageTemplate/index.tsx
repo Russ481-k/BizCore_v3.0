@@ -46,28 +46,22 @@ function MessageTemplate() {
     search: string;
   }>({ mode: "onChange" });
 
-  const [addTemplateModalOpen, setAddTemplateModalOpen] =
-    useState<boolean>(false);
+  const [addTemplateModalOpen, setAddTemplateModalOpen] = useState<boolean>(false);
   const [batchSize, setBatchSize] = useState<number>(10);
-  const [changeTemplateModalData, setChangeTemplateModalData] = useState<
-    number | null
-  >(null);
+  const [changeTemplateModalData, setChangeTemplateModalData] = useState<number | null>(null);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([false]);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [regDateOption, setRegDateOption] = useState<"all" | "select">("all");
   const [endDate, setEndDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(false);
-  const [refetchGroupTemplate, setRefetchGroupTemplate] =
-    useState<boolean>(false);
-  const [selectedTemplateGroup, setSelectedTemplateGroup] =
-    useState<TemplateGroup | null>(null);
+  const [refetchGroupTemplate, setRefetchGroupTemplate] = useState<boolean>(false);
+  const [selectedTemplateGroup, setSelectedTemplateGroup] = useState<TemplateGroup | null>(null);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [templateChannel, setTemplateChannel] = useState<string | null>(null);
   const [templateName, setTemplateName] = useState<string | null>(null);
 
-  const { mutate: deleteTemplate, isLoading: isDeleteLoading } =
-    useDeleteTemplate();
+  const { mutate: deleteTemplate, isLoading: isDeleteLoading } = useDeleteTemplate();
   const {
     contents: templates,
     paging: pagination,
@@ -171,8 +165,8 @@ function MessageTemplate() {
                     <br />
                     문자 템플릿 삭제 중 알 수 없는 오류가 발생하였습니다.
                     <br />
-                    문자 템플릿 삭제를 다시 진행 하세요. 본 오류가 계속 발생하는
-                    경우 시스템 관리자에게 문의하기 바랍니다.
+                    문자 템플릿 삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템
+                    관리자에게 문의하기 바랍니다.
                   </ToastMessage>
                 ),
               });
@@ -195,20 +189,18 @@ function MessageTemplate() {
       }
     });
   };
-  const handleFormSubmit = methods.handleSubmit(
-    ({ regDate, search, templateChannel }) => {
-      if (regDateOption === "select" && !!regDate[0] && !!regDate[1]) {
-        setStartDate(`${format(regDate[0], "yyyy-MM-dd")} 00:00:00.000`);
-        setEndDate(`${format(regDate[1], "yyyy-MM-dd")} 23:59:59.999`);
-      } else {
-        setStartDate(null);
-        setEndDate(null);
-      }
-      setTemplateName(search);
-      setTemplateChannel(templateChannel);
-      setEnableQuery(true);
+  const handleFormSubmit = methods.handleSubmit(({ regDate, search, templateChannel }) => {
+    if (regDateOption === "select" && !!regDate[0] && !!regDate[1]) {
+      setStartDate(`${format(regDate[0], "yyyy-MM-dd")} 00:00:00.000`);
+      setEndDate(`${format(regDate[1], "yyyy-MM-dd")} 23:59:59.999`);
+    } else {
+      setStartDate(null);
+      setEndDate(null);
     }
-  );
+    setTemplateName(search);
+    setTemplateChannel(templateChannel);
+    setEnableQuery(true);
+  });
   const handleTemplateGroupChange = (groupTemplate: TemplateGroup | null) => {
     setSelectedTemplateGroup(groupTemplate);
   };
@@ -246,13 +238,7 @@ function MessageTemplate() {
           onChange={handleTemplateGroupChange}
           onRefetch={setRefetchGroupTemplate}
         />
-        <Box
-          as="form"
-          flex={1}
-          gap={3}
-          width="100%"
-          onSubmit={handleFormSubmit}
-        >
+        <Box as="form" flex={1} gap={3} width="100%" onSubmit={handleFormSubmit}>
           <Flex flexDirection="column" width="100%">
             <CollapseSection
               borderBottomRadius={0}
@@ -285,7 +271,7 @@ function MessageTemplate() {
                     </InfoElement>
                   </Flex>
                   <Flex>
-                    <InfoElement flex={4} label="발송채널">
+                    <InfoElement flex={4} label="채널">
                       <CustomSelect
                         codes={templateChannelOption}
                         placeholder="전체"
@@ -294,11 +280,7 @@ function MessageTemplate() {
                       />
                     </InfoElement>
                     <InfoElement flex={8} label="키워드">
-                      <Input
-                        placeholder="검색어 입력"
-                        size="sm"
-                        {...methods.register("search")}
-                      />
+                      <Input placeholder="검색어 입력" size="sm" {...methods.register("search")} />
                     </InfoElement>
                   </Flex>
                 </InfoBox>
@@ -340,12 +322,9 @@ function MessageTemplate() {
                     url={template(
                       "/excel?" +
                         (templateName ? "&templateName=" + templateName : "") +
-                        (templateChannel
-                          ? "&templateChannel=" + templateChannel
-                          : "") +
+                        (templateChannel ? "&templateChannel=" + templateChannel : "") +
                         (selectedTemplateGroup?.groupTemplateId
-                          ? "&groupTemplateId=" +
-                            selectedTemplateGroup?.groupTemplateId
+                          ? "&groupTemplateId=" + selectedTemplateGroup?.groupTemplateId
                           : "") +
                         (startDate ? "&startDate=" + startDate : "") +
                         (endDate ? "&endDate=" + endDate : "")
@@ -379,7 +358,7 @@ function MessageTemplate() {
                     onChange={(e) => handleCheckboxCheckAll(e)}
                   />
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    발송채널
+                    채널
                   </Text>
                   <Text flex={4} px={4} py={2} textAlign="center">
                     문자 템플릿명
@@ -396,12 +375,7 @@ function MessageTemplate() {
                         borderBottomWidth={1}
                         height="38px"
                         justifyContent="space-between"
-                        key={
-                          templates?.[i].templateId +
-                          "-" +
-                          i +
-                          "-templates-skeleton"
-                        }
+                        key={templates?.[i].templateId + "-" + i + "-templates-skeleton"}
                       >
                         <Skeleton mx={4} my={2} height="16px" width="16px" />
                         <Skeleton flex={1} height="20px" mx={4} my={2} />
@@ -444,17 +418,12 @@ function MessageTemplate() {
                           _hover={{
                             textDecoration: "underline",
                           }}
-                          onClick={() =>
-                            handleChangeTemplateModalData(template.templateId)
-                          }
+                          onClick={() => handleChangeTemplateModalData(template.templateId)}
                         >
                           {template.templateName}
                         </Text>
                         <Text flex={1} px={4} py={2} textAlign="center">
-                          {format(
-                            new Date(template.createDate ?? ""),
-                            "yyyy-MM-dd"
-                          )}
+                          {format(new Date(template.createDate ?? ""), "yyyy-MM-dd")}
                         </Text>
                       </Flex>
                     ))

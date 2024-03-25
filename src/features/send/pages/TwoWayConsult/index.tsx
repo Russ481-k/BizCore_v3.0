@@ -1,13 +1,4 @@
-import {
-  Badge,
-  Flex,
-  Tab,
-  TabList,
-  TabPanels,
-  Tabs,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Badge, Flex, Tab, TabList, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 
 import { CustomCard } from "components";
 import { KEYWORD } from "features/send";
@@ -16,7 +7,7 @@ import ConsultTabPanel from "./ConsultTabPanel";
 function TwoWayConsult() {
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="양방향 상담 관리" />
+      <CustomCard isHeader=" 상담 관리" />
       <CustomCard align="stretch" direction="column">
         <Tabs variant="enclosed">
           <TabList>

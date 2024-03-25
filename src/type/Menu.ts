@@ -3,7 +3,6 @@ interface Menu {
   id: number;
   name?: string;
   icon?: string | null;
-  programId?: number | null;
   programName?: string | null;
   programPath?: string | null;
   order?: number;

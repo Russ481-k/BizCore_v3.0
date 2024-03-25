@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Input,
-  Skeleton,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Input, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { format } from "date-fns";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -42,8 +33,7 @@ function TwoWayScenario() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [selectedScenario, setSelectedScenario] =
-    useState<ScenarioGroup | null>(null);
+  const [selectedScenario, setSelectedScenario] = useState<ScenarioGroup | null>(null);
   const [subject, setSubject] = useState<string | null>(null);
 
   const {
@@ -140,10 +130,10 @@ function TwoWayScenario() {
   }, [isEnableQuery]);
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="자동안내 시나리오 관리" />
+      <CustomCard isHeader="안내 시나리오 관리" />
       <FormProvider {...methods}>
         {!selectedScenario?.groupId ? (
-          <CollapseSection headerTitle="자동안내 시나리오 목록">
+          <CollapseSection headerTitle="안내 시나리오 목록">
             <InfoBox>
               <Flex>
                 <InfoElement flex={4} label="사용 여부">
@@ -225,10 +215,10 @@ function TwoWayScenario() {
                     justifyContent="space-between"
                   >
                     <Text flex={1} px={4} py={2} textAlign="center">
-                      양방향 발신번호
+                      발신번호
                     </Text>
                     <Text flex={4} px={4} py={2} textAlign="center">
-                      자동안내 시나리오명
+                      안내 시나리오명
                     </Text>
                     <Text flex={1} px={4} py={2} textAlign="center">
                       사용여부
@@ -245,12 +235,7 @@ function TwoWayScenario() {
                           borderBottomWidth={1}
                           height="38px"
                           justifyContent="space-between"
-                          key={
-                            scenarios?.[i].bizNumber +
-                            "-" +
-                            i +
-                            "-scenarios-skeleton"
-                          }
+                          key={scenarios?.[i].bizNumber + "-" + i + "-scenarios-skeleton"}
                         >
                           <Skeleton flex={1} height="20px" mx={4} my={2} />
                           <Skeleton flex={4} height="20px" mx={4} my={2} />

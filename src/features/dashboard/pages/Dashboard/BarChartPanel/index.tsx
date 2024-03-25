@@ -54,7 +54,7 @@ function BarChartPanel({ data }: BarChartPanelProps) {
           type: "column",
           xKey: "sendDate",
           yKey: "sendCount",
-          yName: "발송건 수",
+          yName: "건 수",
         },
         {
           type: "column",

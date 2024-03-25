@@ -56,7 +56,7 @@ interface SearchForm {
   callerNo: string | null;
   regDate: [Date, Date] | null;
   callType: "S" | "R" | null; // S:발신 / R:수신
-  sendType: "A" | "C" | null; // A:자동안내 / C:문자상담
+  sendType: "A" | "C" | null; // A:안내 / C:문자상담
   isResult: boolean; // 미확인 수신 메시지 false:체크 / null:미체크
   targetColumn: "all" | "receiverNo" | "message";
   keyword: string;
@@ -78,35 +78,25 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
   });
 
   const [searchCallerNo, setSearchCallerNo] = useState<string | null>(null);
-  const [searchCallerNoOptions, setSearchCallerNoOptions] = useState<Option[]>(
-    []
-  );
+  const [searchCallerNoOptions, setSearchCallerNoOptions] = useState<Option[]>([]);
   const [searchCallType, setSearchCallType] = useState<"S" | "R" | null>(null);
-  const [searchSendDateOption, setSearchSendDateOption] = useState<
-    "all" | "select"
-  >("all");
-  const [searchEndSendDate, setSearchEndSendDate] = useState<string | null>(
-    null
-  );
+  const [searchSendDateOption, setSearchSendDateOption] = useState<"all" | "select">("all");
+  const [searchEndSendDate, setSearchEndSendDate] = useState<string | null>(null);
   const [searchIsResult, setSearchIsResult] = useState<boolean | null>(null);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [searchSendType, setSearchSendType] = useState<"A" | "C" | null>(null);
-  const [searchStartSendDate, setSearchStartSendDate] = useState<string | null>(
-    null
+  const [searchStartSendDate, setSearchStartSendDate] = useState<string | null>(null);
+  const [searchTargetColumn, setSearchTargetColumn] = useState<"all" | "receiverNo" | "message">(
+    "all"
   );
-  const [searchTargetColumn, setSearchTargetColumn] = useState<
-    "all" | "receiverNo" | "message"
-  >("all");
 
   const [batchSize, setBatchSize] = useState<number>(20);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [getConsultsEnabled, setGetConsultsEnabled] = useState<boolean>(true);
   const [selectedMasterId, setSelectedMasterId] = useState<number>(0);
 
-  const [consultDetailModalOpen, setConsultDetailModalOpen] =
-    useState<boolean>(false);
-  const [transformGuideModalOpen, setTransformGuideModalOpen] =
-    useState<boolean>(false);
+  const [consultDetailModalOpen, setConsultDetailModalOpen] = useState<boolean>(false);
+  const [transformGuideModalOpen, setTransformGuideModalOpen] = useState<boolean>(false);
 
   const isFirstRender = useRef(true);
 
@@ -151,14 +141,10 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
   const handleSearchFormSubmit = methods.handleSubmit((data) => {
     if (searchSendDateOption === "select") {
       setSearchStartSendDate(
-        data.regDate?.[0]
-          ? format(new Date(data.regDate[0]), "yyyy-MM-dd")
-          : null
+        data.regDate?.[0] ? format(new Date(data.regDate[0]), "yyyy-MM-dd") : null
       );
       setSearchEndSendDate(
-        data.regDate?.[1]
-          ? format(new Date(data.regDate[1]), "yyyy-MM-dd")
-          : null
+        data.regDate?.[1] ? format(new Date(data.regDate[1]), "yyyy-MM-dd") : null
       );
     } else {
       setSearchStartSendDate(null);
@@ -246,19 +232,13 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
   return (
     <TabPanel>
       <CollapseSection
-        headerTitle={
-          csltStatus === "p" ? "양방향 상담 목록" : "종료된 양방향 상담 목록"
-        }
+        headerTitle={csltStatus === "p" ? " 상담 목록" : "종료된  상담 목록"}
         borderBottomRadius={0}
       >
         {/* TODO: 다음 개발단계에서 적용 */}
         <CustomCard justify="space-between" bg="gray.100" display="none">
-          <TipText text="진행중인 양방향 상담은 문자상담과 자동안내로 전환 가능하며, 오른쪽의 [전환안내 설정] 기능용 이용하여 전환시 자동으로 발신할 메시지를 등록할 수 있습니다." />
-          <Button
-            variant="textGray"
-            size="sm"
-            onClick={handleTransformGuidButtonClick}
-          >
+          <TipText text="진행중인  상담은 문자상담과 안내로 전환 가능하며, 오른쪽의 [전환안내 설정] 기능용 이용하여 전환시 자동으로 발신할 메시지를 등록할 수 있습니다." />
+          <Button variant="textGray" size="sm" onClick={handleTransformGuidButtonClick}>
             전환안내 설정
           </Button>
         </CustomCard>
@@ -266,11 +246,7 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
           <FormProvider {...methods}>
             <InfoBox>
               <Flex>
-                <InfoElement
-                  flex={6}
-                  label="양방향 발신번호"
-                  labelWidth="190px"
-                >
+                <InfoElement flex={6} label=" 발신번호" labelWidth="190px">
                   <CustomSelect
                     codes={searchCallerNoOptions}
                     size="sm"
@@ -311,7 +287,7 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
                     />
                   )}
                 </InfoElement>
-                <InfoElement flex={6} label="발송 구분" labelWidth="190px">
+                <InfoElement flex={6} label=" 구분" labelWidth="190px">
                   <CustomSelect
                     codes={CONSULTS_OPTION.SEND_TYPE}
                     size="sm"
@@ -338,11 +314,7 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
               </InfoElement>
             </InfoBox>
             <Flex justify="flex-end">
-              <Button
-                type="submit"
-                variant="primaryBlue"
-                onClick={handleSearchFormSubmit}
-              >
+              <Button type="submit" variant="primaryBlue" onClick={handleSearchFormSubmit}>
                 조회
               </Button>
             </Flex>
@@ -368,7 +340,7 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
                   <Th width="60px">No</Th>
                   <Th width="180px">발신번호</Th>
                   <Th width="180px">수신번호</Th>
-                  <Th width="150px">발송구분</Th>
+                  <Th width="150px">구분</Th>
                   <Th width="150px">발신/수신</Th>
                   <Th>마지막 발신/수신 메시지</Th>
                   <Th width="200px">발신/수신 일시</Th>
@@ -378,10 +350,7 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
                 {consultsData && consultsData.length > 0 ? (
                   consultsData.map((consult, i) => (
                     <Tr key={consult.customKey}>
-                      <Td>
-                        {totalCount &&
-                          totalCount - batchSize * (currentPage - 1) - i}
-                      </Td>
+                      <Td>{totalCount && totalCount - batchSize * (currentPage - 1) - i}</Td>
                       <Td>{formatter.contactFormatter(consult.callerNo)}</Td>
                       <Td>
                         <Button
@@ -393,9 +362,7 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
                         </Button>
                       </Td>
                       <Td>
-                        {consult.sendType === "A"
-                          ? KEYWORD.SENDTYPE_AUTO
-                          : KEYWORD.SENDTYPE_CHAT}
+                        {consult.sendType === "A" ? KEYWORD.SENDTYPE_AUTO : KEYWORD.SENDTYPE_CHAT}
                       </Td>
                       <Td>
                         {consult.callType === "R" ? (
@@ -432,16 +399,11 @@ function ConsultTabPanel({ csltStatus }: ConsultTabPanelProps) {
                           {!consult.isRead && <Image src={newIcon} alt="NEW" />}
                         </Button>
                       </Td>
-                      <Td>
-                        {format(new Date(consult.sendDate), "yyyy-MM-dd HH:mm")}
-                      </Td>
+                      <Td>{format(new Date(consult.sendDate), "yyyy-MM-dd HH:mm")}</Td>
                     </Tr>
                   ))
                 ) : (
-                  <NoDataTr
-                    colspan={7}
-                    text="조회된 진행중인 양방향 상담 내역이 없습니다."
-                  />
+                  <NoDataTr colspan={7} text="조회된 진행중인  상담 내역이 없습니다." />
                 )}
               </Tbody>
             </Table>

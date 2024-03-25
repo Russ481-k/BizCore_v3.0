@@ -50,11 +50,7 @@ interface TwoWayInputPanelProps {
   onChannelChange?: (channel: string) => void;
   onContextChange: (context: string) => void;
   onDisabled?: (disabled: boolean) => void;
-  onImagesChange?: (
-    imageContents: File,
-    url: string | null,
-    index: number | null
-  ) => void;
+  onImagesChange?: (imageContents: File, url: string | null, index: number | null) => void;
   onTitleChange?: (title: string) => void;
   onWiredPhoneNumberChange?: (wiredPhoneNumber: string) => void;
   removeImageFile?: (index: number) => void;
@@ -93,15 +89,11 @@ function TwoWayInputPanel({
   const [channel, setChannel] = useState<string>("SMS");
   const [contentsByteCount, setContentsByteCount] = useState<number>(0);
   const [contentsStringLimit, setContentsStringLimit] = useState<number>(0);
-  const [immediateSendModalData, setImmediateSendModalData] =
-    useState<SendData | null>(null);
+  const [immediateSendModalData, setImmediateSendModalData] = useState<SendData | null>(null);
   const [isAutoTestModalOpen, setAutoTestModalOpen] = useState<boolean>(false);
-  const [isOpenSendTelNumberModal, setOpenSendTelNumberModal] =
-    useState<boolean>(false);
-  const [replacementInfoModalOpen, setReplacementInfoModalOpen] =
-    useState<boolean>(false);
-  const [reservationTimeModalData, setReservationTimeModalData] =
-    useState<SendData | null>(null);
+  const [isOpenSendTelNumberModal, setOpenSendTelNumberModal] = useState<boolean>(false);
+  const [replacementInfoModalOpen, setReplacementInfoModalOpen] = useState<boolean>(false);
+  const [reservationTimeModalData, setReservationTimeModalData] = useState<SendData | null>(null);
   const [reset, setReset] = useState<boolean>(false);
   const [subjects, setSubjects] = useState<Subject[]>();
   const [toggleAuto, setToggleAuto] = useState<boolean>(true);
@@ -197,10 +189,7 @@ function TwoWayInputPanel({
       if (imageURL.slice(0, 4) === "blob") {
         return null;
       }
-      return imageURL?.slice(
-        imageURL?.indexOf("/resources/") + 11,
-        imageURL?.length
-      );
+      return imageURL?.slice(imageURL?.indexOf("/resources/") + 11, imageURL?.length);
     });
     return {
       id: null,
@@ -355,17 +344,11 @@ function TwoWayInputPanel({
   return (
     <FormProvider {...methods}>
       <Flex flex={1} flexDirection="column" gap={3} width="100%">
-        <CollapseSection
-          flexDirection="column"
-          gap={1}
-          headerTitle="양방향 메시지 입력"
-        >
+        <CollapseSection flexDirection="column" gap={1} headerTitle=" 메시지 입력">
           <InfoBox>
-            <InfoElement label="양방향 발신번호" required>
+            <InfoElement label=" 발신번호" required>
               <Flex gap={2} justifyContent="space-between" width="100%">
-                <FormControl
-                  isInvalid={!!methods?.formState.errors.callingNumber}
-                >
+                <FormControl isInvalid={!!methods?.formState.errors.callingNumber}>
                   <Input
                     defaultValue={template?.wiredPhoneNumber}
                     isDisabled
@@ -375,7 +358,7 @@ function TwoWayInputPanel({
                     {...methods?.register("callingNumber", {
                       required: {
                         value: true,
-                        message: "양방향 발신번호를 선택하세요.",
+                        message: " 발신번호를 선택하세요.",
                       },
                       onChange: (e) => handlePhoneNumberChange(e.target.value),
                     })}
@@ -393,12 +376,12 @@ function TwoWayInputPanel({
                     variant="secondaryBlue"
                     onClick={handleSendTelNumberModalOpen}
                   >
-                    양방향 발신번호 변경
+                    발신번호 변경
                   </Button>
                 )}
               </Flex>
             </InfoElement>
-            <InfoElement label="발송 구분">
+            <InfoElement label=" 구분">
               <Flex alignItems="center" gap={2} width="100%">
                 <Tooltip
                   arrowSize={10}
@@ -410,11 +393,7 @@ function TwoWayInputPanel({
                   fontWeight="normal"
                   hasArrow
                   isDisabled={toggleAuto}
-                  label={
-                    <Text>
-                      자동안내를 선택하면 수정한 내용은 모두 초기화됩니다.
-                    </Text>
-                  }
+                  label={<Text>수정한 내용은 모두 초기화됩니다.</Text>}
                   p={2}
                   placement="bottom-start"
                 >
@@ -423,7 +402,7 @@ function TwoWayInputPanel({
                     variant={toggleAuto ? "primaryBlue" : "secondaryBlue"}
                     onClick={() => handleToggleAuto(true)}
                   >
-                    자동안내
+                    안내
                   </Button>
                 </Tooltip>
                 <Button
@@ -435,7 +414,7 @@ function TwoWayInputPanel({
                 </Button>
                 <TipText
                   size="sm"
-                  text="양방향 자동안내 시나리오 관리에서 [미사용]으로 지정된 경우
+                  text=" 안내 시나리오 관리에서 [미사용]으로 지정된 경우
                   문자상담만 가능합니다"
                 />
               </Flex>
@@ -464,10 +443,7 @@ function TwoWayInputPanel({
                           특수문자
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent
-                        boxShadow="0px 4px 12px -3px"
-                        width="402px"
-                      >
+                      <PopoverContent boxShadow="0px 4px 12px -3px" width="402px">
                         <PopoverArrow />
                         <PopoverHeader>특수문자 입력</PopoverHeader>
                         <PopoverCloseButton />
@@ -487,10 +463,7 @@ function TwoWayInputPanel({
                           치환코드
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent
-                        boxShadow="0px 4px 12px -3px"
-                        width="162px"
-                      >
+                      <PopoverContent boxShadow="0px 4px 12px -3px" width="162px">
                         <PopoverArrow />
                         <PopoverHeader>치환코드 입력</PopoverHeader>
                         <PopoverCloseButton />
@@ -502,11 +475,7 @@ function TwoWayInputPanel({
                     <QuestionMarkIcon
                       color={toggleAuto ? "primary.400" : "primary.700"}
                       cursor="pointer"
-                      onClick={
-                        toggleAuto
-                          ? () => {}
-                          : handleReplacementInfoModalIconClick
-                      }
+                      onClick={toggleAuto ? () => {} : handleReplacementInfoModalIconClick}
                     />
                   </Flex>
                 </Flex>
@@ -534,12 +503,7 @@ function TwoWayInputPanel({
               type="submit"
               onClick={handleAutoTestButtonClick}
             />
-            <Input
-              display="none"
-              id="immediate-send"
-              type="submit"
-              onClick={handleImmediateSend}
-            />
+            <Input display="none" id="immediate-send" type="submit" onClick={handleImmediateSend} />
             <Input
               display="none"
               id="reserved-send"
@@ -548,9 +512,7 @@ function TwoWayInputPanel({
             />
           </InfoBox>
         </CollapseSection>
-        {subjectPanel && (
-          <SubjectPanel isReset={reset} onChange={handleChangeSubjects} />
-        )}
+        {subjectPanel && <SubjectPanel isReset={reset} onChange={handleChangeSubjects} />}
         {replacementInfoModalOpen && (
           <ReplacementCodeInfoModal setOpen={setReplacementInfoModalOpen} />
         )}
@@ -573,9 +535,7 @@ function TwoWayInputPanel({
             onClose={handleSendTelNumberModalClose}
           />
         )}
-        {isAutoTestModalOpen && (
-          <AutoTestModal onClose={handleAutoTestModalClose} />
-        )}
+        {isAutoTestModalOpen && <AutoTestModal onClose={handleAutoTestModalClose} />}
       </Flex>
     </FormProvider>
   );

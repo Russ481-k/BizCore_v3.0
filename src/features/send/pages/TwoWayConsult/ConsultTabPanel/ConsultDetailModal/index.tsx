@@ -30,11 +30,7 @@ import {
   InfoBox,
   InfoElement,
   LetterIcon,
-  PreviewBox,
-  PreviewMessage,
   StatusText,
-  TipText,
-  ToastMessage,
   UpdateIcon,
 } from "components";
 import { KEYWORD } from "features/send";
@@ -51,11 +47,7 @@ interface ConsultDetailModalProps {
   isOpen: boolean;
   setModalOpen: (open: boolean) => void;
 }
-function ConsultDetailModal({
-  consultData,
-  isOpen,
-  setModalOpen,
-}: ConsultDetailModalProps) {
+function ConsultDetailModal({ consultData, isOpen, setModalOpen }: ConsultDetailModalProps) {
   const toast = useToast();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -70,8 +62,7 @@ function ConsultDetailModal({
   };
 
   // 종료모달
-  const [endConsultModalOpen, setEndConsultModalOpen] =
-    useState<boolean>(false);
+  const [endConsultModalOpen, setEndConsultModalOpen] = useState<boolean>(false);
   const handleFinishButtonClick = () => {
     setEndConsultModalOpen(true);
   };
@@ -105,7 +96,7 @@ function ConsultDetailModal({
     <>
       <CustomModal isOpen={isOpen} onClose={onClose}>
         <ModalContent minW="768px">
-          <ModalHeader>양방향 상담 상세</ModalHeader>
+          <ModalHeader> 상담 상세</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {isLoading && (
@@ -116,47 +107,31 @@ function ConsultDetailModal({
             {!isLoading && consultData && (
               <VStack align="stretch" spacing={10}>
                 <VStack align="stretch" spacing={4}>
-                  <Heading
-                    as="h4"
-                    color="gray.900"
-                    fontSize="md"
-                    fontWeight="600"
-                  >
-                    양방향 메세지 발송 정보
+                  <Heading as="h4" color="gray.900" fontSize="md" fontWeight="600">
+                    메세지 정보
                   </Heading>
                   <InfoBox>
                     <Flex>
                       <InfoElement flex={1} label="발신번호" labelWidth="120px">
                         <Text fontSize="sm">
-                          {formatter.contactFormatter(
-                            consultData.headerData.callerNo
-                          )}
+                          {formatter.contactFormatter(consultData.headerData.callerNo)}
                         </Text>
                       </InfoElement>
                       <InfoElement flex={1} label="등록자" labelWidth="120px">
                         <Text fontSize="sm">
-                          {consultData.headerData.userName}(
-                          {consultData.headerData.userId})
+                          {consultData.headerData.userName}({consultData.headerData.userId})
                         </Text>
                       </InfoElement>
                     </Flex>
                     <Flex>
-                      <InfoElement
-                        flex={1}
-                        label="최초 발송구분"
-                        labelWidth="120px"
-                      >
+                      <InfoElement flex={1} label="최초 구분" labelWidth="120px">
                         <Text fontSize="sm">
                           {consultData.headerData.firstSendType === "A"
                             ? KEYWORD.SENDTYPE_AUTO
                             : KEYWORD.SENDTYPE_CHAT}
                         </Text>
                       </InfoElement>
-                      <InfoElement
-                        flex={1}
-                        label="최초 발송일시"
-                        labelWidth="120px"
-                      >
+                      <InfoElement flex={1} label="최초 일시" labelWidth="120px">
                         <Text fontSize="sm">
                           {format(
                             new Date(consultData.headerData.firstSendDate),
@@ -167,64 +142,18 @@ function ConsultDetailModal({
                     </Flex>
                     <Flex>
                       <InfoElement flex={1} label="이름" labelWidth="120px">
-                        <Text fontSize="sm">
-                          {consultData.headerData.userName}
-                        </Text>
+                        <Text fontSize="sm">{consultData.headerData.userName}</Text>
                       </InfoElement>
-                      <InfoElement
-                        flex={1}
-                        label="수신(휴대)번호"
-                        labelWidth="120px"
-                      >
+                      <InfoElement flex={1} label="수신(휴대)번호" labelWidth="120px">
                         <Text fontSize="sm">
-                          {formatter.contactFormatter(
-                            consultData.headerData.receiverNo
-                          )}
+                          {formatter.contactFormatter(consultData.headerData.receiverNo)}
                         </Text>
                       </InfoElement>
                     </Flex>
                   </InfoBox>
                 </VStack>
                 <HStack align="stretch" spacing={5}>
-                  <Box flex="0 0 320px">
-                    <PreviewBox
-                      channelType={msgChannel}
-                      position="relative"
-                      pb="60px"
-                    >
-                      {consultData.messageData?.length > 0 &&
-                        consultData.messageData.map((msg, i) => {
-                          return (
-                            <PreviewMessage
-                              key={`consult-msg-${i}`}
-                              type={msg.callType}
-                              text={msg.message}
-                              date={msg.sendDate}
-                              filePath={msg.filePath ?? null}
-                              clickableFile
-                            />
-                          );
-                        })}
-                      <Box
-                        bgColor="white"
-                        bottom="0"
-                        boxShadow="0px -2px 14px -2px rgba(181, 181, 181, 0.4)"
-                        left="12px"
-                        p="0.75rem"
-                        position="absolute"
-                        right="12px"
-                      >
-                        <Button
-                          size="sm"
-                          variant="textGray"
-                          w="100%"
-                          onClick={handleExcelDownloadButtonClick}
-                        >
-                          엑셀 다운로드
-                        </Button>
-                      </Box>
-                    </PreviewBox>
-                  </Box>
+                  <Box flex="0 0 320px"></Box>
                   <VStack align="stretch" flex={1} spacing={6}>
                     <VStack
                       align="stretch"
@@ -236,22 +165,14 @@ function ConsultDetailModal({
                     >
                       <HStack spacing={3}>
                         <Badge size="lg" variant="primaryBlue">
-                          {currentSendType === "A" ? (
-                            <RobotIcon />
-                          ) : (
-                            <LetterIcon />
-                          )}
+                          {currentSendType === "A" ? <RobotIcon /> : <LetterIcon />}
                         </Badge>
                         <VStack align="flex-start" spacing={0}>
                           <StatusText
                             text={
-                              currentStatus === 1
-                                ? KEYWORD.STATUS_PROGRESS
-                                : KEYWORD.STATUS_END
+                              currentStatus === 1 ? KEYWORD.STATUS_PROGRESS : KEYWORD.STATUS_END
                             }
-                            colorScheme={
-                              currentStatus === 1 ? "success" : "danger"
-                            }
+                            colorScheme={currentStatus === 1 ? "success" : "danger"}
                           />
                           <Text color="black" fontWeight="500">
                             {currentSendType === "A"
@@ -267,9 +188,7 @@ function ConsultDetailModal({
                         variant="textGray"
                         onClick={handleTransformButtonClick}
                       >
-                        {currentSendType === "A"
-                          ? KEYWORD.TRANSFORM_ToC
-                          : KEYWORD.TRANSFORM_ToA}
+                        {currentSendType === "A" ? KEYWORD.TRANSFORM_ToC : KEYWORD.TRANSFORM_ToA}
                       </Button>
                     </VStack>
                     <SendMessageArea
@@ -293,10 +212,7 @@ function ConsultDetailModal({
           </ModalFooter>
         </ModalContent>
       </CustomModal>
-      <EndConsultModal
-        isOpen={endConsultModalOpen}
-        setModalOpen={setEndConsultModalOpen}
-      />
+      <EndConsultModal isOpen={endConsultModalOpen} setModalOpen={setEndConsultModalOpen} />
       <TransformModal
         isOpen={transformModalOpen}
         transTo={currentSendType === "A" ? "C" : "A"}

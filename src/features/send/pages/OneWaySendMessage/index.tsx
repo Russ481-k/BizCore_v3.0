@@ -22,11 +22,8 @@ function OneWaySendMessage() {
   const [imageURLs, setImageURLs] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [isDisabled, setDisabled] = useState<boolean>(true);
-  const [noneWiredNumberModalOpen, setNoneWiredNumberModalOpen] =
-    useState<boolean>(false);
-  const [templateMsgContext, setTemplateMsgContext] = useState<string | null>(
-    null
-  );
+  const [noneWiredNumberModalOpen, setNoneWiredNumberModalOpen] = useState<boolean>(false);
+  const [templateMsgContext, setTemplateMsgContext] = useState<string | null>(null);
   const [subjectCount, setSubjectCount] = useState<number>(0);
   const { data: wiredPhoneNumbers } = useGetWiredPhoneNumbers();
 
@@ -41,14 +38,14 @@ function OneWaySendMessage() {
       },
     ];
     if (!!wiredPhoneNumbers?.wiredPhoneNumberPlus.length) {
-      Object.values(
-        JSON.parse(wiredPhoneNumbers?.wiredPhoneNumberPlus)
-      ).forEach((wiredPhoneNumber) => {
-        wiredPhoneNumberCodesArray.push({
-          code: String(wiredPhoneNumber),
-          name: String(wiredPhoneNumber),
-        });
-      });
+      Object.values(JSON.parse(wiredPhoneNumbers?.wiredPhoneNumberPlus)).forEach(
+        (wiredPhoneNumber) => {
+          wiredPhoneNumberCodesArray.push({
+            code: String(wiredPhoneNumber),
+            name: String(wiredPhoneNumber),
+          });
+        }
+      );
     }
     return wiredPhoneNumberCodesArray;
   }, [wiredPhoneNumbers]);
@@ -77,10 +74,7 @@ function OneWaySendMessage() {
               .filter((_, i) => i !== index)
               .map((url) => {
                 return {
-                  uniqueFileName: url.slice(
-                    url.indexOf("/resources/") + 11,
-                    url.length
-                  ),
+                  uniqueFileName: url.slice(url.indexOf("/resources/") + 11, url.length),
                   fileOrder: index,
                 };
               }),
@@ -109,15 +103,7 @@ function OneWaySendMessage() {
         });
       }
     },
-    [
-      changedIndex,
-      imageFiles,
-      imageURLs,
-      toast,
-      setChangedIndex,
-      setImageFiles,
-      setImageURLs,
-    ]
+    [changedIndex, imageFiles, imageURLs, toast, setChangedIndex, setImageFiles, setImageURLs]
   );
   const removeImageFile = (index: number) => {
     const bufImageFiles = imageFiles;
@@ -128,10 +114,7 @@ function OneWaySendMessage() {
         .filter((_, i) => i !== index)
         .map((url) => {
           return {
-            uniqueFileName: url.slice(
-              url.indexOf("/resources/") + 11,
-              url.length
-            ),
+            uniqueFileName: url.slice(url.indexOf("/resources/") + 11, url.length),
             fileOrder: index,
           };
         }),
@@ -162,7 +145,7 @@ function OneWaySendMessage() {
 
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="문자 메시지 발송" />
+      <CustomCard isHeader="문자 전송" />
       <Flex gap={3} width="100%">
         <FormProvider {...methods}>
           <InputPanel

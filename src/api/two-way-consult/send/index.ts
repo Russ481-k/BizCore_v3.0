@@ -14,9 +14,7 @@ export interface SendConsultResponse {
   data: string;
   message: string;
 }
-export function sendConsultAPI(
-  params: SendConsultParams
-): Promise<SendConsultResponse> {
+export function sendConsultAPI(params: SendConsultParams): Promise<SendConsultResponse> {
   return requestApi<SendConsultResponse>({
     url: consultations("/send"),
     method: "POST",
@@ -35,7 +33,7 @@ export interface SendMMSConsultParams {
   mastId: number;
   bizNumber: string;
   message: string;
-  // sendType: "A" | "C"; // A:자동안내 / C:문자상담
+  // sendType: "A" | "C"; // A:안내 / C:문자상담
   // changeStatus: "NORMAL" | "AUTO" | "MANUAL" | "QUIT"; // NORMAL:일반 /AUTO:자동전환 / MANUAL:수동전환 / QUIT:종료
   file: File;
   expireTime: string;
@@ -45,9 +43,7 @@ export interface SendMMSConsultResponse {
   data: string;
   message: string;
 }
-export function sendMMSConsultAPI(
-  params: SendMMSConsultParams
-): Promise<SendMMSConsultResponse> {
+export function sendMMSConsultAPI(params: SendMMSConsultParams): Promise<SendMMSConsultResponse> {
   return requestApi<SendMMSConsultResponse>({
     url: consultations("/mms/send"),
     headers: {

@@ -88,7 +88,7 @@ export const CHANNEL_OPTION: Option[] = [
     code: "kkt",
   },
   {
-    name: "양방향",
+    name: "",
     code: "crs",
   },
 ];

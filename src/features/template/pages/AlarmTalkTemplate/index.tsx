@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { format } from "date-fns";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { alarmTalkTemplate } from "api/url";
@@ -23,7 +23,6 @@ import {
   InfoElement,
   PaginationButtons,
   RangeDatePicker,
-  SaveAlarmTalkTemplateModal,
 } from "components";
 import { useGetAlarmTalkTemplatesBySearch } from "features/template";
 import TemplateGroup from "type/TemplateGroup";
@@ -38,18 +37,14 @@ function AlarmTalkTemplate() {
     search: string;
   }>({ mode: "onChange" });
 
-  const [changeTemplateModalData, setChangeTemplateModalData] = useState<
-    number | null
-  >(null);
+  const [, setChangeTemplateModalData] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
   const [batchSize, setBatchSize] = useState<number>(10);
   const [regDateOption, setRegDateOption] = useState<"all" | "select">("all");
-  const [refetchGroupTemplate, setRefetchGroupTemplate] =
-    useState<boolean>(false);
-  const [selectedTemplateGroup, setSelectedTemplateGroup] =
-    useState<TemplateGroup | null>(null);
+  const [refetchGroupTemplate, setRefetchGroupTemplate] = useState<boolean>(false);
+  const [selectedTemplateGroup, setSelectedTemplateGroup] = useState<TemplateGroup | null>(null);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [templateName, setTemplateName] = useState<string | null>(null);
 
@@ -59,7 +54,6 @@ function AlarmTalkTemplate() {
     pageLength,
     paging: pagination,
     totalCount,
-    refetch,
   } = useGetAlarmTalkTemplatesBySearch(
     {
       groupTemplateId: selectedTemplateGroup?.groupTemplateId ?? null,
@@ -78,13 +72,7 @@ function AlarmTalkTemplate() {
     setBatchSize(BatchSize);
     setEnableQuery(true);
   };
-  const handleChangeTemplateModalClose = () => {
-    setChangeTemplateModalData(null);
-  };
-  const handleChangeTemplateModalConfirm = () => {
-    setChangeTemplateModalData(null);
-    handlePageRefetch();
-  };
+
   const handleChangeTemplateModalData = (templateId: number) => {
     setChangeTemplateModalData(templateId);
   };
@@ -92,11 +80,6 @@ function AlarmTalkTemplate() {
     setCurrentPage(page);
     setEnableQuery(true);
   };
-  const handlePageRefetch = useCallback(() => {
-    setCurrentPage(1);
-    refetch();
-    setRefetchGroupTemplate(true);
-  }, [refetch, setCurrentPage, setRefetchGroupTemplate]);
 
   const handleFormSubmit = methods.handleSubmit(({ regDate, search }) => {
     if (regDateOption === "select" && !!regDate[0] && !!regDate[1]) {
@@ -147,13 +130,7 @@ function AlarmTalkTemplate() {
           onChange={handleTemplateGroupChange}
           onRefetch={setRefetchGroupTemplate}
         />
-        <Box
-          as="form"
-          flex={1}
-          gap={3}
-          width="100%"
-          onSubmit={handleFormSubmit}
-        >
+        <Box as="form" flex={1} gap={3} width="100%" onSubmit={handleFormSubmit}>
           <Flex flexDirection="column" width="100%">
             <CollapseSection
               borderBottomRadius={0}
@@ -225,8 +202,7 @@ function AlarmTalkTemplate() {
                       "/excel?" +
                         (templateName ? "&templateName=" + templateName : "") +
                         (selectedTemplateGroup?.groupTemplateId
-                          ? "&groupTemplateId=" +
-                            selectedTemplateGroup?.groupTemplateId
+                          ? "&groupTemplateId=" + selectedTemplateGroup?.groupTemplateId
                           : "") +
                         (startDate ? "&startDate=" + startDate : "") +
                         (endDate ? "&endDate=" + endDate : "")
@@ -297,17 +273,12 @@ function AlarmTalkTemplate() {
                           _hover={{
                             textDecoration: "underline",
                           }}
-                          onClick={() =>
-                            handleChangeTemplateModalData(template.templateId)
-                          }
+                          onClick={() => handleChangeTemplateModalData(template.templateId)}
                         >
                           {template.templateName}
                         </Text>
                         <Text flex={4} textAlign="center" px={4} py={2}>
-                          {format(
-                            new Date(template.createDate ?? ""),
-                            "yyyy-MM-dd"
-                          )}
+                          {format(new Date(template.createDate ?? ""), "yyyy-MM-dd")}
                         </Text>
                       </Flex>
                     ))
@@ -337,15 +308,6 @@ function AlarmTalkTemplate() {
             </Flex>
           </Flex>
         </Box>
-        {changeTemplateModalData && (
-          <SaveAlarmTalkTemplateModal
-            selectedTemplateGroupId={selectedTemplateGroup?.groupTemplateId}
-            isChangeTemplate={false}
-            templateId={changeTemplateModalData}
-            onClose={handleChangeTemplateModalClose}
-            onConfirm={handleChangeTemplateModalConfirm}
-          />
-        )}
       </HStack>
     </VStack>
   );

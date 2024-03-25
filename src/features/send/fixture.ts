@@ -1,9 +1,9 @@
 export const KEYWORD = {
-  SENDTYPE_AUTO: "자동안내",
+  SENDTYPE_AUTO: "안내",
   SENDTYPE_CHAT: "문자상담",
   STATUS_PROGRESS: "진행중",
   STATUS_END: "종료",
-  TRANSFORM_ToA: "자동안내로 전환",
+  TRANSFORM_ToA: "안내로 전환",
   TRANSFORM_ToC: "문자상담으로 전환",
 };
 export const CONSULTS_OPTION = {
@@ -31,7 +31,7 @@ export const CONSULTS_OPTION = {
       code: "C",
     },
     {
-      name: "자동안내",
+      name: "안내",
       code: "A",
     },
   ],

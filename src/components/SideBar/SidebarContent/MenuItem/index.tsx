@@ -1,4 +1,5 @@
 import { Flex, FlexProps } from "@chakra-ui/react";
+import React from "react";
 
 import Menu from "type/Menu";
 import MenuItemWrapper from "../MenuItemWrapper";

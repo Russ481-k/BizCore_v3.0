@@ -15,10 +15,7 @@ interface CheckEmptyContextModalProps {
   setModalOpen: (open: boolean) => void;
 }
 
-function CheckEmptyContextModal({
-  isOpen,
-  setModalOpen,
-}: CheckEmptyContextModalProps) {
+function CheckEmptyContextModal({ isOpen, setModalOpen }: CheckEmptyContextModalProps) {
   const onClose = () => {
     setModalOpen(false);
   };
@@ -31,8 +28,7 @@ function CheckEmptyContextModal({
           <ModalCloseButton />
           <ModalBody>
             <Text>
-              안내 메시지 자동 발송을 설정한 경우 메시지 내용을 등록하여셔
-              합니다.
+              안내 메시지 을 설정한 경우 메시지 내용을 등록하여셔 합니다.
               <br />
               <br />
               메시지 내용을 등록 후 전환안내 설정을 저장하세요.

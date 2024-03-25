@@ -78,12 +78,7 @@ function SendStatusModal({ sendMessageId, onClose }: SendStatusModalProps) {
   );
 
   const handleFormSubmit = handleSubmit(
-    (data: {
-      sendStatus: string;
-      sendChannel: string;
-      resend: string;
-      keyword: string;
-    }) => {
+    (data: { sendStatus: string; sendChannel: string; resend: string; keyword: string }) => {
       setSendStatus(data.sendStatus === "ALL" ? null : Number(data.sendStatus));
       setSendChannel(data.sendChannel === "ALL" ? null : data.sendChannel);
       setKeyword(data.keyword);
@@ -108,57 +103,33 @@ function SendStatusModal({ sendMessageId, onClose }: SendStatusModalProps) {
   return (
     <CustomModal isOpen onClose={onClose}>
       <ModalContent minW="1200px">
-        <ModalHeader>양방향 발송 상세</ModalHeader>
+        <ModalHeader> 상세</ModalHeader>
         <ModalCloseButton />
         <ModalBody id="send-modal">
           <Flex flexDirection="column">
-            <CollapseSection
-              headerTitle="발송 정보"
-              borderBottomWidth={0}
-              borderBottomRadius={0}
-            >
+            <CollapseSection headerTitle=" 정보" borderBottomWidth={0} borderBottomRadius={0}>
               <InfoBox>
                 <Flex>
-                  <InfoElement flex={1} label="발송채널" labelWidth="130px">
+                  <InfoElement flex={1} label="채널" labelWidth="130px">
                     {channel === "SHORT" && (
-                      <Tag
-                        backgroundColor="channel.sms.bg"
-                        color="channel.sms.text"
-                        size="sm"
-                      >
+                      <Tag backgroundColor="channel.sms.bg" color="channel.sms.text" size="sm">
                         단문 (SMS)
                       </Tag>
                     )}
                     {channel === "LONG" && (
-                      <Tag
-                        backgroundColor="channel.lms.bg"
-                        color="channel.lms.text"
-                        size="sm"
-                      >
+                      <Tag backgroundColor="channel.lms.bg" color="channel.lms.text" size="sm">
                         장문 (LMS)
                       </Tag>
                     )}
                     {channel === "MULTI" && (
-                      <Tag
-                        backgroundColor="channel.mms.bg"
-                        color="channel.mms.text"
-                        size="sm"
-                      >
+                      <Tag backgroundColor="channel.mms.bg" color="channel.mms.text" size="sm">
                         멀티 (MMS)
                       </Tag>
                     )}
                   </InfoElement>
-                  <InfoElement flex={1} label="발송 일시" labelWidth="130px">
-                    <Flex
-                      alignItems="center"
-                      justifyContent="space-between"
-                      width="100%"
-                    >
-                      <Text>
-                        {sendDate
-                          ? format(new Date(sendDate), "yyyy-MM-dd HH:mm")
-                          : "-"}
-                      </Text>
+                  <InfoElement flex={1} label=" 일시" labelWidth="130px">
+                    <Flex alignItems="center" justifyContent="space-between" width="100%">
+                      <Text>{sendDate ? format(new Date(sendDate), "yyyy-MM-dd HH:mm") : "-"}</Text>
                     </Flex>
                   </InfoElement>
                 </Flex>
@@ -167,23 +138,17 @@ function SendStatusModal({ sendMessageId, onClose }: SendStatusModalProps) {
                     <Text>{createUser ?? "-"}</Text>
                   </InfoElement>
                   <InfoElement flex={1} label="등록 일시" labelWidth="130px">
-                    {createDate
-                      ? format(new Date(createDate), "yyyy-MM-dd HH:mm")
-                      : "-"}
+                    {createDate ? format(new Date(createDate), "yyyy-MM-dd HH:mm") : "-"}
                   </InfoElement>
                 </Flex>
               </InfoBox>
             </CollapseSection>
-            <CollapseSection
-              headerTitle="수신 대상자 정보"
-              borderBottomWidth={0}
-              borderRadius={0}
-            >
+            <CollapseSection headerTitle="수신 대상자 정보" borderBottomWidth={0} borderRadius={0}>
               <Section flexWrap="wrap" gap={8} justifyContent="left" px={6}>
                 <Flex alignItems="center" gap={2}>
                   <SendIcon boxSize={4} fill="primary.800" />
                   <Text as="span" fontSize="sm">
-                    발송수: {totalSendLogCount ?? 0}명
+                    수: {totalSendLogCount ?? 0}명
                   </Text>
                 </Flex>
                 <Divider
@@ -220,7 +185,7 @@ function SendStatusModal({ sendMessageId, onClose }: SendStatusModalProps) {
                       {...register("sendStatus")}
                     />
                   </InfoElement>
-                  <InfoElement flex={1} label="발송 채널" labelWidth="130px">
+                  <InfoElement flex={1} label=" 채널" labelWidth="130px">
                     <CustomSelect
                       codes={[
                         { code: "S", name: "SMS" },
@@ -234,11 +199,7 @@ function SendStatusModal({ sendMessageId, onClose }: SendStatusModalProps) {
                   </InfoElement>
                 </Flex>
                 <InfoElement label="키워드" labelWidth="130px">
-                  <Input
-                    placeholder="검색어를 입력해주세요."
-                    size="sm"
-                    {...register("keyword")}
-                  />
+                  <Input placeholder="검색어를 입력해주세요." size="sm" {...register("keyword")} />
                   <Button size="sm" type="submit" variant="secondaryBlue">
                     검색
                   </Button>
@@ -261,12 +222,7 @@ function SendStatusModal({ sendMessageId, onClose }: SendStatusModalProps) {
                         검색결과 : {totalSendLogCount ?? 0} 건
                       </Text>
                       <Flex flex={1} gap={2} justifyContent="flex-end">
-                        <Button
-                          size="sm"
-                          type="button"
-                          variant="secondaryBlue"
-                          width="100px"
-                        >
+                        <Button size="sm" type="button" variant="secondaryBlue" width="100px">
                           엑셀 다운로드
                         </Button>
                       </Flex>
@@ -286,7 +242,7 @@ function SendStatusModal({ sendMessageId, onClose }: SendStatusModalProps) {
                         justifyContent="space-between"
                       >
                         <Text flex={1} px={2} py={3} textAlign="center">
-                          발송채널
+                          채널
                         </Text>
                         <Text flex={1} px={2} py={3} textAlign="center">
                           이름
@@ -361,9 +317,7 @@ function SendStatusModal({ sendMessageId, onClose }: SendStatusModalProps) {
                             </Text>
                             <Text flex={2} px={2} py={3} textAlign="center">
                               {formatter.contactFormatter(
-                                logData.receiverNo
-                                  .replace(/[^0-9]/g, "")
-                                  .substring(0, 11)
+                                logData.receiverNo.replace(/[^0-9]/g, "").substring(0, 11)
                               ) ?? "-"}
                             </Text>
                             <Text

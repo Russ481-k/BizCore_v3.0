@@ -73,27 +73,23 @@ function SendReservationDetailModal({
 
   const [changeReservationTimeModalOpen, setChangeReservationTimeModalOpen] =
     useState<boolean>(false);
-  const [
-    deleteReservedMessageCheckModalOpen,
-    setDeleteReservedMessageCheckModalOpen,
-  ] = useState<boolean>(false);
+  const [deleteReservedMessageCheckModalOpen, setDeleteReservedMessageCheckModalOpen] =
+    useState<boolean>(false);
   const [changeReservedMessageModalOpen, setChangeReservedMessageModalOpen] =
     useState<boolean>(false);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
   const [checkedSubject, setCheckedSubject] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
-  const [deleteSubjectsCheckModalOpen, setDeleteSubjectsCheckModalOpen] =
-    useState<boolean>(false);
+  const [deleteSubjectsCheckModalOpen, setDeleteSubjectsCheckModalOpen] = useState<boolean>(false);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
   const [messageContents, setMessageContents] = useState<string | null>();
 
-  const { data: messageData, refetch: refetchReservedMessageDetail } =
-    useGetReservedMessageDetail(
-      {
-        headId: messageId ?? null,
-      },
-      { enabled: !!messageId }
-    );
+  const { data: messageData, refetch: refetchReservedMessageDetail } = useGetReservedMessageDetail(
+    {
+      headId: messageId ?? null,
+    },
+    { enabled: !!messageId }
+  );
   const {
     data: subjects,
     refetch: refetchSubjects,
@@ -109,12 +105,9 @@ function SendReservationDetailModal({
       enabled: !!messageId,
     }
   );
-  const { mutate: deleteSubjects, isLoading: isDeleteSubjectsLoading } =
-    useDeleteSubjects();
-  const {
-    mutate: cancelReservedMessage,
-    isLoading: isCancelReservedMessageLoading,
-  } = useCancelReservedMessage();
+  const { mutate: deleteSubjects, isLoading: isDeleteSubjectsLoading } = useDeleteSubjects();
+  const { mutate: cancelReservedMessage, isLoading: isCancelReservedMessageLoading } =
+    useCancelReservedMessage();
 
   const isAllChecked = !!checkedItems.length && checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !isAllChecked;
@@ -165,10 +158,10 @@ function SendReservationDetailModal({
           toast({
             render: () => (
               <ToastMessage title="예약 수정 오류" type="ERROR">
-                <Text>예약 발송 수정 중 알 수 없는 오류가 발생하였습니다.</Text>
+                <Text>예약 수정 중 알 수 없는 오류가 발생하였습니다.</Text>
                 <Text>
-                  예약 발송 수정을 다시 진행 하세요. 본 오류가 계속 발생하는
-                  경우 시스템 관리자에게 문의하기 바랍니다.
+                  예약 수정을 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템 관리자에게
+                  문의하기 바랍니다.
                 </Text>
               </ToastMessage>
             ),
@@ -178,15 +171,11 @@ function SendReservationDetailModal({
         onSuccess: () => {
           toast({
             render: () => (
-              <ToastMessage title="예약 발송 수정" type="SUCCESS">
+              <ToastMessage title="예약  수정" type="SUCCESS">
                 <Text>
-                  등록된 예약 발송을 취소하고 발송 메시지 정보와 수신 대상자를
-                  정상적으로 불러왔습니다.
+                  등록된 예약 을 취소하고 메시지 정보와 수신 대상자를 정상적으로 불러왔습니다.
                 </Text>
-                <Text>
-                  발송 메시지와 수신 대상자 수정 후 즉시 발송 또는 예약 발송을
-                  진행하세요.
-                </Text>
+                <Text>메시지와 수신 대상자 수정 후 즉시 또는 예약 을 진행하세요.</Text>
               </ToastMessage>
             ),
           });
@@ -205,12 +194,10 @@ function SendReservationDetailModal({
           toast({
             render: () => (
               <ToastMessage title="수신 대상자 전체 삭제 오류" type="ERROR">
+                <Text>수신 대상자 전체 삭제 중 알 수 없는 오류가 발생하였습니다.</Text>
                 <Text>
-                  수신 대상자 전체 삭제 중 알 수 없는 오류가 발생하였습니다.
-                </Text>
-                <Text>
-                  수신 대상자 전체 삭제를 다시 진행 하세요. 본 오류가 계속
-                  발생하는 경우 시스템 관리자에게 문의하기 바랍니다.
+                  수신 대상자 전체 삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템
+                  관리자에게 문의하기 바랍니다.
                 </Text>
               </ToastMessage>
             ),
@@ -222,7 +209,7 @@ function SendReservationDetailModal({
             render: () => (
               <ToastMessage title="수신 대상자 전체 삭제 완료" type="SUCCESS">
                 <Text>수신 대상자 전체 삭제가 정상적으로 완료되고</Text>
-                <Text>예약 발송이 취소되었습니다.</Text>
+                <Text>예약 이 취소되었습니다.</Text>
               </ToastMessage>
             ),
           });
@@ -251,7 +238,7 @@ function SendReservationDetailModal({
               render: () => (
                 <ToastMessage title="수신 대상자 전체 삭제 완료" type="SUCCESS">
                   <Text>수신 대상자 전체 삭제가 정상적으로 완료되고</Text>
-                  <Text>예약 발송이 취소되었습니다.</Text>
+                  <Text>예약 이 취소되었습니다.</Text>
                 </ToastMessage>
               ),
             });
@@ -277,13 +264,10 @@ function SendReservationDetailModal({
             toast({
               render: () => (
                 <ToastMessage title="수신 대상자 삭제 오류" type="ERROR">
+                  <Text>수신 대상자 삭제 중 알 수 없는 오류가 발생하였습니다.</Text>
                   <Text>
-                    수신 대상자 삭제 중 알 수 없는 오류가 발생하였습니다.
-                  </Text>
-                  <Text>
-                    수신 대상자 삭제를 클릭하여 수신 대상자를 다시 삭제하세요.
-                    본 오류가 계속 발생하는 경우 시스템 관리자에게 문의하기
-                    바랍니다.
+                    수신 대상자 삭제를 클릭하여 수신 대상자를 다시 삭제하세요. 본 오류가 계속
+                    발생하는 경우 시스템 관리자에게 문의하기 바랍니다.
                   </Text>
                 </ToastMessage>
               ),
@@ -312,16 +296,14 @@ function SendReservationDetailModal({
   useEffect(() => {
     setMessageContents(messageData?.msg);
     setImageURLs(
-      [
-        messageData?.filePath1,
-        messageData?.filePath2,
-        messageData?.filePath3,
-      ].map((uniqueFileName) => {
-        if (!!uniqueFileName) {
-          return process.env.REACT_APP_API_URL + "/resources/" + uniqueFileName;
+      [messageData?.filePath1, messageData?.filePath2, messageData?.filePath3].map(
+        (uniqueFileName) => {
+          if (!!uniqueFileName) {
+            return process.env.REACT_APP_API_URL + "/resources/" + uniqueFileName;
+          }
+          return "";
         }
-        return "";
-      })
+      )
     );
   }, [messageData]);
 
@@ -335,41 +317,27 @@ function SendReservationDetailModal({
   return (
     <CustomModal isOpen onClose={onClose}>
       <ModalContent minW="1200px">
-        <ModalHeader>예약 발송 상세</ModalHeader>
+        <ModalHeader>예약 상세</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex flexDirection="column" gap={3}>
-            <CollapseSection headerTitle="예약 발송 정보">
+            <CollapseSection headerTitle="예약  정보">
               <InfoBox>
                 <Flex>
-                  <InfoElement flex={1} label="발송채널" labelWidth="130px">
-                    <ChannelTag
-                      channelType={messageData?.channelType ?? "SMS"}
-                    />
+                  <InfoElement flex={1} label="채널" labelWidth="130px">
+                    <ChannelTag channelType={messageData?.channelType ?? "SMS"} />
                   </InfoElement>
-                  <InfoElement
-                    flex={1}
-                    label="예약 발송 일시"
-                    labelWidth="130px"
-                  >
-                    <Flex
-                      alignItems="center"
-                      justifyContent="space-between"
-                      width="100%"
-                    >
+                  <InfoElement flex={1} label="예약  일시" labelWidth="130px">
+                    <Flex alignItems="center" justifyContent="space-between" width="100%">
                       <Text>
-                        {messageData &&
-                          format(
-                            new Date(messageData?.reqDate),
-                            "yyyy-MM-dd HH:mm"
-                          )}
+                        {messageData && format(new Date(messageData?.reqDate), "yyyy-MM-dd HH:mm")}
                       </Text>
                       <Button
                         size="sm"
                         variant="secondaryBlue"
                         onClick={handleChangeReservationTimeModalOpen}
                       >
-                        예약 발송 일시 수정
+                        예약 일시 수정
                       </Button>
                     </Flex>
                   </InfoElement>
@@ -380,11 +348,7 @@ function SendReservationDetailModal({
                   </InfoElement>
                   <InfoElement flex={1} label="등록일시" labelWidth="130px">
                     <Text>
-                      {messageData &&
-                        format(
-                          new Date(messageData?.createDate),
-                          "yyyy-MM-dd HH:mm"
-                        )}
+                      {messageData && format(new Date(messageData?.createDate), "yyyy-MM-dd HH:mm")}
                     </Text>
                   </InfoElement>
                 </Flex>
@@ -393,7 +357,7 @@ function SendReservationDetailModal({
             <Flex flex={1} gap={3} width="100%">
               <Tabs align="start" variant="enclosed" width="100%">
                 <TabList>
-                  <Tab>발송 메시지 정보</Tab>
+                  <Tab> 메시지 정보</Tab>
                   <Tab>
                     수신 대상자<Tag ml={2}>{totalCount}명</Tag>
                   </Tab>
@@ -401,17 +365,8 @@ function SendReservationDetailModal({
                 <TabPanels>
                   <TabPanel>
                     <InfoBox>
-                      <InfoElement
-                        label="발신번호"
-                        labelWidth="130px"
-                        width="100%"
-                      >
-                        <Flex
-                          gap={2}
-                          justifyContent="space-between"
-                          py={2}
-                          width="100%"
-                        >
+                      <InfoElement label="발신번호" labelWidth="130px" width="100%">
+                        <Flex gap={2} justifyContent="space-between" py={2} width="100%">
                           <Input
                             isDisabled
                             maxWidth="250px"
@@ -419,29 +374,14 @@ function SendReservationDetailModal({
                             size="sm"
                             value={formatter.contactFormatter(
                               messageData &&
-                                messageData.callback
-                                  ?.replace(/[^0-9]/g, "")
-                                  .substring(0, 11)
+                                messageData.callback?.replace(/[^0-9]/g, "").substring(0, 11)
                             )}
                           />
                         </Flex>
                       </InfoElement>
-                      <InfoElement
-                        label="메시지 제목"
-                        labelWidth="130px"
-                        width="100%"
-                      >
-                        <Flex
-                          flexDirection="column"
-                          gap={1}
-                          py={2}
-                          width="100%"
-                        >
-                          <Flex
-                            alignItems="end"
-                            justifyContent="space-between"
-                            lineHeight={1}
-                          >
+                      <InfoElement label="메시지 제목" labelWidth="130px" width="100%">
+                        <Flex flexDirection="column" gap={1} py={2} width="100%">
+                          <Flex alignItems="end" justifyContent="space-between" lineHeight={1}>
                             <Flex />
                           </Flex>
                           <Input
@@ -453,17 +393,8 @@ function SendReservationDetailModal({
                           />
                         </Flex>
                       </InfoElement>
-                      <InfoElement
-                        label="메시지 내용"
-                        labelWidth="130px"
-                        width="100%"
-                      >
-                        <Flex
-                          flexDirection="column"
-                          gap={2}
-                          py={2}
-                          width="100%"
-                        >
+                      <InfoElement label="메시지 내용" labelWidth="130px" width="100%">
+                        <Flex flexDirection="column" gap={2} py={2} width="100%">
                           <Textarea
                             backgroundColor="gray.50"
                             defaultValue={messageData?.msg}
@@ -475,18 +406,11 @@ function SendReservationDetailModal({
                           />
                         </Flex>
                       </InfoElement>
-                      <InfoElement
-                        label="이미지 첨부"
-                        labelWidth="130px"
-                        width="100%"
-                      >
+                      <InfoElement label="이미지 첨부" labelWidth="130px" width="100%">
                         {imageURLs.length > 0 ? (
                           <Flex gap={2}>
                             {imageURLs.map((imagesURL, index) => (
-                              <Flex
-                                id={`${imagesURL}-${index}`}
-                                key={`${imagesURL}-${index}`}
-                              >
+                              <Flex id={`${imagesURL}-${index}`} key={`${imagesURL}-${index}`}>
                                 <Flex
                                   backgroundImage={imagesURL}
                                   backgroundPosition="center"
@@ -513,12 +437,7 @@ function SendReservationDetailModal({
                         <Text fontSize="xs" fontWeight="bold">
                           대상자 수 : {totalCount} 명
                         </Text>
-                        <Flex
-                          flex={1}
-                          gap={2}
-                          justifyContent="flex-end"
-                          px={4}
-                        ></Flex>
+                        <Flex flex={1} gap={2} justifyContent="flex-end" px={4}></Flex>
                       </HStack>
                     </Flex>
                     <Box height="440px" overflow="auto" width="100%" mb={2}>
@@ -567,75 +486,44 @@ function SendReservationDetailModal({
                                             ])
                                           : setCheckedSubject(
                                               checkedSubject.filter(
-                                                (id) =>
-                                                  Number(id) !== data.msgId
+                                                (id) => Number(id) !== data.msgId
                                               )
                                             );
                                       }}
                                     />
                                   </Td>
                                   <Td>
-                                    <Text
-                                      borderColor="gray.50"
-                                      fontSize="sm"
-                                      textAlign="center"
-                                    >
+                                    <Text borderColor="gray.50" fontSize="sm" textAlign="center">
                                       {data.name}
                                     </Text>
                                   </Td>
                                   <Td>
-                                    <Text
-                                      borderColor="gray.50"
-                                      fontSize="sm"
-                                      textAlign="center"
-                                    >
+                                    <Text borderColor="gray.50" fontSize="sm" textAlign="center">
                                       {formatter.contactFormatter(data.phone)}
                                     </Text>
                                   </Td>
                                   <Td>
-                                    <Text
-                                      borderColor="gray.50"
-                                      fontSize="sm"
-                                      textAlign="center"
-                                    >
-                                      {formatter.contactFormatter(
-                                        data.callNumber
-                                      )}
+                                    <Text borderColor="gray.50" fontSize="sm" textAlign="center">
+                                      {formatter.contactFormatter(data.callNumber)}
                                     </Text>
                                   </Td>
                                   <Td>
-                                    <Text
-                                      borderColor="gray.50"
-                                      fontSize="sm"
-                                      textAlign="center"
-                                    >
+                                    <Text borderColor="gray.50" fontSize="sm" textAlign="center">
                                       {data.setValue1}
                                     </Text>
                                   </Td>
                                   <Td>
-                                    <Text
-                                      borderColor="gray.50"
-                                      fontSize="sm"
-                                      textAlign="center"
-                                    >
+                                    <Text borderColor="gray.50" fontSize="sm" textAlign="center">
                                       {data.setValue2}
                                     </Text>
                                   </Td>
                                   <Td>
-                                    <Text
-                                      borderColor="gray.50"
-                                      fontSize="sm"
-                                      textAlign="center"
-                                    >
+                                    <Text borderColor="gray.50" fontSize="sm" textAlign="center">
                                       {data.setValue3}
                                     </Text>
                                   </Td>
                                   <Td>
-                                    <Text
-                                      borderColor="gray.50"
-                                      fontSize="sm"
-                                      textAlign="center"
-                                    >
+                                    <Text borderColor="gray.50" fontSize="sm" textAlign="center">
                                       {data.setValue4}
                                     </Text>
                                   </Td>
@@ -648,20 +536,16 @@ function SendReservationDetailModal({
                     </Box>
                     <PaginationButtons
                       data={subjects ?? []}
-                      isAllChecked={
-                        checkedItems.length === totalCount && isAllChecked
-                      }
+                      isAllChecked={checkedItems.length === totalCount && isAllChecked}
                       isIndeterminate={
-                        (checkedItems.length > 0 ||
-                          checkedItems.length < (totalCount ?? 0)) &&
+                        (checkedItems.length > 0 || checkedItems.length < (totalCount ?? 0)) &&
                         isIndeterminate
                       }
                       pageLength={pageLength}
                       pagination={pagination}
                       onPageChange={handlePageChange}
                       onSelectionDelete={
-                        !isDeleteSubjectsLoading ||
-                        isCancelReservedMessageLoading
+                        !isDeleteSubjectsLoading || isCancelReservedMessageLoading
                           ? handleDeleteSubjectsCheckModalOpen
                           : () => {}
                       }
@@ -688,20 +572,14 @@ function SendReservationDetailModal({
         </ModalBody>
         <ModalFooter justifyContent="space-between" gap={2}>
           {changeMessage ? (
-            <Button
-              variant="secondaryGray"
-              onClick={handleDeleteReservedMessageCheckModalOpen}
-            >
-              예약 발송 취소
+            <Button variant="secondaryGray" onClick={handleDeleteReservedMessageCheckModalOpen}>
+              예약 취소
             </Button>
           ) : (
             <Flex></Flex>
           )}
           <Flex gap={2}>
-            <Button
-              variant="primaryBlue"
-              onClick={handleChangeReservedButtonClick}
-            >
+            <Button variant="primaryBlue" onClick={handleChangeReservedButtonClick}>
               예약 수정
             </Button>
             <Button variant="textGray" onClick={onClose}>

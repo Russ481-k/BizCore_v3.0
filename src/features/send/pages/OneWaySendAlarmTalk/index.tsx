@@ -12,16 +12,14 @@ function OneWaySendAlarmTalk() {
   const [buttons, setButtons] = useState<Array<Buttons>>([]);
   const [isDisabled, setDisabled] = useState<boolean>(true);
   const [subjectCount, setSubjectCount] = useState<number>(0);
-  const [templateMsgContext, setTemplateMsgContext] = useState<string | null>(
-    null
-  );
+  const [templateMsgContext, setTemplateMsgContext] = useState<string | null>(null);
 
   const handleButtonsChange = (buttons: Array<Buttons>) => {
     setButtons(buttons);
   };
   return (
     <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="알림톡 메시지 발송" />
+      <CustomCard isHeader="알림톡 전송" />
       <Flex gap={3} width="100%">
         <FormProvider {...methods}>
           <InputPanel

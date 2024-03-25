@@ -31,15 +31,13 @@ function DeleteSubjectsCheckModal({
   return (
     <CustomModal isOpen onClose={onClose}>
       <ModalContent minW="420px">
-        <ModalHeader>
-          수신 대상자 {selectedAll ? "전체" : "선택"} 삭제
-        </ModalHeader>
+        <ModalHeader>수신 대상자 {selectedAll ? "전체" : "선택"} 삭제</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {selectedAll ? (
             <Flex flexDirection="column" fontSize="14px">
-              <Text>전체 수신 대상자를 삭제하면 예약 발송이 취소됩니다.</Text>
-              <Text>예약 발송을 취소하시겠습니까?</Text>
+              <Text>전체 수신 대상자를 삭제하면 예약 이 취소됩니다.</Text>
+              <Text>예약 을 취소하시겠습니까?</Text>
             </Flex>
           ) : (
             <Flex flexDirection="column" fontSize="14px">
@@ -54,10 +52,7 @@ function DeleteSubjectsCheckModal({
             <Button variant="textGray" onClick={onClose}>
               취소
             </Button>
-            <Button
-              variant="primaryBlue"
-              onClick={handleDeleteSubjectsButtonClick}
-            >
+            <Button variant="primaryBlue" onClick={handleDeleteSubjectsButtonClick}>
               수신 대상자 {selectedAll ? "전체" : "선택"} 삭제
             </Button>
           </Flex>

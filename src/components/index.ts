@@ -45,10 +45,7 @@ export { default as WarningIcon } from "./Icons/WarningIcon";
 
 //Modals
 export { default as ImportTemplateModal } from "./ImportTemplateModal";
-export { default as PreviewModal } from "./PreviewModal";
 export { default as ReplacementCodeInfoModal } from "./ReplacementCodeInfoModal";
-export { default as SaveAlarmTalkTemplateModal } from "./SaveAlarmTalkTemplateModal";
-export { default as SaveTemplateConfirmModal } from "./SaveTemplateConfirmModal";
 export { default as ViewImageModal } from "./ViewImageModal";
 
 //Sections
@@ -75,8 +72,6 @@ export { default as InputPanel } from "./InputPanel";
 export { default as MessageTextarea } from "./InputPanel/MessageTextarea";
 export { default as NoDataTr } from "./NoDataTr";
 export { default as PaginationButtons } from "./PaginationButtons";
-export { default as PreviewBox } from "./PreviewBox";
-export { default as PreviewMessage } from "./PreviewMessage";
 export { default as QuestionMarkTooltip } from "./QuestionMarkTooltip";
 export { default as RangeDateInput } from "./RangeDateInput";
 export { default as RangeDatePicker } from "./RangeDatePicker";
