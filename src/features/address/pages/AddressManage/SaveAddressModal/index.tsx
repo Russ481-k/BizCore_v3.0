@@ -123,12 +123,10 @@ function SaveAddressModal({
       deleteAddress(
         { addressIds: [addressId] },
         {
-          onError: (error) => {
+          onError: () => {
             toast({
               render: () => (
                 <ToastMessage title="주소록 삭제 오류" type="ERROR">
-                  {error.message}
-                  <br />
                   주소록 삭제 중 알 수 없는 오류가 발생하였습니다.
                   <br />
                   주소록 삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
@@ -165,12 +163,10 @@ function SaveAddressModal({
           addressGroupId,
         },
         {
-          onError: (error) => {
+          onError: () => {
             toast({
               render: () => (
                 <ToastMessage title="주소록 등록 오류" type="ERROR">
-                  {error.message}
-                  <br />
                   주소록 등록 중 알 수 없는 오류가 발생하였습니다.
                   <br />
                   주소록 등록을 다시 수정하세요. 본 오류가 계속 발생하는 경우
@@ -213,12 +209,10 @@ function SaveAddressModal({
         addressId,
       },
       {
-        onError: (error) => {
+        onError: () => {
           toast({
             render: () => (
               <ToastMessage title="주소록 수정 오류" type="ERROR">
-                {error.message}
-                <br />
                 주소록을 다시 수정하세요.
               </ToastMessage>
             ),

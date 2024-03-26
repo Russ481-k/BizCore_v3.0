@@ -99,12 +99,10 @@ function AddDeptModal({ isOpen, onRefetch, setModalOpen }: AddDeptModalProps) {
         isBizCore: true,
       },
       {
-        onError: (error) => {
+        onError: () => {
           toast({
             render: () => (
               <ToastMessage title="부서 추가 오류" type="ERROR">
-                {error.message}
-                <br />
                 부서 추가 중 오류가 발생하였습니다.
                 <br />
                 부서 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우

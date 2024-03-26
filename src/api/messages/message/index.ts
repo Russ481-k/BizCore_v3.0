@@ -1,7 +1,5 @@
 import { requestApi } from "api";
 import { messages } from "api/url";
-import { GetAutoMessageDetailParams } from "features/send/hooks/useGetAutoSendMessageLog";
-import { GetMessageDetailParams } from "features/send/hooks/useGetSendMessageLog";
 import AutoMessage from "type/AutoMessage";
 import Message from "type/Message";
 import Pagination from "type/Pagination";
@@ -188,7 +186,7 @@ export interface GetMessageLogResponse {
 }
 
 export function getGetSendMessageLogAPI(
-  params: GetMessageDetailParams
+  params: any
 ): Promise<GetMessageLogResponse> {
   return requestApi<GetMessageLogResponse>({
     url: messages(`/log/${params.headId}`),
@@ -228,7 +226,7 @@ export interface GetAutoMessageLogResponse {
 }
 
 export function getGetAutoSendMessageLogAPI(
-  params: GetAutoMessageDetailParams
+  params: any
 ): Promise<GetAutoMessageLogResponse> {
   return requestApi<GetAutoMessageLogResponse>({
     url: messages(`/log/auto`),

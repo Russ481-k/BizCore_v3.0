@@ -23,7 +23,7 @@ import {
   InfoElement,
   PaginationButtons,
 } from "components";
-import { useGetScenarioGroups } from "features/send";
+
 import formatter from "libs/formatter";
 
 interface SendTelNumberModalProps {
@@ -48,28 +48,6 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
   const [pageSize, setPageSize] = useState<number>(10);
   const [subject, setSubject] = useState<string | null>(null);
 
-  const {
-    data: scenarios,
-    isLoading: isScenarioLoading,
-    totalCount: scenarioTotalCount,
-    pagination,
-    pageLength,
-  } = useGetScenarioGroups(
-    {
-      all,
-      createId,
-      createUser,
-      subject,
-      pageSize,
-      currentPage,
-    },
-    {
-      enabled: isEnableQuery,
-      onSuccess: () => {
-        setEnableQuery(false);
-      },
-    }
-  );
   const searchTypeOption = [
     {
       code: "all",
@@ -200,7 +178,7 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
           >
             <HStack>
               <Text fontSize="xs" fontWeight="bold">
-                검색결과 : {scenarioTotalCount ?? 0} 건
+                검색결과 : {0} 건
               </Text>
               <Flex />
             </HStack>
@@ -235,22 +213,28 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
                 </Text>
               </Flex>
               <Flex flexDirection="column" fontSize="sm">
-                {isScenarioLoading &&
+                {true &&
                   Array.from({ length: 4 }).map((_, i) => (
                     <Flex
                       alignItems="center"
                       borderBottomWidth={1}
                       height="38px"
                       justifyContent="space-between"
-                      key={scenarios?.[i] + "-" + i + "-telNumbers-skeleton"}
+                      key={[]?.[i] + "-" + i + "-telNumbers-skeleton"}
                     >
                       <Skeleton flex={4} height="20px" mx={4} my={2} />
                       <Skeleton flex={2} height="20px" mx={4} my={2} />
                       <Skeleton flex={6} height="20px" mx={4} my={2} />
-                      <Skeleton flex={1} height="20px" mx={4} my={2} width="80px" />
+                      <Skeleton
+                        flex={1}
+                        height="20px"
+                        mx={4}
+                        my={2}
+                        width="80px"
+                      />
                     </Flex>
                   ))}
-                {scenarioTotalCount === 0 ? (
+                {0 ? (
                   <Flex
                     alignItems="center"
                     borderBottomWidth={1}
@@ -262,7 +246,7 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
                     <Text>조회된 연락처가 없습니다.</Text>
                   </Flex>
                 ) : (
-                  scenarios?.map((scenario, i) => (
+                  []?.map((scenario: any, i: number) => (
                     <Flex
                       alignItems="center"
                       borderBottomWidth={1}
@@ -285,12 +269,20 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
                       <Text flex={6} px={4} py={2} textAlign="center">
                         {scenario.serviceName}
                       </Text>
-                      <Flex flex={1} px={4} py={2} textAlign="center" width="75px">
+                      <Flex
+                        flex={1}
+                        px={4}
+                        py={2}
+                        textAlign="center"
+                        width="75px"
+                      >
                         <Button
                           flex={1}
                           size="sm"
                           variant="primaryBlue"
-                          onClick={() => handleChangeTelNumberButtonClick(scenario.bizNumber)}
+                          onClick={() =>
+                            handleChangeTelNumberButtonClick(scenario.bizNumber)
+                          }
                         >
                           선택
                         </Button>
@@ -302,9 +294,20 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
             </Box>
             <PaginationButtons
               batchSize={pageSize}
-              data={scenarios ?? []}
-              pageLength={pageLength}
-              pagination={pagination}
+              data={[]}
+              pageLength={10}
+              pagination={{
+                offset: 10,
+                currentPage: 1,
+                pageSize: 10,
+                paged: true,
+                sort: {
+                  empty: false,
+                  sorted: true,
+                  unsorted: false,
+                },
+                unpaged: false,
+              }}
               onBatchSizeChange={handleBatchSizeChange}
               onPageChange={handlePageChange}
             />

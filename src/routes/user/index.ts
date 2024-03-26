@@ -1,7 +1,6 @@
 export { default as LoginPage } from "./route/LoginPage";
 export { default as ChangePwdPage } from "./route/ChangePwdPage";
 
-export { default as AlarmTalkTemplateManagePage } from "./route/AlarmTalkTemplateManagePage";
 export { default as AutoSendMessagePage } from "./route/AutoSendMessagePage";
 export { default as CommonCodePage } from "./route/CommonCodePage";
 export { default as DefaultPage } from "./route/DefaultPage";

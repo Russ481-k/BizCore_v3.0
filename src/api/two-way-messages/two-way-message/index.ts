@@ -1,7 +1,5 @@
 import { requestApi } from "api";
 import { twoway } from "api/url";
-import { GetAutoMessageDetailParams } from "features/send/hooks/useGetAutoSendMessageLog";
-import { GetTwoWayMessageDetailParams } from "features/send/hooks/useGetSendTwoWayMessageLog";
 import AutoMessage from "type/AutoMessage";
 import Message from "type/Message";
 import Pagination from "type/Pagination";
@@ -156,7 +154,7 @@ export interface GetTwoWayMessageLogResponse {
 }
 
 export function getGetSendTwoWayMessageLogAPI(
-  params: GetTwoWayMessageDetailParams
+  params: any
 ): Promise<GetTwoWayMessageLogResponse> {
   return requestApi<GetTwoWayMessageLogResponse>({
     url: twoway(`/master/${params.headId}`),
@@ -195,7 +193,7 @@ export interface GetAutoMessageLogResponse {
 }
 
 export function getGetAutoSendMessageLogAPI(
-  params: GetAutoMessageDetailParams
+  params: any
 ): Promise<GetAutoMessageLogResponse> {
   return requestApi<GetAutoMessageLogResponse>({
     url: twoway(`/log/auto`),

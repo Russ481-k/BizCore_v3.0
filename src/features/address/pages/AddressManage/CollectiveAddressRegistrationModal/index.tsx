@@ -102,12 +102,10 @@ function CollectiveAddressRegistrationModal({
         file: uploadedFileData,
       },
       {
-        onError: (error) => {
+        onError: () => {
           toast({
             render: () => (
               <ToastMessage title="일괄 등록 오류" type="ERROR">
-                {error.message}
-                <br />
                 일괄 등록 중 알 수 없는 오류가 발생하였습니다.
                 <br />
                 일괄 등록을 다시 진행 하세요. 본 오류가 계속 발생하는 경우

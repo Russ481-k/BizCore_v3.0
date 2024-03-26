@@ -109,9 +109,12 @@ function SendDetailModal({
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isUse, setIsUse] = useState<RecordBooleanProps>(defalutBooleanProps);
-  const [isUnlimited, setIsUnlimited] = useState<RecordBooleanProps>(defalutBooleanProps);
-  const [limitCount, setLimitCount] = useState<RecordNumberOrNullProps>(defalutNullProps);
-  const [useCount, setUseCount] = useState<RecordNumberProps>(defalutNumberProps);
+  const [isUnlimited, setIsUnlimited] =
+    useState<RecordBooleanProps>(defalutBooleanProps);
+  const [limitCount, setLimitCount] =
+    useState<RecordNumberOrNullProps>(defalutNullProps);
+  const [useCount, setUseCount] =
+    useState<RecordNumberProps>(defalutNumberProps);
 
   const handleRemainCount = useCallback((limit: number | null, use: number) => {
     if (limit !== null) {
@@ -157,16 +160,14 @@ function SendDetailModal({
           },
         },
         {
-          onError: (error) => {
+          onError: () => {
             toast({
               render: () => (
                 <ToastMessage title="당월 량 수정 오류" type="ERROR">
-                  {error.message}
-                  <br />
                   당월 량 수정 중 오류가 발생하였습니다.
                   <br />
-                  당월 량 수정을 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템 관리자에게
-                  문의하기 바랍니다.
+                  당월 량 수정을 다시 진행 하세요. 본 오류가 계속 발생하는 경우
+                  시스템 관리자에게 문의하기 바랍니다.
                 </ToastMessage>
               ),
             });
@@ -285,7 +286,10 @@ function SendDetailModal({
                   <InfoElement label="상태" labelWidth="130px">
                     <Text fontSize="sm">
                       {userData.status
-                        ? convertCodeToName(USERS_OPTION.STATUS, userData.status)
+                        ? convertCodeToName(
+                            USERS_OPTION.STATUS,
+                            userData.status
+                          )
                         : "-"}
                     </Text>
                   </InfoElement>
@@ -302,7 +306,10 @@ function SendDetailModal({
                   <Text fontWeight="600" size="xl">
                     당월 량
                   </Text>
-                  <TipText size="sm" text="당월 량 조정시 해당월에만 적용됩니다." />
+                  <TipText
+                    size="sm"
+                    text="당월 량 조정시 해당월에만 적용됩니다."
+                  />
                 </Flex>
                 <FormProvider {...methods}>
                   <CustomTableContainer>
@@ -372,7 +379,10 @@ function SendDetailModal({
                               </Td>
                               <Td>{useCount[item.code] || "-"}</Td>
                               <Td>
-                                {handleRemainCount(limitCount[item.code], useCount[item.code])}
+                                {handleRemainCount(
+                                  limitCount[item.code],
+                                  useCount[item.code]
+                                )}
                               </Td>
                               <Td>
                                 {isUse[item.code] ? (
@@ -418,9 +428,11 @@ function SendDetailModal({
                       당월 량 조정:
                     </Text>
                     <Text>
-                      당월에 한하여 량을 조정할 수 있으며, 당월 량보다 작은 수를 등록하시면
+                      당월에 한하여 량을 조정할 수 있으며, 당월 량보다 작은 수를
+                      등록하시면
                       <br />
-                      해당 운영자는 할 수 없습니다. (남은 량 = 당월 량 조정 – 당월 량)
+                      해당 운영자는 할 수 없습니다. (남은 량 = 당월 량 조정 –
+                      당월 량)
                     </Text>
                   </Flex>
                 </VStack>

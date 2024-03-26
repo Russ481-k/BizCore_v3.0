@@ -43,12 +43,12 @@ const message = {
     pattern: "2~10자로 이름을 입력하세요. (특수문자 사용 불가)",
   },
   templateName: {
-    required: "문자 템플릿명을 입력하세요.",
-    pattern: "2~20자 이내로 문자 템플릿명을 입력하세요.",
+    required: "명을 입력하세요.",
+    pattern: "2~20자 이내로 명을 입력하세요.",
   },
   templateGroupName: {
-    required: "문자 템플릿 그룹명을 입력하세요.",
-    pattern: "2~20자 이내로 문자 템플릿 그룹명을 입력하세요.",
+    required: " 그룹명을 입력하세요.",
+    pattern: "2~20자 이내로  그룹명을 입력하세요.",
   },
 };
 

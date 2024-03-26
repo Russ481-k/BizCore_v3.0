@@ -24,7 +24,13 @@ const defaultProps = {
   onFold() {},
 };
 
-function SidebarContent({ isFold, tabIndex, onClose, onFold, ...props }: SidebarContentProps) {
+function SidebarContent({
+  isFold,
+  tabIndex,
+  onClose,
+  onFold,
+  ...props
+}: SidebarContentProps) {
   // const userAuthName = useAppSelector((state) => state.user.profile.authName);
   // const [rank, setRank] = useState<number>(0);
 
@@ -118,7 +124,12 @@ function SidebarContent({ isFold, tabIndex, onClose, onFold, ...props }: Sidebar
             pl={4}
             top="90px"
           >
-            <Box color="white" fontSize="20" fontWeight="600" whiteSpace="nowrap">
+            <Box
+              color="white"
+              fontSize="20"
+              fontWeight="600"
+              whiteSpace="nowrap"
+            >
               {isFold ? (
                 ""
               ) : (
@@ -160,15 +171,29 @@ function SidebarContent({ isFold, tabIndex, onClose, onFold, ...props }: Sidebar
           </Flex>
           <Flex
             aria-label="main menu navigation"
-            direction="column"
             as={motion.div}
             animate={{
               paddingLeft: isFold ? "0" : "2px",
               paddingRight: isFold ? "0" : "2px",
             }}
+            direction="column"
+            height={`calc(100vh - 140px)`}
+            overflowY="scroll"
+            sx={{
+              "::-webkit-scrollbar-track": { background: "inherit" },
+              "::-webkit-scrollbar-corner": {
+                background: "rgba(0,0,0,0)",
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: "#44418b",
+                border: "4px solid #302c7f",
+                borderRadius: "5rem",
+                width: "14px",
+              },
+            }}
           >
             <TabPanels>
-              <TabPanel>
+              <TabPanel pr={0}>
                 {groupedMenus.map((menuItem) =>
                   menuItem.menus.length > 0 ? (
                     <MenuGroup
@@ -178,6 +203,7 @@ function SidebarContent({ isFold, tabIndex, onClose, onFold, ...props }: Sidebar
                       isFold={isFold}
                       key={`menu-${menuItem.id}`}
                       menus={menuItem.menus}
+                      overflowY="scroll"
                       onMenuClose={onClose}
                     />
                   ) : null

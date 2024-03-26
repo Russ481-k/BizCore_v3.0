@@ -8,7 +8,6 @@ export { default as Permission } from "./pages/Permission";
 export { default as StaffContact } from "./pages/StaffContact";
 export { default as Default } from "./pages/Default";
 export { default as AutoSendMessage } from "./pages/AutoSendMessage";
-export { default as AlarmTalkTemplateManage } from "./pages/AlarmTalkTemplateManage";
 export { default as CommonCode } from "./pages/CommonCode";
 
 /* hooks */

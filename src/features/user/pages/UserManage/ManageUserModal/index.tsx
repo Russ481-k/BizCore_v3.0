@@ -29,7 +29,12 @@ import {
   TipText,
   ToastMessage,
 } from "components";
-import { useChangeUser, useDeleteUser, useResetPwd, USERS_OPTION } from "features/user";
+import {
+  useChangeUser,
+  useDeleteUser,
+  useResetPwd,
+  USERS_OPTION,
+} from "features/user";
 import authService from "libs/authService";
 import {
   convertCodeToName,
@@ -104,7 +109,8 @@ function ManageUserModal({
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [deleteCheckModalOpen, setDeleteCheckModalOpen] = useState(false);
-  const [selectDeptModalOpen, setSelectDeptModalOpen] = useState<boolean>(false);
+  const [selectDeptModalOpen, setSelectDeptModalOpen] =
+    useState<boolean>(false);
   const [resetPwdModalOpen, setResetPwdModalOpen] = useState(false);
 
   const methods = useForm<ChangeUser>({
@@ -130,15 +136,21 @@ function ManageUserModal({
   };
 
   const handleChangeButtonClick = methods.handleSubmit((data) => {
-    const positionNameParam = convertCodeToName(USERS_OPTION.POSITION, data.positionCode);
+    const positionNameParam = convertCodeToName(
+      USERS_OPTION.POSITION,
+      data.positionCode
+    );
     const deptCodeParam = changedDept?.deptCode;
     const permissionIdParam = Number(data.permissionsId);
-    const wiredPhoneNumberParam = data?.wiredPhoneNumbers?.[0].number.toString();
+    const wiredPhoneNumberParam =
+      data?.wiredPhoneNumbers?.[0].number.toString();
     let wiredPhoneNumberPlusParam = "";
     let crsPhoneNumberParam = "";
 
     if (data?.wiredPhoneNumbers && data.wiredPhoneNumbers.length > 1) {
-      wiredPhoneNumberPlusParam = convertNumbersToJSON(data.wiredPhoneNumbers.slice(1));
+      wiredPhoneNumberPlusParam = convertNumbersToJSON(
+        data.wiredPhoneNumbers.slice(1)
+      );
     }
     if (data?.crsPhoneNumbers && data.crsPhoneNumbers.length > 0) {
       crsPhoneNumberParam = convertNumbersToJSON(data.crsPhoneNumbers);
@@ -177,16 +189,14 @@ function ManageUserModal({
         },
       },
       {
-        onError: (error) => {
+        onError: () => {
           toast({
             render: () => (
               <ToastMessage title="운영자 수정 오류" type="ERROR">
-                {error.message}
-                <br />
                 운영자 수정 중 오류가 발생하였습니다.
                 <br />
-                부서 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템 관리자에게
-                문의하기 바랍니다.
+                부서 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
+                시스템 관리자에게 문의하기 바랍니다.
               </ToastMessage>
             ),
           });
@@ -215,16 +225,14 @@ function ManageUserModal({
         userIdx,
       },
       {
-        onError: (error) => {
+        onError: () => {
           toast({
             render: () => (
               <ToastMessage title="운영자 삭제 오류" type="ERROR">
-                {error.message}
-                <br />
                 운영자 삭제 중 오류가 발생하였습니다.
                 <br />
-                운영자 삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템 관리자에게
-                문의하기 바랍니다.
+                운영자 삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
+                시스템 관리자에게 문의하기 바랍니다.
               </ToastMessage>
             ),
           });
@@ -251,16 +259,14 @@ function ManageUserModal({
         userIdx,
       },
       {
-        onError: (error) => {
+        onError: () => {
           toast({
             render: () => (
               <ToastMessage title="비밀번호 초기화 오류" type="ERROR">
-                {error.message}
-                <br />
                 비밀번호 초기화 중 오류가 발생하였습니다.
                 <br />
-                비밀번호 초기화를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템 관리자에게
-                문의하기 바랍니다.
+                비밀번호 초기화를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
+                시스템 관리자에게 문의하기 바랍니다.
               </ToastMessage>
             ),
           });
@@ -290,13 +296,18 @@ function ManageUserModal({
         deptCode: userData.deptCode ?? "",
         deptName: userData.deptName ?? "부서 미지정",
       });
-      const positionCodeValue = convertNameToCode(USERS_OPTION.POSITION, userData.positionName);
+      const positionCodeValue = convertNameToCode(
+        USERS_OPTION.POSITION,
+        userData.positionName
+      );
       let wiredPhoneNumbersValue: FieldNumber[] = [];
       let crsPhoneNumbersValue: FieldNumber[] = [];
 
       if (userData.wiredPhoneNumber !== null) {
         const phoneObj = `{"phone0":"${userData.wiredPhoneNumber}"}`;
-        wiredPhoneNumbersValue = wiredPhoneNumbersValue.concat(convertJSONToNumbers(phoneObj));
+        wiredPhoneNumbersValue = wiredPhoneNumbersValue.concat(
+          convertJSONToNumbers(phoneObj)
+        );
         if (userData.wiredPhoneNumberPlus) {
           wiredPhoneNumbersValue = wiredPhoneNumbersValue.concat(
             convertJSONToNumbers(userData?.wiredPhoneNumberPlus)
@@ -353,7 +364,11 @@ function ManageUserModal({
 
   return (
     <>
-      <CustomModal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+      <CustomModal
+        closeOnOverlayClick={false}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalContent as="form" minW="720px">
           <ModalHeader>운영자 {isModify ? "수정" : "상세"}</ModalHeader>
           <ModalCloseButton />
@@ -388,7 +403,10 @@ function ManageUserModal({
                         ) : (
                           <Text fontSize="sm">
                             {defaultValues.status
-                              ? convertCodeToName(USERS_OPTION.STATUS, defaultValues.status)
+                              ? convertCodeToName(
+                                  USERS_OPTION.STATUS,
+                                  defaultValues.status
+                                )
                               : "-"}
                           </Text>
                         )}
@@ -419,7 +437,11 @@ function ManageUserModal({
                         </InfoElement>
                       )}
                       <InfoElement label="이름" required>
-                        <FormControl isInvalid={!!methods.formState.errors?.userName?.message}>
+                        <FormControl
+                          isInvalid={
+                            !!methods.formState.errors?.userName?.message
+                          }
+                        >
                           <Flex align="center">
                             <Input
                               maxW={240}
@@ -444,11 +466,17 @@ function ManageUserModal({
                         </FormControl>
                       </InfoElement>
                       <InfoElement label="직급 (직책)" required>
-                        <FormControl isInvalid={!!methods.formState.errors?.positionCode?.message}>
+                        <FormControl
+                          isInvalid={
+                            !!methods.formState.errors?.positionCode?.message
+                          }
+                        >
                           <CustomSelect
                             codes={USERS_OPTION.POSITION}
                             isDisabled={!isModify}
-                            isInvalid={!!methods.formState.errors?.positionCode?.message}
+                            isInvalid={
+                              !!methods.formState.errors?.positionCode?.message
+                            }
                             maxW={250}
                             placeholder="직급을 선택하세요."
                             size="sm"
@@ -463,7 +491,11 @@ function ManageUserModal({
                         </FormControl>
                       </InfoElement>
                       <InfoElement label="부서" required>
-                        <Flex alignItems="center" flex={1} justify="space-between">
+                        <Flex
+                          alignItems="center"
+                          flex={1}
+                          justify="space-between"
+                        >
                           <Text fontSize="sm">{changedDept?.deptName}</Text>
                           {isModify && (
                             <Button
@@ -478,10 +510,16 @@ function ManageUserModal({
                         </Flex>
                       </InfoElement>
                       <InfoElement label="권한" required>
-                        <FormControl isInvalid={!!methods.formState.errors?.permissionsId?.message}>
+                        <FormControl
+                          isInvalid={
+                            !!methods.formState.errors?.permissionsId?.message
+                          }
+                        >
                           <CustomSelect
                             codes={permissionOptions}
-                            isInvalid={!!methods.formState.errors?.permissionsId?.message}
+                            isInvalid={
+                              !!methods.formState.errors?.permissionsId?.message
+                            }
                             maxW={250}
                             placeholder="권한을 선택하세요."
                             size="sm"
@@ -496,7 +534,10 @@ function ManageUserModal({
                       </InfoElement>
                       <InfoElement label="휴대폰 번호">
                         <FormControl
-                          isInvalid={!!methods.formState.errors?.wirelessPhoneNumber?.message}
+                          isInvalid={
+                            !!methods.formState.errors?.wirelessPhoneNumber
+                              ?.message
+                          }
                         >
                           <Input
                             maxW={240}
@@ -504,7 +545,8 @@ function ManageUserModal({
                             size="sm"
                             {...methods.register("wirelessPhoneNumber", {
                               validate: (v: string | null | undefined) => {
-                                if (v === "" || v === null || v === undefined) return true;
+                                if (v === "" || v === null || v === undefined)
+                                  return true;
                                 return (
                                   pattern.phoneNumber.mobile.test(v) ||
                                   pattern.phoneNumber.tel.test(v) ||
@@ -518,13 +560,18 @@ function ManageUserModal({
                                 methods.setValue(
                                   "wirelessPhoneNumber",
                                   formatter.contactFormatter(
-                                    e.target.value.replace(/[^0-9]/g, "").substring(0, 11)
+                                    e.target.value
+                                      .replace(/[^0-9]/g, "")
+                                      .substring(0, 11)
                                   )
                                 ),
                             })}
                           />
                           <FormErrorMessage fontSize="xs" mt={1}>
-                            {methods.formState.errors?.wirelessPhoneNumber?.message}
+                            {
+                              methods.formState.errors?.wirelessPhoneNumber
+                                ?.message
+                            }
                           </FormErrorMessage>
                         </FormControl>
                       </InfoElement>

@@ -38,12 +38,10 @@ function DeleteDeptModal({
         deptCode: selectedDept.deptCode,
       },
       {
-        onError: (error) => {
+        onError: () => {
           toast({
             render: () => (
               <ToastMessage title="부서 삭제 오류" type="ERROR">
-                {error.message}
-                <br />
                 부서 삭제 중 오류가 발생하였습니다.
                 <br />
                 부서 삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우

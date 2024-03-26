@@ -110,8 +110,11 @@ function AddUserModal({
     name: "sendAuthorization",
   });
 
-  const [changedDept, setChangedDept] = useState<Department | null>(selectedDept);
-  const [selectDeptModalOpen, setSelectDeptModalOpen] = useState<boolean>(false);
+  const [changedDept, setChangedDept] = useState<Department | null>(
+    selectedDept
+  );
+  const [selectDeptModalOpen, setSelectDeptModalOpen] =
+    useState<boolean>(false);
   const handleChangeDeptButtonClick = () => {
     setSelectDeptModalOpen(true);
   };
@@ -146,13 +149,19 @@ function AddUserModal({
   const handleSubmitButtonClick = methods.handleSubmit((data) => {
     const deptCodeParam = changedDept?.deptCode;
     const permissionIdParam = Number(data.permissionsId);
-    const positionNameParam = convertCodeToName(USERS_OPTION.POSITION, data.positionCode);
-    const wiredPhoneNumberParam = data?.wiredPhoneNumbers?.[0].number.toString();
+    const positionNameParam = convertCodeToName(
+      USERS_OPTION.POSITION,
+      data.positionCode
+    );
+    const wiredPhoneNumberParam =
+      data?.wiredPhoneNumbers?.[0].number.toString();
     let wiredPhoneNumberPlusParam = "";
     let crsPhoneNumberParam = "";
 
     if (data?.wiredPhoneNumbers && data.wiredPhoneNumbers.length > 1) {
-      wiredPhoneNumberPlusParam = convertNumbersToJSON(data.wiredPhoneNumbers.slice(1));
+      wiredPhoneNumberPlusParam = convertNumbersToJSON(
+        data.wiredPhoneNumbers.slice(1)
+      );
     }
     if (data?.crsPhoneNumbers && data.crsPhoneNumbers.length > 0) {
       crsPhoneNumberParam = convertNumbersToJSON(data.crsPhoneNumbers);
@@ -191,16 +200,14 @@ function AddUserModal({
         },
       },
       {
-        onError: (error) => {
+        onError: () => {
           toast({
             render: () => (
               <ToastMessage title="운영자 등록 오류" type="ERROR">
-                {error.message}
-                <br />
                 운영자 등록 중 오류가 발생하였습니다.
                 <br />
-                운영자 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템 관리자에게
-                문의하기 바랍니다.
+                운영자 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
+                시스템 관리자에게 문의하기 바랍니다.
               </ToastMessage>
             ),
           });
@@ -288,7 +295,12 @@ function AddUserModal({
                         {methods.formState.errors.userId?.message}
                       </FormErrorMessage>
                       {isFetching && (
-                        <FormHelperText fontSize="xs" fontWeight="500" mt={1} color="blue.400">
+                        <FormHelperText
+                          fontSize="xs"
+                          fontWeight="500"
+                          mt={1}
+                          color="blue.400"
+                        >
                           {message.doubleCheck}
                         </FormHelperText>
                       )}
@@ -301,7 +313,9 @@ function AddUserModal({
                     />
                   </InfoElement>
                   <InfoElement label="이름" required>
-                    <FormControl isInvalid={!!methods.formState.errors?.userName?.message}>
+                    <FormControl
+                      isInvalid={!!methods.formState.errors?.userName?.message}
+                    >
                       <Flex align="center">
                         <Input
                           maxW={240}
@@ -323,10 +337,16 @@ function AddUserModal({
                     </FormControl>
                   </InfoElement>
                   <InfoElement label="직급(직책)" required>
-                    <FormControl isInvalid={!!methods.formState.errors?.positionCode?.message}>
+                    <FormControl
+                      isInvalid={
+                        !!methods.formState.errors?.positionCode?.message
+                      }
+                    >
                       <CustomSelect
                         codes={USERS_OPTION.POSITION}
-                        isInvalid={!!methods.formState.errors?.positionCode?.message}
+                        isInvalid={
+                          !!methods.formState.errors?.positionCode?.message
+                        }
                         maxW={250}
                         placeholder="직급을 선택하세요."
                         size="sm"
@@ -355,10 +375,16 @@ function AddUserModal({
                     </Flex>
                   </InfoElement>
                   <InfoElement label="권한" required>
-                    <FormControl isInvalid={!!methods.formState.errors?.permissionsId?.message}>
+                    <FormControl
+                      isInvalid={
+                        !!methods.formState.errors?.permissionsId?.message
+                      }
+                    >
                       <CustomSelect
                         codes={permissionOptions}
-                        isInvalid={!!methods.formState.errors?.permissionsId?.message}
+                        isInvalid={
+                          !!methods.formState.errors?.permissionsId?.message
+                        }
                         maxW={250}
                         placeholder="권한을 선택하세요."
                         size="sm"
@@ -373,7 +399,9 @@ function AddUserModal({
                   </InfoElement>
                   <InfoElement label="휴대폰 번호">
                     <FormControl
-                      isInvalid={!!methods.formState.errors?.wirelessPhoneNumber?.message}
+                      isInvalid={
+                        !!methods.formState.errors?.wirelessPhoneNumber?.message
+                      }
                     >
                       <Input
                         maxW={240}
@@ -381,7 +409,8 @@ function AddUserModal({
                         size="sm"
                         {...methods.register("wirelessPhoneNumber", {
                           validate: (v: string | null | undefined) => {
-                            if (v === "" || v === null || v === undefined) return true;
+                            if (v === "" || v === null || v === undefined)
+                              return true;
                             return (
                               pattern.phoneNumber.mobile.test(v) ||
                               pattern.phoneNumber.tel.test(v) ||
@@ -395,7 +424,9 @@ function AddUserModal({
                             methods.setValue(
                               "wirelessPhoneNumber",
                               formatter.contactFormatter(
-                                e.target.value.replace(/[^0-9]/g, "").substring(0, 11)
+                                e.target.value
+                                  .replace(/[^0-9]/g, "")
+                                  .substring(0, 11)
                               )
                             ),
                         })}
@@ -470,7 +501,12 @@ function AddUserModal({
                       <InfoElement
                         label={
                           <>
-                            <Text as="span" fontSize="sm" fontWeight="normal" whiteSpace="nowrap">
+                            <Text
+                              as="span"
+                              fontSize="sm"
+                              fontWeight="normal"
+                              whiteSpace="nowrap"
+                            >
                               사용권한
                             </Text>
                             <QuestionMarkTooltip

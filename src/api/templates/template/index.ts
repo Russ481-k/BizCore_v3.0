@@ -1,6 +1,6 @@
 import { requestApi } from "api";
 import { excel, template } from "api/url";
-import { AddTemplateAnotherParams } from "features/template/hooks/useAddTemplateAnother";
+import { AddTemplateAnotherParams } from "features/sopp/hooks/useAddTemplateAnother";
 import Template from "type/Template";
 
 export interface AddTemplateResponse {

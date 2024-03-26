@@ -28,7 +28,7 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
   //     bizNumber,
   //   },
   //   {
-  //     onError: (error) => {
+  //     onError: () => {
   //       toast({
   //         render: () => (
   //           <ToastMessage title=" 발신번호 변경 오류" type="ERROR">
@@ -207,7 +207,10 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
                   </InputGroup>
                 </Flex>
                 <Divider my={2} />
-                <TipText size="sm" text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다." />
+                <TipText
+                  size="sm"
+                  text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다."
+                />
               </Box>
             </Flex>
           </Flex>

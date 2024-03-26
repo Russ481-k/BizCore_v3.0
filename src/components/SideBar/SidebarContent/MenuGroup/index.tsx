@@ -32,7 +32,14 @@ const defaultProps = {
   onMenuClose() {},
 };
 
-function MenuGroup({ groupId, groupName, icon, isFold, menus, onMenuClose }: MenuGroupProps) {
+function MenuGroup({
+  groupId,
+  groupName,
+  icon,
+  isFold,
+  menus,
+  onMenuClose,
+}: MenuGroupProps) {
   const currentRef = useRef<HTMLDivElement>(null);
   const { isOpen, onClose, onToggle } = useDisclosure();
 
@@ -80,7 +87,13 @@ function MenuGroup({ groupId, groupName, icon, isFold, menus, onMenuClose }: Men
               </Box>
             ) : null}
             {!isFold && (
-              <Text fontSize="md" fontWeight="500" ml={2} overflow="hidden" whiteSpace="nowrap">
+              <Text
+                fontSize="md"
+                fontWeight="500"
+                ml={2}
+                overflow="hidden"
+                whiteSpace="nowrap"
+              >
                 {groupName}
               </Text>
             )}
@@ -146,6 +159,7 @@ function MenuGroup({ groupId, groupName, icon, isFold, menus, onMenuClose }: Men
                     height="38px"
                     key={`menuItem-${menuItem.groupMenuId}-${menuItem.id}`}
                     menuItem={menuItem}
+                    mb={1}
                     pl="42px"
                     pr={4}
                     py={2}

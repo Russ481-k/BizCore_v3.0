@@ -32,7 +32,7 @@ import {
   useGetTemplateGroups,
   useGetTemplatesBySearch,
   useGetAlarmTalkTemplatesBySearch,
-} from "features/template";
+} from "features/sopp";
 import Template from "type/Template";
 import Buttons from "type/Buttons";
 
@@ -42,20 +42,27 @@ interface ImportTemplateModalProps {
   setTemplate: (template: Template) => void;
 }
 
-function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTemplateModalProps) {
+function ImportTemplateModal({
+  isAlarmTalk,
+  setOpen,
+  setTemplate,
+}: ImportTemplateModalProps) {
   const { onClose } = useDisclosure();
 
   const [buttons, setButtons] = useState<Buttons[]>([]);
   const [importTemplateId, setImportTemplateId] = useState<number | null>(null);
-  const [selectedTemplateGroupId, setSelectedTemplateGroupId] = useState<number | null>(null);
+  const [selectedTemplateGroupId, setSelectedTemplateGroupId] = useState<
+    number | null
+  >(null);
   const [templateChannel, setTemplateChannel] = useState<string | null>(null);
   const [templateName, setTemplateName] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
   const [pageSize] = useState<number>(10);
 
-  const { data: templateGroups, totalTemplateCount: totalTemplateGroup } = useGetTemplateGroups({
-    enabled: !isAlarmTalk,
-  });
+  const { data: templateGroups, totalTemplateCount: totalTemplateGroup } =
+    useGetTemplateGroups({
+      enabled: !isAlarmTalk,
+    });
   const { data: selectedTemplate } = useGetTemplate(
     {
       templateId: importTemplateId,
@@ -81,10 +88,12 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
     },
     { enabled: !isAlarmTalk }
   );
-  const { data: alarmTalkTemplateGroups, totalTemplateCount: totalAlarmTalkTemplateCount } =
-    useGetAlarmTalkTemplateGroups({
-      enabled: isAlarmTalk,
-    });
+  const {
+    data: alarmTalkTemplateGroups,
+    totalTemplateCount: totalAlarmTalkTemplateCount,
+  } = useGetAlarmTalkTemplateGroups({
+    enabled: isAlarmTalk,
+  });
   const { data: selectedAlarmTalkTemplate } = useGetAlarmTalkTemplate(
     {
       templateId: importTemplateId,
@@ -198,14 +207,16 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
   return (
     <CustomModal isOpen onClose={handleModalClose}>
       <ModalContent minW="1200px">
-        <ModalHeader>{isAlarmTalk ? "알림톡" : "문자"} 템플릿 불러오기</ModalHeader>
+        <ModalHeader>
+          {isAlarmTalk ? "알림톡" : "문자"} 템플릿 불러오기
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody py={5}>
           <Flex gap={3} height="590px">
             <CollapseSection
               flex={2.2}
               flexDirection="column"
-              headerTitle={isAlarmTalk ? "알림톡 템플릿 그룹" : "문자 템플릿 그룹"}
+              headerTitle={isAlarmTalk ? " 그룹" : " 그룹"}
             >
               <Flex
                 flexDirection="column"
@@ -226,22 +237,34 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                   pl={3}
                   onClick={() => handleTemplateGroupClick(null)}
                 >{`전체 (${
-                  isAlarmTalk ? totalAlarmTalkTemplateCount ?? 0 : totalTemplateGroup ?? 0
+                  isAlarmTalk
+                    ? totalAlarmTalkTemplateCount ?? 0
+                    : totalTemplateGroup ?? 0
                 })`}</Button>
                 {isAlarmTalk
                   ? alarmTalkTemplateGroups?.map((templateGroup, i) => (
-                      <Flex key={templateGroup.groupTemplateId + "-" + i} ml={5}>
+                      <Flex
+                        key={templateGroup.groupTemplateId + "-" + i}
+                        ml={5}
+                      >
                         <Text py={1}>ㄴ</Text>
                         <Button
                           alignItems="center"
                           bgColor={
-                            selectedTemplateGroupId !== templateGroup.groupTemplateId ? "white" : ""
+                            selectedTemplateGroupId !==
+                            templateGroup.groupTemplateId
+                              ? "white"
+                              : ""
                           }
                           borderRadius={0}
                           flex={1}
                           key={templateGroup.groupTemplateId}
                           pl={2}
-                          onClick={() => handleTemplateGroupClick(templateGroup.groupTemplateId)}
+                          onClick={() =>
+                            handleTemplateGroupClick(
+                              templateGroup.groupTemplateId
+                            )
+                          }
                         >
                           <Text
                             overflow="hidden"
@@ -252,22 +275,34 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                           >
                             {templateGroup.groupTemplateName}
                           </Text>
-                          <Text>{` (${templateGroup.templateCount ?? 0})`}</Text>
+                          <Text>{` (${
+                            templateGroup.templateCount ?? 0
+                          })`}</Text>
                         </Button>
                       </Flex>
                     ))
                   : templateGroups?.map((templateGroup, i) => (
-                      <Flex key={templateGroup.groupTemplateId + "-" + i} ml={5}>
+                      <Flex
+                        key={templateGroup.groupTemplateId + "-" + i}
+                        ml={5}
+                      >
                         <Text py={1}>ㄴ</Text>
                         <Button
                           alignItems="center"
                           bgColor={
-                            selectedTemplateGroupId !== templateGroup.groupTemplateId ? "white" : ""
+                            selectedTemplateGroupId !==
+                            templateGroup.groupTemplateId
+                              ? "white"
+                              : ""
                           }
                           borderRadius={0}
                           flex={1}
                           pl={2}
-                          onClick={() => handleTemplateGroupClick(templateGroup.groupTemplateId)}
+                          onClick={() =>
+                            handleTemplateGroupClick(
+                              templateGroup.groupTemplateId
+                            )
+                          }
                         >
                           <Text
                             overflow="hidden"
@@ -278,7 +313,9 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                           >
                             {templateGroup.groupTemplateName}
                           </Text>
-                          <Text>{` (${templateGroup.templateCount ?? 0})`}</Text>
+                          <Text>{` (${
+                            templateGroup.templateCount ?? 0
+                          })`}</Text>
                         </Button>
                       </Flex>
                     ))}
@@ -287,7 +324,7 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
             <CollapseSection
               flex={6}
               flexDirection="column"
-              headerTitle={isAlarmTalk ? "알림톡 템플릿 목록" : "문자 템플릿 목록"}
+              headerTitle={isAlarmTalk ? " 목록" : " 목록"}
             >
               <Flex flexDirection="column" gap={3}>
                 <InfoBox>
@@ -336,7 +373,12 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                         채널
                       </Text>
                     )}
-                    <Text flex={isAlarmTalk ? 1 : 4} pr={4} py={2} textAlign="center">
+                    <Text
+                      flex={isAlarmTalk ? 1 : 4}
+                      pr={4}
+                      py={2}
+                      textAlign="center"
+                    >
                       {isAlarmTalk ? "알림톡" : "문자"} 템플릿명
                     </Text>
                   </Flex>
@@ -351,7 +393,9 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                                   p={0}
                                   alignItems="center"
                                   borderBottomWidth={
-                                    alarmTalkTemplates?.length ?? 0 - 1 === i ? 0 : 1
+                                    alarmTalkTemplates?.length ?? 0 - 1 === i
+                                      ? 0
+                                      : 1
                                   }
                                   height="32px"
                                   justifyContent="space-between"
@@ -362,7 +406,12 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                                     "-alarm-talk-templates-skeleton"
                                   }
                                 >
-                                  <Skeleton flex={1} height="20px" mx={4} my={2} />
+                                  <Skeleton
+                                    flex={1}
+                                    height="20px"
+                                    mx={4}
+                                    my={2}
+                                  />
                                 </Flex>
                               ))}
                           </Flex>
@@ -371,11 +420,14 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                             <Button
                               alignItems="center"
                               bgColor={
-                                selectedTemplate?.templateId !== template.templateId
+                                selectedTemplate?.templateId !==
+                                template.templateId
                                   ? "white"
                                   : "gray.200"
                               }
-                              borderBottomWidth={alarmTalkTemplates?.length - 1 === i ? 0 : 1}
+                              borderBottomWidth={
+                                alarmTalkTemplates?.length - 1 === i ? 0 : 1
+                              }
                               borderRadius={0}
                               flex={1}
                               fontSize="sm"
@@ -387,7 +439,9 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                                 bgColor: "gray.100",
                               }}
                               onClick={() =>
-                                handleChangeImportTemplateModalData(template.templateId)
+                                handleChangeImportTemplateModalData(
+                                  template.templateId
+                                )
                               }
                             >
                               <Text flex={4} px={4} py={2} textAlign="left">
@@ -412,13 +466,32 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                             {Array.from({ length: pageSize }).map((_, i) => (
                               <Flex
                                 alignItems="center"
-                                borderBottomWidth={templates?.length ?? 0 - 1 === i ? 0 : 1}
+                                borderBottomWidth={
+                                  templates?.length ?? 0 - 1 === i ? 0 : 1
+                                }
                                 height="30px"
                                 justifyContent="space-between"
-                                key={templates?.[i].templateId + "-" + i + "-templates-skeleton"}
+                                key={
+                                  templates?.[i].templateId +
+                                  "-" +
+                                  i +
+                                  "-templates-skeleton"
+                                }
                               >
-                                <Skeleton flex={1} height="20px" mx={4} my={2} textAlign="center" />
-                                <Skeleton flex={4} height="20px" mx={4} my={2} textAlign="center" />
+                                <Skeleton
+                                  flex={1}
+                                  height="20px"
+                                  mx={4}
+                                  my={2}
+                                  textAlign="center"
+                                />
+                                <Skeleton
+                                  flex={4}
+                                  height="20px"
+                                  mx={4}
+                                  my={2}
+                                  textAlign="center"
+                                />
                               </Flex>
                             ))}
                           </Flex>
@@ -427,11 +500,14 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                             <Button
                               alignItems="center"
                               bgColor={
-                                selectedTemplate?.templateId !== template.templateId
+                                selectedTemplate?.templateId !==
+                                template.templateId
                                   ? "white"
                                   : "gray.200"
                               }
-                              borderBottomWidth={templates?.length - 1 === i ? 0 : 1}
+                              borderBottomWidth={
+                                templates?.length - 1 === i ? 0 : 1
+                              }
                               borderRadius={0}
                               flex={1}
                               fontSize="sm"
@@ -444,11 +520,15 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                                 bgColor: "gray.100",
                               }}
                               onClick={() =>
-                                handleChangeImportTemplateModalData(template.templateId)
+                                handleChangeImportTemplateModalData(
+                                  template.templateId
+                                )
                               }
                             >
                               <Text flex={1} textAlign="center" px={4} py={1}>
-                                <ChannelTag channelType={template.templateChannel} />
+                                <ChannelTag
+                                  channelType={template.templateChannel}
+                                />
                               </Text>
                               <Text flex={4} px={4} py={1} textAlign="left">
                                 {template.templateName}
@@ -472,7 +552,9 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                   </Box>
                 </Box>
                 <PaginationButtons
-                  data={isAlarmTalk ? alarmTalkTemplates ?? [] : templates ?? []}
+                  data={
+                    isAlarmTalk ? alarmTalkTemplates ?? [] : templates ?? []
+                  }
                   pagination={isAlarmTalk ? alarmTalkPagination : pagination}
                   pageLength={isAlarmTalk ? alarmTalkPageLength : pageLength}
                   onPageChange={handlePageChange}
@@ -482,17 +564,19 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
             <CollapseSection
               flex={4.2}
               flexDirection="column"
-              headerTitle={isAlarmTalk ? "알림톡 템플릿 미리보기" : "문자 템플릿 미리보기"}
+              headerTitle={isAlarmTalk ? " 미리보기" : " 미리보기"}
             >
               <Flex alignItems="center" flexDirection="column" gap={3}>
                 <InfoBox>
                   {!isAlarmTalk && (
                     <InfoElement label="채널" labelWidth="130px">
-                      <ChannelTag channelType={selectedTemplate?.templateChannel ?? ""} />
+                      <ChannelTag
+                        channelType={selectedTemplate?.templateChannel ?? ""}
+                      />
                     </InfoElement>
                   )}
                   <InfoElement
-                    label={isAlarmTalk ? "알림톡 템플릿명" : "문자 템플릿명"}
+                    label={isAlarmTalk ? "명" : "명"}
                     labelWidth="130px"
                   >
                     <Text fontSize="14px">
@@ -526,7 +610,10 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                     {!isAlarmTalk &&
                       selectedTemplate?.files?.map((file, i) => (
                         <Box
-                          key={"selectedTemplateId-" + selectedTemplate.groupTemplateId}
+                          key={
+                            "selectedTemplateId-" +
+                            selectedTemplate.groupTemplateId
+                          }
                           mx={8}
                           overflow="hidden"
                           p={3}
@@ -536,7 +623,9 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                             alt="preview"
                             height="auto"
                             src={
-                              process.env.REACT_APP_API_URL + "/resources/" + file.uniqueFileName
+                              process.env.REACT_APP_API_URL +
+                              "/resources/" +
+                              file.uniqueFileName
                             }
                           />
                         </Box>
@@ -581,7 +670,10 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                               ))}
                             {!!buttons?.[0]?.name?.length && (
                               <>
-                                <Divider my={5} borderColor="channel.kkt.text" />
+                                <Divider
+                                  my={5}
+                                  borderColor="channel.kkt.text"
+                                />
                                 {buttons
                                   ?.filter((button) => !!button.name?.length)
                                   .map((button, i) => (
@@ -592,7 +684,11 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                                       px={3}
                                       width="100%"
                                     >
-                                      <Button bgColor="white" color="black" width="100%">
+                                      <Button
+                                        bgColor="white"
+                                        color="black"
+                                        width="100%"
+                                      >
                                         {button.name}
                                       </Button>
                                     </Box>
@@ -607,16 +703,22 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                     ) : selectedTemplate?.templateMsgContext ? (
                       <Box
                         backgroundColor={
-                          (selectedTemplate?.templateChannel === "SMS" && "channel.sms.bg") ||
-                          (selectedTemplate?.templateChannel === "LMS" && "channel.lms.bg") ||
-                          (selectedTemplate?.templateChannel === "MMS" && "channel.mms.bg") ||
+                          (selectedTemplate?.templateChannel === "SMS" &&
+                            "channel.sms.bg") ||
+                          (selectedTemplate?.templateChannel === "LMS" &&
+                            "channel.lms.bg") ||
+                          (selectedTemplate?.templateChannel === "MMS" &&
+                            "channel.mms.bg") ||
                           ""
                         }
                         borderRadius="12px"
                         color={
-                          (selectedTemplate?.templateChannel === "SMS" && "channel.sms.text") ||
-                          (selectedTemplate?.templateChannel === "LMS" && "channel.lms.text") ||
-                          (selectedTemplate?.templateChannel === "MMS" && "channel.mms.text") ||
+                          (selectedTemplate?.templateChannel === "SMS" &&
+                            "channel.sms.text") ||
+                          (selectedTemplate?.templateChannel === "LMS" &&
+                            "channel.lms.text") ||
+                          (selectedTemplate?.templateChannel === "MMS" &&
+                            "channel.mms.text") ||
                           ""
                         }
                         mx={10}
@@ -624,12 +726,20 @@ function ImportTemplateModal({ isAlarmTalk, setOpen, setTemplate }: ImportTempla
                         p={3}
                         width="220px"
                       >
-                        {selectedTemplate?.templateMsgContext.split("\n").map((line, i) => (
-                          <Text key={"selectedTemplate" + selectedTemplate.templateId + i}>
-                            {line}
-                            <br />
-                          </Text>
-                        ))}
+                        {selectedTemplate?.templateMsgContext
+                          .split("\n")
+                          .map((line, i) => (
+                            <Text
+                              key={
+                                "selectedTemplate" +
+                                selectedTemplate.templateId +
+                                i
+                              }
+                            >
+                              {line}
+                              <br />
+                            </Text>
+                          ))}
                       </Box>
                     ) : (
                       ""

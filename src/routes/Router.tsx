@@ -18,25 +18,42 @@ import {
   ErrorPage500,
 } from "routes";
 import { DashboardPage } from "routes/dashboard";
+import { NoticeListPage, NoticeWritePage } from "routes/notice";
 import {
-  OneWayAutoSendStatusPage,
-  OneWayReservationPage,
-  OneWaySendAlarmTalkPage,
-  OneWaySendMessageExcelPage,
-  OneWaySendMessagePage,
-  OneWaySendStatusPage,
-  TwoWayConsultPage,
-  TwoWayReservationPage,
-  TwoWayResponseSummaryPage,
-  TwoWayScenarioPage,
-  TwoWaySendMessagePage,
-  TwoWaySendStatusPage,
-} from "routes/send";
-import { Stats001Page, Stats002Page, Stats003Page } from "routes/stats";
-import { AlarmTalkTemplatePage, MessageTemplatePage } from "routes/template";
-import { AddressManagePage } from "routes/address";
+  CalendarPage,
+  ScheduleListPage,
+  ScheduleWritePage,
+  WorkLogWritePage,
+  WorkLogCheckPage,
+} from "routes/schedule";
+
+import { SalesListPage, SalesWritePage } from "routes/sales";
 import {
-  AlarmTalkTemplateManagePage,
+  SoppListPage,
+  SoppWritePage,
+  SoppEstimateManagePage,
+  SoppEstimateWritePage,
+} from "routes/sopp";
+import {
+  OrderSalesReportListPage,
+  OrderSalesReportWritePage,
+} from "routes/order-sales-report";
+import {
+  ContListPage,
+  ContWritePage,
+  ContBusinessListPage,
+  ContBuyAndSellListPage,
+  ContBuyAndSellWritePage,
+} from "routes/cont";
+import {
+  TechdListPage,
+  TechdWritePage,
+  TechdMaintenanceListPage,
+  TechdMaintenanceWritePage,
+  TechdInventoryListPage,
+  TechdInventoryWritePage,
+} from "routes/techd";
+import {
   AutoSendMessagePage,
   ChangePwdPage,
   CommonCodePage,
@@ -64,7 +81,7 @@ function Router() {
             !refreshToken ? (
               <Navigate to="/login" />
             ) : (
-              <Navigate to="/one-way/send-message" />
+              <Navigate to="/dashboard" />
             )
           }
           path="/"
@@ -76,45 +93,69 @@ function Router() {
           <Route element={<ChangePwdPage />} path="/change-pwd" />
           <Route element={<AppLayout />}>
             <Route element={<DashboardPage />} path="/dashboard" />
-            <Route element={<Outlet />} path="/one-way">
-              <Route element={<OneWaySendMessagePage />} path="send-message" />
-              <Route element={<OneWayReservationPage />} path="reservation" />
-              <Route element={<OneWaySendStatusPage />} path="send-status" />
+            <Route element={<Outlet />} path="/notice">
+              <Route element={<NoticeListPage />} path="list" />
+              <Route element={<NoticeWritePage />} path="write" />
+            </Route>
+            <Route element={<Outlet />} path="/schedule">
+              <Route element={<CalendarPage />} path="calendar" />
+              <Route element={<ScheduleListPage />} path="schedule-list" />
+              <Route element={<ScheduleWritePage />} path="schedule-write" />
+              <Route element={<WorkLogWritePage />} path="work-log-write" />
+              <Route element={<WorkLogCheckPage />} path="work-log-check" />
+            </Route>
+            <Route element={<Outlet />} path="/sales">
+              <Route element={<SalesListPage />} path="list" />
+              <Route element={<SalesWritePage />} path="write" />
+            </Route>
+            <Route element={<Outlet />} path="/sopp">
+              <Route element={<SoppListPage />} path="list" />
+              <Route element={<SoppWritePage />} path="write" />
               <Route
-                element={<OneWaySendMessageExcelPage />}
-                path="send-message-excel"
+                element={<SoppEstimateManagePage />}
+                path="estimate-manage"
               />
               <Route
-                element={<OneWaySendAlarmTalkPage />}
-                path="send-alarm-talk"
+                element={<SoppEstimateWritePage />}
+                path="estimate-write"
+              />
+            </Route>
+            <Route element={<Outlet />} path="/order-sales-report">
+              <Route element={<OrderSalesReportListPage />} path="list" />
+              <Route element={<OrderSalesReportWritePage />} path="write" />
+            </Route>
+            <Route element={<Outlet />} path="/cont">
+              <Route element={<ContListPage />} path="list" />
+              <Route element={<ContWritePage />} path="write" />
+              <Route element={<ContBusinessListPage />} path="business-list" />
+              <Route
+                element={<ContBuyAndSellListPage />}
+                path="buy-and-sell-list"
               />
               <Route
-                element={<OneWayAutoSendStatusPage />}
-                path="auto-send-status"
+                element={<ContBuyAndSellWritePage />}
+                path="buy-and-sell-write"
               />
             </Route>
-            <Route element={<Outlet />} path="/two-way">
-              <Route element={<TwoWaySendMessagePage />} path="send-message" />
-              <Route element={<TwoWayReservationPage />} path="reservation" />
-              <Route element={<TwoWaySendStatusPage />} path="send-status" />
-              <Route element={<TwoWayConsultPage />} path="consult" />
+            <Route element={<Outlet />} path="/techd">
+              <Route element={<TechdListPage />} path="list" />
+              <Route element={<TechdWritePage />} path="write" />
               <Route
-                element={<TwoWayResponseSummaryPage />}
-                path="response-summary"
+                element={<TechdMaintenanceListPage />}
+                path="maintenance-list"
               />
-              <Route element={<TwoWayScenarioPage />} path="scenario" />
-            </Route>
-            <Route element={<Outlet />} path="/template">
-              <Route element={<MessageTemplatePage />} path="message" />
-              <Route element={<AlarmTalkTemplatePage />} path="alarm-talk" />
-            </Route>
-            <Route element={<Outlet />} path="/address">
-              <Route element={<AddressManagePage />} path="manage" />
-            </Route>
-            <Route element={<Outlet />} path="/stats">
-              <Route element={<Stats001Page />} path="001" />
-              <Route element={<Stats002Page />} path="002" />
-              <Route element={<Stats003Page />} path="003" />
+              <Route
+                element={<TechdMaintenanceWritePage />}
+                path="maintenance-write"
+              />
+              <Route
+                element={<TechdInventoryListPage />}
+                path="inventory-list"
+              />
+              <Route
+                element={<TechdInventoryWritePage />}
+                path="inventory-write"
+              />
             </Route>
             <Route element={<Outlet />} path="/user">
               <Route element={<UserManagePage />} path="manage" />
@@ -125,16 +166,12 @@ function Router() {
                 element={<AutoSendMessagePage />}
                 path="auto-send-message"
               />
-              <Route
-                element={<AlarmTalkTemplateManagePage />}
-                path="alarm-talk-template"
-              />
               <Route element={<CommonCodePage />} path="common-code" />
             </Route>
             <Route element={<Outlet />} path="/system">
               <Route element={<UMSPage />} path="ums" />
               <Route element={<TwoWaySettingPage />} path="two-way-setting" />
-              <Route element={<BizCoreSettingPage />} path="BizCore-setting" />
+              <Route element={<BizCoreSettingPage />} path="bizcore-setting" />
               <Route element={<MenuSettingPage />} path="menu-setting" />
               <Route element={<SystemCodePage />} path="system-code" />
             </Route>
