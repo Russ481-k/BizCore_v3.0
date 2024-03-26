@@ -14,7 +14,7 @@ import { Controller, useForm, useFormState } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { ToastMessage } from "components";
-import { authLoginThunk, useCheckPwd } from "features/user";
+import { authLoginThunk } from "features/user";
 import authService from "libs/authService";
 import message from "libs/message";
 import { useAppDispatch } from "storage/redux/hooks";
@@ -31,7 +31,7 @@ function Login() {
   const toast = useToast();
   const storageHaveSavedId = localStorage.getItem("savedId");
 
-  const { control, handleSubmit, register, reset, resetField, setError } =
+  const { control, handleSubmit, register, resetField, setError } =
     useForm<LoginInterface>({
       defaultValues: {
         compId: "vtek",
@@ -43,7 +43,6 @@ function Login() {
     });
   const { errors, isValid, isSubmitting } = useFormState({ control });
 
-  const { mutate: checkInitialPwd } = useCheckPwd();
   const onSubmitLogin = handleSubmit(async (data) => {
     const resultAction = await dispatch(
       authLoginThunk({
