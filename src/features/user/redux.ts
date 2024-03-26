@@ -13,7 +13,7 @@ export const REFRESHTOKEN_TIME_OUT = 30;
 
 export const authLoginThunk = createAsyncThunk<
   AuthLoginResponse,
-  { userId: string; password: string },
+  { compId: string; userId: string; password: string },
   {
     rejectValue: {
       resultCode: "FAILURE";
@@ -22,9 +22,13 @@ export const authLoginThunk = createAsyncThunk<
   }
 >(
   "auth/login",
-  async (params: { userId: string; password: string }, { rejectWithValue }) => {
+  async (
+    params: { compId: string; userId: string; password: string },
+    { rejectWithValue }
+  ) => {
     try {
       const result = await authLoginAPI(params);
+      console.log(result);
       return result;
     } catch (err: any) {
       return rejectWithValue(err.response.data);

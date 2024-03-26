@@ -1,4 +1,8 @@
 const message = {
+  compNo: {
+    login: "기업번호를 입력하세요.",
+    required: "기업번호는 필수 입력 항목입니다.",
+  },
   addressGroupName: {
     required: "주소록 그룹명을 입력하세요.",
     pattern: "2~20자 이내로 주소록 그룹명을 입력하세요.",

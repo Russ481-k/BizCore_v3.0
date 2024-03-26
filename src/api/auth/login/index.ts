@@ -4,15 +4,18 @@ import { auth } from "api/url";
 export interface AuthLoginResponse {
   status: string;
   data: {
-    name: string;
-    userId: string;
     accessToken: string;
     refreshToken: string;
+    userId: string;
+    userName: string;
+    userNo: string;
+    userRole: string;
   };
   message: string;
 }
 
 export function authLoginAPI(params: {
+  compId: string;
   userId: string;
   password: string;
 }): Promise<AuthLoginResponse> {
@@ -20,6 +23,7 @@ export function authLoginAPI(params: {
     url: auth("/login"),
     method: "POST",
     data: {
+      compId: params.compId ?? null,
       userId: params.userId ?? null,
       password: params.password ?? null,
     },

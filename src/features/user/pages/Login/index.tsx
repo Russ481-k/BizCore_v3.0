@@ -20,6 +20,7 @@ import message from "libs/message";
 import { useAppDispatch } from "storage/redux/hooks";
 
 interface LoginInterface {
+  compId: string;
   userId: string;
   password: string;
   saveId: boolean;
@@ -33,6 +34,7 @@ function Login() {
   const { control, handleSubmit, register, reset, resetField, setError } =
     useForm<LoginInterface>({
       defaultValues: {
+        compId: "vtek",
         userId: storageHaveSavedId ? storageHaveSavedId : "",
         password: "",
         saveId: storageHaveSavedId ? true : false,
@@ -45,6 +47,7 @@ function Login() {
   const onSubmitLogin = handleSubmit(async (data) => {
     const resultAction = await dispatch(
       authLoginThunk({
+        compId: data.compId,
         userId: data.userId,
         password: data.password,
       })
@@ -71,34 +74,37 @@ function Login() {
         message: message,
       });
       return;
+    } else {
+      authService.getMyData();
+      return navigate("/dashboard");
     }
 
-    if (authLoginThunk.fulfilled.match(resultAction)) {
-      checkInitialPwd(
-        {
-          password: data.password,
-        },
-        {
-          onSuccess: (data) => {
-            const isInitialPwd: boolean = data.data;
-            if (isInitialPwd) {
-              navigate("/change-pwd");
-            } else {
-              authService.getMyData();
-              navigate("/one-way/send-message");
-            }
-          },
-          onSettled: () => {
-            if (data.saveId === true) {
-              localStorage.setItem("savedId", data.userId);
-            } else {
-              localStorage.removeItem("savedId");
-            }
-            reset();
-          },
-        }
-      );
-    }
+    // if (authLoginThunk.fulfilled.match(resultAction)) {
+    //   checkInitialPwd(
+    //     {
+    //       password: data.password,
+    //     },
+    //     {
+    //       onSuccess: (data) => {
+    //         const isInitialPwd: boolean = data.data;
+    //         if (isInitialPwd) {
+    //           navigate("/change-pwd");
+    //         } else {
+    //           authService.getMyData();
+    //           navigate("/one-way/send-message");
+    //         }
+    //       },
+    //       onSettled: () => {
+    //         if (data.saveId === true) {
+    //           localStorage.setItem("savedId", data.userId);
+    //         } else {
+    //           localStorage.removeItem("savedId");
+    //         }
+    //         reset();
+    //       },
+    //     }
+    //   );
+    // }
   });
 
   return (
@@ -108,6 +114,20 @@ function Login() {
           <Image alt="logo" src={require("assets/img/logo.png")} />
         </VStack>
         <VStack alignItems="flex-start" mt={12} spacing={2.5} w="100%">
+          <FormControl isInvalid={!!errors?.userId}>
+            <Input
+              placeholder="기업아이디"
+              defaultValue={"vtek"}
+              {...register("compId", {
+                required: message.compNo.login,
+              })}
+            />
+            {!!errors?.userId?.message && (
+              <FormErrorMessage mt={2}>
+                {errors?.userId?.message}
+              </FormErrorMessage>
+            )}
+          </FormControl>
           <FormControl isInvalid={!!errors?.userId}>
             <Input
               placeholder="아이디"
