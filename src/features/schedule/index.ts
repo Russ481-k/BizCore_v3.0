@@ -10,4 +10,5 @@ export { default as WorkLogCheck } from "./pages/WorkLogCheck";
 export { default as WorkLogWrite } from "./pages/WorkLogWrite";
 
 /* hooks */
+export { default as useGetSchedList } from "./hooks/useGetSchedList";
 export { default as useGetWiredPhoneNumbers } from "./hooks/useGetWiredPhoneNumbers";
