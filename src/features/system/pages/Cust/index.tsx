@@ -25,7 +25,7 @@ import {
 import formatter from "libs/formatter";
 import { useGetCustList } from "features/system";
 
-function CustList() {
+function Cust() {
   const methods = useForm<{
     sendDate: [Date, Date] | null;
     sendChannel: string | null;
@@ -619,4 +619,4 @@ function CustList() {
   );
 }
 
-export default CustList;
+export default Cust;
