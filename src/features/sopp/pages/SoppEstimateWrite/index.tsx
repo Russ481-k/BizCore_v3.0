@@ -17,7 +17,6 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { template } from "api/url";
 import {
-  ChannelTag,
   CollapseSection,
   CustomCard,
   CustomSelect,
@@ -367,9 +366,6 @@ function MessageTemplate() {
                           textAlign="left"
                           onChange={() => handleCheckboxCheck(i)}
                         />
-                        <Text flex={1} textAlign="center" px={4} py={2}>
-                          <ChannelTag channelType={template.templateChannel} />
-                        </Text>
                         <Text
                           color="primary.500"
                           cursor="pointer"

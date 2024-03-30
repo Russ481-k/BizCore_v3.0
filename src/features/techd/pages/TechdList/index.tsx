@@ -13,7 +13,6 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import {
-  ChannelTag,
   CollapseSection,
   CustomCard,
   CustomSelect,
@@ -410,9 +409,6 @@ function TechdList() {
                           backgroundColor: "gray.50",
                         }}
                       >
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          <ChannelTag channelType={message?.type ?? "SMS"} />
-                        </Text>
                         <Text flex={1} px={4} py={2} textAlign="center">
                           {message.etc1}
                         </Text>

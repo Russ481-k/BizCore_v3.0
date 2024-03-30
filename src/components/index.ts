@@ -53,7 +53,6 @@ export { default as Section } from "./Section";
 
 //Components
 export { default as ChangeReservationTimeModal } from "./ChangeReservationTimeModal";
-export { default as ChannelTag } from "./ChannelTag";
 export { default as CustomCard } from "./CustomCard";
 export { default as CustomModal } from "./CustomModal";
 export { default as CustomSelect } from "./CustomSelect";

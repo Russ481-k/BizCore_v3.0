@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { FieldError, useFormContext, useFormState } from "react-hook-form";
 
-import { ChannelTag, SpecialSymbolPopOver, ToastMessage } from "components";
+import { SpecialSymbolPopOver, ToastMessage } from "components";
 
 interface MessageTextareaProps {
   name: string;
@@ -133,7 +133,6 @@ function MessageTextarea({
 
   return (
     <VStack align="flex-start" flex={1} spacing={2} {...props}>
-      {channel && <ChannelTag channelType={channel} hasTooltip />}
       <FormControl isInvalid={!isDisabled && !!errors?.[name]} h="100%">
         <Flex
           bgColor={isDisabled ? "gray.100" : "white"}
