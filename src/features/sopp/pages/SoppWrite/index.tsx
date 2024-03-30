@@ -1,20 +1,16 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   HStack,
   Input,
   InputGroup,
   InputRightAddon,
-  Skeleton,
   Text,
   useDisclosure,
   useOutsideClick,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
-import { format } from "date-fns";
 import {
   ChangeEvent,
   forwardRef,
@@ -25,20 +21,15 @@ import {
 } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { template } from "api/url";
 import {
-  ChannelTag,
   CollapseSection,
   CustomCard,
   CustomSelect,
-  ExcelFileDownload,
   InfoBox,
   InfoElement,
-  PaginationButtons,
   ScheduleIcon,
-  ToastMessage,
 } from "components";
-import { useDeleteTemplate, useGetTemplatesBySearch } from "features/sopp";
+import { useGetTemplatesBySearch } from "features/sopp";
 import TemplateGroup from "type/TemplateGroup";
 import ReactDatePicker from "react-datepicker";
 import { ko } from "date-fns/locale";
@@ -66,7 +57,6 @@ const CustomInput = forwardRef(({ ...inputProps }: inputPropsType, ref) => {
 });
 
 function MessageTemplate() {
-  const toast = useToast();
   const currentRef = useRef<HTMLDivElement>(null);
   const { isOpen, onClose } = useDisclosure();
 
@@ -79,43 +69,29 @@ function MessageTemplate() {
     keyword: string | null;
   }>({ mode: "onChange" });
 
-  const [addTemplateModalOpen, setAddTemplateModalOpen] =
-    useState<boolean>(false);
-  const [autoType, setAutoType] = useState<string | null>(null);
+  const [, setAutoType] = useState<string | null>(null);
   const [batchSize, setBatchSize] = useState<number>(10);
-  const [changeTemplateModalData, setChangeTemplateModalData] = useState<
-    number | null
-  >(null);
-  const [channelType, setChannelType] = useState<string | null>(null);
-  const [checkedItems, setCheckedItems] = useState<boolean[]>([false]);
+  const [, setChannelType] = useState<string | null>(null);
+  const [, setCheckedItems] = useState<boolean[]>([false]);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
-  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [endDate, setEndDate] = useState<string | null>(null);
-  const [endSendDate, setEndSendDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(false);
-  const [name, setName] = useState<string | null>(null);
-  const [pageSize, setPageSize] = useState<number>(10);
-  const [phone, setPhone] = useState<string | null>(null);
-  const [refetchGroupTemplate, setRefetchGroupTemplate] =
-    useState<boolean>(false);
-  const [regDateOption, setRegDateOption] = useState<"all" | "select">("all");
-  const [result, setResult] = useState<string | null>(null);
-  const [selectedTemplateGroup, setSelectedTemplateGroup] =
-    useState<TemplateGroup | null>(null);
-  const [sendDateOption, setSendDateOption] = useState<"all" | "select">("all");
+  const [, setName] = useState<string | null>(null);
+  const [, setPhone] = useState<string | null>(null);
+  const [, setRefetchGroupTemplate] = useState<boolean>(false);
+  const [, setResult] = useState<string | null>(null);
+  const [selectedTemplateGroup] = useState<TemplateGroup | null>(null);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [expectedSalesDate, setExpectedSalesDate] = useState<Date | null>(null);
   const [templateChannel, setTemplateChannel] = useState<string | null>(null);
   const [templateName, setTemplateName] = useState<string | null>(null);
 
-  const { mutate: deleteTemplate, isLoading: isDeleteLoading } =
-    useDeleteTemplate();
   const {
     contents: templates,
-    paging: pagination,
-    pageLength,
-    totalCount,
-    isLoading: isTemplatesLoading,
+    // paging: pagination,
+    // pageLength,
+    // totalCount,
+    // isLoading: isTemplatesLoading,
   } = useGetTemplatesBySearch(
     {
       groupTemplateId: selectedTemplateGroup?.groupTemplateId ?? null,
@@ -133,9 +109,6 @@ function MessageTemplate() {
       },
     }
   );
-
-  const allChecked = checkedItems.every(Boolean);
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
   const salesMethod = [
     {
@@ -243,58 +216,10 @@ function MessageTemplate() {
     },
   ];
 
-  const vendors = [
-    {
-      code: "vendor1",
-      name: "거래처1",
-    },
-    {
-      code: "vendor2",
-      name: "거래처2",
-    },
-    {
-      code: "vendor3",
-      name: "거래처3",
-    },
-    {
-      code: "vendor4",
-      name: "거래처4",
-    },
-  ];
   const handleExpectedSalesDateChange = (startDate: Date | null) => {
     setExpectedSalesDate(startDate);
   };
 
-  const handleAddTemplateModalClose = () => {
-    setAddTemplateModalOpen(false);
-    handlePageRefetch();
-  };
-  const handleAddTemplateModalOpen = () => {
-    setAddTemplateModalOpen(true);
-  };
-  const handleBatchSizeChange = (BatchSize: number) => {
-    setBatchSize(BatchSize);
-    setEnableQuery(true);
-  };
-  const handleChangeTemplateModalClose = () => {
-    setChangeTemplateModalData(null);
-    handlePageRefetch();
-  };
-  const handleChangeTemplateModalData = (templateId: number) => {
-    setChangeTemplateModalData(templateId);
-  };
-  const handleCheckboxCheckAll = (e: ChangeEvent<HTMLInputElement>) => {
-    const checkboxArray = templates?.map(() => e.target.checked);
-    setCheckedItems(checkboxArray ?? []);
-  };
-  const handleCheckboxCheck = (index: number) => {
-    checkedItems[index] = !checkedItems[index];
-    setCheckedItems([...checkedItems]);
-  };
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    setEnableQuery(true);
-  };
   const handlePageRefetch = useCallback(() => {
     setEndDate(null);
     setStartDate(null);
@@ -306,49 +231,6 @@ function MessageTemplate() {
     setEnableQuery(true);
     setRefetchGroupTemplate(true);
   }, [methods, setEnableQuery, setCurrentPage, setRefetchGroupTemplate]);
-  const handleDeleteSelectedTemplateModalOpen = () => {
-    setDeleteModalOpen(true);
-  };
-  const handleDeleteSelectedTemplateModalClose = () => {
-    setDeleteModalOpen(false);
-  };
-  const handleDeleteSelectTemplateModalConfirm = () => {
-    templates?.forEach((template: any, i: number) => {
-      if (checkedItems[i]) {
-        deleteTemplate(
-          { templateId: template.templateId },
-          {
-            onError: () => {
-              toast({
-                render: () => (
-                  <ToastMessage title=" 삭제 오류" type="ERROR">
-                    삭제 중 알 수 없는 오류가 발생하였습니다.
-                    <br />
-                    삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템
-                    관리자에게 문의하기 바랍니다.
-                  </ToastMessage>
-                ),
-              });
-            },
-            onSuccess: () => {
-              toast({
-                render: () => (
-                  <ToastMessage title=" 삭제 완료" type="SUCCESS">
-                    을 정상적으로 삭제하였습니다.
-                  </ToastMessage>
-                ),
-              });
-              onClose();
-              handlePageRefetch();
-            },
-          }
-        );
-        setDeleteModalOpen(false);
-        setEnableQuery(true);
-      }
-    });
-  };
-
   const handleFormSubmit = methods.handleSubmit(
     ({
       // sendDate,
@@ -396,12 +278,6 @@ function MessageTemplate() {
   });
 
   useEffect(() => {
-    if (!isDeleteLoading) {
-      setEnableQuery(true);
-    }
-  }, [isDeleteLoading]);
-
-  useEffect(() => {
     handlePageRefetch();
     methods.reset();
   }, [selectedTemplateGroup, methods, handlePageRefetch]);
@@ -409,6 +285,10 @@ function MessageTemplate() {
   useEffect(() => {
     setCheckedItems(templates?.length ? templates?.map(() => false) : [false]);
   }, [templates]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <VStack align="stretch" spacing={2}>

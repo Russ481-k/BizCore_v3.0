@@ -1,5 +1,5 @@
 import { requestApi } from "api";
-import { auth, sopp } from "api/url";
+import { sopp } from "api/url";
 
 export interface SoppListResponse {
   status: string;

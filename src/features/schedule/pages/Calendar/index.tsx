@@ -1,38 +1,118 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Input,
-  Skeleton,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { format } from "date-fns";
-import { ChangeEvent, useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react";
+import TuiCalendar from "@toast-ui/react-calendar";
 
-import {
-  ChannelTag,
-  CollapseSection,
-  CustomCard,
-  CustomSelect,
-  InfoBox,
-  InfoElement,
-  PaginationButtons,
-  RangeDatePicker,
-  Section,
-} from "components";
-import formatter from "libs/formatter";
+import { getDate } from "date-fns";
+import { useState } from "react";
+
+import { CollapseSection, Section } from "components";
+
+interface CalendarInfo {
+  id: string;
+  name: string;
+  bgColor: string;
+  borderColor: string;
+}
+enum ViewType {
+  MONTH = "month",
+  WEEK = "week",
+  DAY = "day",
+}
+interface CalendarInfo {}
 
 function Calendar() {
-  const handleBatchSizeChange = () => {};
-  const handlePageChange = () => {};
+  const [selectedView, setSelectedView] = useState<ViewType | undefined>(
+    ViewType.MONTH
+  );
+
+  const handleCalendarViewButtonClick = (viewType: ViewType) => {
+    setSelectedView(viewType);
+  };
+  const today = new Date().getTime();
+
+  const calendars: CalendarInfo[] = [
+    {
+      id: "0",
+      name: "Private",
+      bgColor: "#9e5fff",
+      borderColor: "#9e5fff",
+    },
+    {
+      id: "1",
+      name: "Company",
+      bgColor: "#00a9ff",
+      borderColor: "#00a9ff",
+    },
+  ];
+
+  // Especially avoid to declare the `template` prop inside the component.
+
+  const scadules: any = [
+    {
+      id: "1",
+      calendarId: "0",
+      title: "TOAST UI Calendar Study",
+      category: "time",
+      dueDateClass: "",
+      start: today.toString(),
+      end: getDate(today + 3).toString(),
+    },
+    {
+      id: "2",
+      calendarId: "0",
+      title: "Practice",
+      category: "milestone",
+      dueDateClass: "",
+      start: getDate(today + 1).toString(),
+      end: getDate(today + 1).toString(),
+      isReadOnly: true,
+    },
+    {
+      id: "3",
+      calendarId: "0",
+      title: "FE Workshop",
+      category: "allday",
+      dueDateClass: "",
+      start: getDate(today - 2).toString(),
+      end: getDate(today - 1).toString(),
+      isReadOnly: true,
+    },
+    {
+      id: "4",
+      calendarId: "0",
+      title: "Report",
+      category: "time",
+      dueDateClass: "",
+      start: today.toString(),
+      end: getDate(today + 1).toString(),
+    },
+  ];
+
+  const template = {
+    milestone(schedule: any) {
+      return `<span style="color:#fff;background-color: ${schedule.bgColor};">${schedule.title}</span>`;
+    },
+    milestoneTitle() {
+      return "Milestone";
+    },
+    allday(schedule: any) {
+      return `${schedule.title}<i class="fa fa-refresh"></i>`;
+    },
+    alldayTitle() {
+      return "All Day";
+    },
+  };
+
   return (
     <VStack align="stretch" spacing={2}>
-      <CustomCard isHeader="캘린더" />
       <Box>
-        <CollapseSection headerTitle="일정 조회" borderBottomRadius={0}>
+        <CollapseSection
+          headerTitle={
+            <Text color="black" fontSize="lg" fontWeight="600">
+              캘린더
+            </Text>
+          }
+          borderBottomRadius={0}
+        >
           {/* <FormProvider {...methods}>
             <InfoBox>
               <Flex>
@@ -117,17 +197,24 @@ function Calendar() {
         </CollapseSection>
         <Section borderTopRadius={0} borderTopWidth={0}>
           <Flex flexDirection="column" gap={2} width="100%">
+            <Flex>
+              <Button
+                onClick={() => handleCalendarViewButtonClick(ViewType.MONTH)}
+              >
+                월간
+              </Button>
+              <Button
+                onClick={() => handleCalendarViewButtonClick(ViewType.WEEK)}
+              >
+                주간
+              </Button>
+              <Button
+                onClick={() => handleCalendarViewButtonClick(ViewType.DAY)}
+              >
+                일간
+              </Button>
+            </Flex>
             <Flex flexDirection="column" gap={2} width="100%">
-              <HStack>
-                <Text fontSize="xs" fontWeight="bold">
-                  검색결과 : {0} 건
-                </Text>
-                <Flex flex={1} gap={2} justifyContent="flex-end">
-                  <Button size="sm" type="button" variant="secondaryBlue">
-                    엑셀 다운로드
-                  </Button>
-                </Flex>
-              </HStack>
               <Box
                 borderLeftWidth={1}
                 borderRadius="12px"
@@ -135,180 +222,42 @@ function Calendar() {
                 borderTopWidth={1}
                 overflow="hidden"
               >
-                <Flex
-                  alignItems="center"
-                  backgroundColor="gray.100"
-                  borderBottomWidth={1}
-                  flex={1}
-                  fontSize="sm"
-                  fontWeight="500"
-                  justifyContent="space-between"
-                >
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    판매방식
-                  </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    구분
-                  </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    이름
-                  </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    번호
-                  </Text>
-                  <Text flex={5} px={4} py={2} textAlign="center">
-                    내용
-                  </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    상태
-                  </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    일
-                  </Text>
-                </Flex>
-                <Flex flexDirection="column" fontSize="sm">
-                  {true &&
-                    Array.from({ length: 10 }).map((_, i) => (
-                      <Flex
-                        alignItems="center"
-                        borderBottomWidth={1}
-                        height="38px"
-                        justifyContent="space-between"
-                        key={[]?.[i] + "-" + i + "-messages-skeleton"}
-                      >
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={2}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={5}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                      </Flex>
-                    ))}
-                  {false ? (
-                    <Flex
-                      alignItems="center"
-                      borderBottomWidth={1}
-                      flex={1}
-                      fontSize="sm"
-                      justifyContent="center"
-                      p={3}
-                      width="100%"
-                    >
-                      <Text>조회된 결과가 없습니다.</Text>
-                    </Flex>
-                  ) : (
-                    []?.map((message: any, i: number) => (
-                      <Flex
-                        alignItems="center"
-                        borderBottomWidth={1}
-                        flex={1}
-                        fontSize="sm"
-                        height="37px"
-                        justifyContent="space-between"
-                        key={message.id + "-" + i}
-                        width="100%"
-                        _hover={{
-                          backgroundColor: "gray.50",
-                        }}
-                      >
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          <ChannelTag channelType={message?.type ?? "SMS"} />
-                        </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {message.etc1}
-                        </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {message.etc3}
-                        </Text>
-                        <Text flex={2} px={4} py={2} textAlign="center">
-                          {formatter.contactFormatter(message.callback)}
-                        </Text>
-                        <Text
-                          flex={5}
-                          overflow="hidden"
-                          px={4}
-                          py={2}
-                          textAlign="left"
-                          textOverflow="ellipsis"
-                          whiteSpace="nowrap"
-                        >
-                          {message.msg}
-                        </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {message.rslt === "0" && "성공"}
-                          {message.rslt === "1" && "실패"}
-                        </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {format(new Date(message.sentDate), "yyyy-MM-dd")}
-                        </Text>
-                      </Flex>
-                    ))
-                  )}
-                </Flex>
+                <TuiCalendar
+                  usageStatistics={true}
+                  calendars={calendars}
+                  // disableDblClick={false}
+                  // disableDblClick={true}
+                  isReadOnly={false}
+                  month={{
+                    startDayOfWeek: 0,
+                  }}
+                  // scadules={scadules}
+                  // scheduleView={}
+                  // taskView={}
+                  template={template}
+                  // theme={myTheme}
+                  // timezones={[
+                  //   {
+                  //     timezoneOffset: 540,
+                  //     displayLabel: "GMT+09:00",
+                  //     tooltip: "Seoul",
+                  //   },
+                  //   {
+                  //     timezoneOffset: -420,
+                  //     displayLabel: "GMT-08:00",
+                  //     tooltip: "Los Angeles",
+                  //   },
+                  // ]}
+                  useDetailPopup
+                  // useCreationPopup
+                  view={selectedView} // You can also set the `defaultView` option.
+                  week={{
+                    showTimezoneCollapseButton: true,
+                    timezonesCollapsed: true,
+                  }}
+                />
               </Box>
             </Flex>
-            <PaginationButtons
-              batchSize={10}
-              data={[]}
-              pagination={{
-                offset: 10,
-                currentPage: 1,
-                pageSize: 10,
-                paged: true,
-                sort: {
-                  empty: false,
-                  sorted: true,
-                  unsorted: false,
-                },
-                unpaged: false,
-              }}
-              pageLength={10}
-              onPageChange={handlePageChange}
-              onBatchSizeChange={handleBatchSizeChange}
-            />
           </Flex>
         </Section>
       </Box>
