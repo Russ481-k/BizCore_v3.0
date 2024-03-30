@@ -21,6 +21,6 @@ export function getSoppList(): Promise<SoppListResponse> {
     //   userId: params.userId ?? null,
     //   password: params.password ?? null,
     // },
-    withJWT: true,
+    withJWT: false,
   }).then((response) => response.data);
 }

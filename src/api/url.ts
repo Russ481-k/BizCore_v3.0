@@ -19,6 +19,14 @@ export const auth = (path: string) =>
   `${API_URL}/api/auth${path}`.replace(/\/$/, "");
 export const sopp = (path: string) =>
   `${API_URL}/api/sopp${path}`.replace(/\/$/, "");
+export const cont = (path: string) =>
+  `${API_URL}/api/cont${path}`.replace(/\/$/, "");
+export const cust = (path: string) =>
+  `${API_URL}/api/cust${path}`.replace(/\/$/, "");
+export const sales = (path: string) =>
+  `${API_URL}/api/sales${path}`.replace(/\/$/, "");
+export const sched = (path: string) =>
+  `${API_URL}/api/sched${path}`.replace(/\/$/, "");
 export const department = (path: string) =>
   `${API_URL}/api/department${path}`.replace(/\/$/, "");
 export const permission = (path: string) =>

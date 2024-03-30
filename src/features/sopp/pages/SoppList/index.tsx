@@ -23,7 +23,7 @@ import {
   Section,
 } from "components";
 import formatter from "libs/formatter";
-import useGetSoppList from "features/sopp/hooks/useGetSoppList";
+import { useGetSoppList } from "features/sopp";
 
 function SoppList() {
   const methods = useForm<{

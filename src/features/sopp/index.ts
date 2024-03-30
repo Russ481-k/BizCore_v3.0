@@ -14,6 +14,7 @@ export { default as useChangeTemplate } from "./hooks/useChangeTemplate";
 export { default as useChangeTemplateGroup } from "./hooks/useChangeTemplateGroup";
 export { default as useDeleteTemplate } from "./hooks/useDeleteTemplate";
 export { default as useDeleteTemplateGroup } from "./hooks/useDeleteTemplateGroup";
+export { default as useGetSoppList } from "./hooks/useGetSoppList";
 export { default as useGetTemplate } from "./hooks/useGetTemplate";
 export { default as useGetTemplateGroups } from "./hooks/useGetTemplateGroups";
 export { default as useGetTemplates } from "./hooks/useGetTemplates";
