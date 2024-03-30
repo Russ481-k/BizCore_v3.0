@@ -35,29 +35,29 @@ export async function requestApi<T = unknown>({
     ...headers,
   };
 
-  if (withJWT && !accessToken && !silentRefreshPromise) {
-    silentRefreshPromise = authService
-      .silentRefresh()
-      .then(() => {
-        refreshedAccessToken = store.getState().user.accessToken || "";
-        if (!refreshedAccessToken) {
-          throw new Error("액세스 토큰을 재발급 받지 못했습니다.");
-        }
-      })
-      .finally(() => {
-        silentRefreshPromise = null;
-      });
-  }
+  // if (withJWT && !accessToken && !silentRefreshPromise) {
+  //   silentRefreshPromise = authService
+  //     .silentRefresh()
+  //     .then(() => {
+  //       refreshedAccessToken = store.getState().user.accessToken || "";
+  //       if (!refreshedAccessToken) {
+  //         throw new Error("액세스 토큰을 재발급 받지 못했습니다.");
+  //       }
+  //     })
+  //     .finally(() => {
+  //       silentRefreshPromise = null;
+  //     });
+  // }
 
-  if (silentRefreshPromise) {
-    await silentRefreshPromise;
-  }
-  if (!refreshedAccessToken) {
-    refreshedAccessToken = store.getState().user.accessToken || "";
-  }
-  if (withJWT && refreshedAccessToken) {
-    customHeaders.Authorization = `Bearer ${refreshedAccessToken}`;
-  }
+  // if (silentRefreshPromise) {
+  //   await silentRefreshPromise;
+  // }
+  // if (!refreshedAccessToken) {
+  //   refreshedAccessToken = store.getState().user.accessToken || "";
+  // }
+  // if (withJWT && refreshedAccessToken) {
+  //   customHeaders.Authorization = `Bearer ${refreshedAccessToken}`;
+  // }
   return axios
     .request<T>({
       headers: customHeaders,

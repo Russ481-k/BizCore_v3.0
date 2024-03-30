@@ -15,7 +15,10 @@ export function authRefreshAPI(params: {
   return requestApi<AuthRefreshResponse>({
     url: auth("/refresh"),
     method: "POST",
-    data: { refreshToken: params.refreshToken ?? null },
-    withJWT: true,
+    headers: {
+      Authorization: `Bearer ${params.refreshToken}`,
+    },
+    // data: { refreshToken: params.refreshToken ?? null },
+    withJWT: false,
   }).then((response) => response.data);
 }
