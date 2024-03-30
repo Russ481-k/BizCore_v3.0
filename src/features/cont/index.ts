@@ -22,3 +22,4 @@ export { default as useGetTemplates } from "./hooks/useGetTemplates";
 export { default as useGetTemplatesBySearch } from "./hooks/useGetTemplatesBySearch";
 export { default as useGetValidTemplateGroupName } from "./hooks/useGetValidTemplateGroupName";
 export { default as useGetValidTemplateName } from "./hooks/useGetValidTemplateName";
+export { default as useGetContList } from "./hooks/useGetContList";
