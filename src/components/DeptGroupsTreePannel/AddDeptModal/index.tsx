@@ -28,7 +28,7 @@ import {
   // SelectManageDeptModal,
   useAddDept,
   useGetValidDept,
-} from "features/user";
+} from "features/system";
 import message from "libs/message";
 // import Department from "type/Department";
 

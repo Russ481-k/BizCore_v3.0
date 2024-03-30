@@ -2,8 +2,8 @@
 import { useCallback, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { useAuthLogoutKill } from "features/user";
-import { ACCESSTOKEN_TIME_OUT } from "features/user/redux";
+import { useAuthLogoutKill } from "features/system";
+import { ACCESSTOKEN_TIME_OUT } from "features/system/redux";
 import authService from "libs/authService";
 import { getCookie } from "storage/cookie";
 import { useAppSelector } from "storage/redux/hooks";

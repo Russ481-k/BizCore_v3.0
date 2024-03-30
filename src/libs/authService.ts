@@ -2,8 +2,8 @@ import {
   authLogoutThunk,
   authRefreshThunk,
   removeUserData,
-} from "features/user";
-import { getMyProfileThunk } from "features/user";
+} from "features/system";
+import { getMyProfileThunk } from "features/system";
 import { store } from "storage/redux/store";
 import { getCookie } from "storage/cookie";
 
@@ -72,7 +72,7 @@ function authService() {
   };
   return {
     getMyData,
-    silentRefresh,
+    // silentRefresh,
     logout,
   };
 }

@@ -2,7 +2,7 @@ import { Accordion, Button, useToast, VStack } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 
 import { CollapseSection, ToastMessage } from "components";
-import { useGetDept } from "features/user";
+import { useGetDept } from "features/system";
 import { DEPARTMENT_GROUP } from "libs/fixture";
 import Department from "type/Department";
 import DepartmentGroup from "type/DepartmentGroup";

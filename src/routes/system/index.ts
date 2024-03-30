@@ -1,5 +1,5 @@
-export { default as UMSPage } from "./route/UMSPage";
-export { default as TwoWaySettingPage } from "./route/TwoWaySettingPage";
-export { default as BizCoreSettingPage } from "./route/BizCoreSettingPage";
-export { default as MenuSettingPage } from "./route/MenuSettingPage";
-export { default as SystemCodePage } from "./route/SystemCodePage";
+export { default as LoginPage } from "./route/LoginPage";
+export { default as ChangePwdPage } from "./route/ChangePwdPage";
+
+export { default as CustPage } from "./route/CustPage";
+export { default as UserManagePage } from "./route/UserManagePage";

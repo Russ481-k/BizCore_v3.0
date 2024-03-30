@@ -31,7 +31,7 @@ import {
   ChangePwd,
   getMyProfileThunk,
   useChangeMyProfile,
-} from "features/user";
+} from "features/system";
 import formatter from "libs/formatter";
 import message from "libs/message";
 import pattern from "libs/pattern";

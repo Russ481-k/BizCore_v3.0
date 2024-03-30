@@ -32,7 +32,7 @@ import {
   // SelectManageDeptModal,
   useChangeDept,
   useGetValidDept,
-} from "features/user";
+} from "features/system";
 import Department from "type/Department";
 import message from "libs/message";
 

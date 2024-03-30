@@ -53,22 +53,12 @@ import {
   TechdInventoryListPage,
   TechdInventoryWritePage,
 } from "routes/techd";
+
 import {
-  AutoSendMessagePage,
   ChangePwdPage,
-  CommonCodePage,
-  DefaultPage,
+  CustPage,
   LoginPage,
-  PermissionPage,
-  StaffContactPage,
   UserManagePage,
-} from "routes/user";
-import {
-  MenuSettingPage,
-  BizCoreSettingPage,
-  TwoWaySettingPage,
-  UMSPage,
-  SystemCodePage,
 } from "routes/system";
 
 function Router() {
@@ -157,23 +147,12 @@ function Router() {
                 path="inventory-write"
               />
             </Route>
-            <Route element={<Outlet />} path="/user">
-              <Route element={<UserManagePage />} path="manage" />
-              <Route element={<PermissionPage />} path="permission" />
-              <Route element={<StaffContactPage />} path="staff-contact" />
-              <Route element={<DefaultPage />} path="default" />
-              <Route
-                element={<AutoSendMessagePage />}
-                path="auto-send-message"
-              />
-              <Route element={<CommonCodePage />} path="common-code" />
+            <Route element={<Outlet />} path="/reference">
+              <Route element={<TechdInventoryWritePage />} path="list" />
             </Route>
             <Route element={<Outlet />} path="/system">
-              <Route element={<UMSPage />} path="ums" />
-              <Route element={<TwoWaySettingPage />} path="two-way-setting" />
-              <Route element={<BizCoreSettingPage />} path="bizcore-setting" />
-              <Route element={<MenuSettingPage />} path="menu-setting" />
-              <Route element={<SystemCodePage />} path="system-code" />
+              <Route element={<CustPage />} path="cust" />
+              <Route element={<UserManagePage />} path="user-manage" />
             </Route>
           </Route>
         </Route>

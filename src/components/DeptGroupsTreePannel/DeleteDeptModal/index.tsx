@@ -12,7 +12,7 @@ import {
 import React from "react";
 
 import { CustomModal, ToastMessage } from "components";
-import { useDeleteDept } from "features/user";
+import { useDeleteDept } from "features/system";
 import Department from "type/Department";
 
 interface DeleteDeptModalProps {
