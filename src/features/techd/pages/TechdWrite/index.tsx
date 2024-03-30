@@ -1,65 +1,97 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   HStack,
   Input,
-  Skeleton,
+  InputGroup,
+  InputRightAddon,
   Text,
   useDisclosure,
   useOutsideClick,
   VStack,
 } from "@chakra-ui/react";
-import { format } from "date-fns";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { template } from "api/url";
 import {
   CollapseSection,
   CustomCard,
   CustomSelect,
-  ExcelFileDownload,
   InfoBox,
   InfoElement,
-  PaginationButtons,
-  RangeDatePicker,
+  ScheduleIcon,
 } from "components";
 import { useGetTemplatesBySearch } from "features/sopp";
 import TemplateGroup from "type/TemplateGroup";
-import GroupTreePanel from "./GroupTreePanel";
+import ReactDatePicker from "react-datepicker";
+import { ko } from "date-fns/locale";
+
+import { Editor } from "@toast-ui/react-editor";
+
+interface inputPropsType {
+  [key: string]: React.CSSProperties;
+}
+
+const CustomInput = forwardRef(({ ...inputProps }: inputPropsType, ref) => {
+  return (
+    <Input
+      {...inputProps}
+      bg="transparent !important"
+      borderRadius="0.25rem"
+      borderWidth="0 !important"
+      boxShadow="none !important"
+      h="32px"
+      px={2}
+      size="sm"
+      // width="120px"
+    />
+  );
+});
 
 function TechdWrite() {
   const currentRef = useRef<HTMLDivElement>(null);
   const { isOpen, onClose } = useDisclosure();
 
   const methods = useForm<{
-    regDate: [Date, Date];
-    templateChannel: string;
-    search: string;
+    sendDate: [Date, Date] | null;
+    sendChannel: string | null;
+    searchType: string | null;
+    sortType: string | null;
+    receiveStatusType: string | null;
+    keyword: string | null;
   }>({ mode: "onChange" });
 
+  const [, setAutoType] = useState<string | null>(null);
   const [batchSize, setBatchSize] = useState<number>(10);
-  const [checkedItems, setCheckedItems] = useState<boolean[]>([false]);
+  const [, setChannelType] = useState<string | null>(null);
+  const [, setCheckedItems] = useState<boolean[]>([false]);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
-  const [regDateOption, setRegDateOption] = useState<"all" | "select">("all");
   const [endDate, setEndDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(false);
-  const [refetchGroupTemplate, setRefetchGroupTemplate] =
-    useState<boolean>(false);
-  const [selectedTemplateGroup, setSelectedTemplateGroup] =
-    useState<TemplateGroup | null>(null);
+  const [, setName] = useState<string | null>(null);
+  const [, setPhone] = useState<string | null>(null);
+  const [, setRefetchGroupTemplate] = useState<boolean>(false);
+  const [, setResult] = useState<string | null>(null);
+  const [selectedTemplateGroup] = useState<TemplateGroup | null>(null);
   const [startDate, setStartDate] = useState<string | null>(null);
+  const [expectedSalesDate, setExpectedSalesDate] = useState<Date | null>(null);
   const [templateChannel, setTemplateChannel] = useState<string | null>(null);
   const [templateName, setTemplateName] = useState<string | null>(null);
 
   const {
     contents: templates,
-    paging: pagination,
-    pageLength,
-    totalCount,
-    isLoading: isTemplatesLoading,
+    // paging: pagination,
+    // pageLength,
+    // totalCount,
+    // isLoading: isTemplatesLoading,
   } = useGetTemplatesBySearch(
     {
       groupTemplateId: selectedTemplateGroup?.groupTemplateId ?? null,
@@ -78,43 +110,116 @@ function TechdWrite() {
     }
   );
 
-  const allChecked = checkedItems.every(Boolean);
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
-
-  const handleAddTemplateModalOpen = () => {};
-  const handleBatchSizeChange = (BatchSize: number) => {
-    setBatchSize(BatchSize);
-    setEnableQuery(true);
-  };
-
-  const handleChangeTemplateModalData = (templateId: number) => {};
-  const handleCheckboxCheckAll = (e: ChangeEvent<HTMLInputElement>) => {
-    const checkboxArray = templates?.map(() => e.target.checked);
-    setCheckedItems(checkboxArray ?? []);
-  };
-  const handleCheckboxCheck = (index: number) => {
-    checkedItems[index] = !checkedItems[index];
-    setCheckedItems([...checkedItems]);
-  };
-  const templateChannelOption = [
+  const salesMethod = [
     {
-      code: "SMS",
-      name: "단문 (SMS)",
+      code: "DIRECT",
+      name: "직접판매",
     },
     {
-      code: "LMS",
-      name: "장문 (LMS)",
+      code: "INDIRECT",
+      name: "간접판매",
     },
     {
-      code: "MMS",
-      name: "멀티 (MMS)",
+      code: "PROCUREMENT",
+      name: "조달간판",
     },
   ];
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    setEnableQuery(true);
+  const contractTypes = [
+    {
+      code: "MAINTENANCE",
+      name: "유지보수",
+    },
+    {
+      code: "SALES",
+      name: "판매계약",
+    },
+  ];
+
+  const stages = [
+    {
+      code: "INFO_ACQUISITION",
+      name: "영업정보 파악",
+    },
+    {
+      code: "INITIAL_CONTACT",
+      name: "초기접촉",
+    },
+    {
+      code: "PROPOSAL_SUBMISSION_AND_PT",
+      name: "제안서 제출 및 PT",
+    },
+    {
+      code: "QUOTE_SUBMISSION",
+      name: "견적서 제출",
+    },
+    {
+      code: "CONTRACT_REQUEST",
+      name: "계약요청",
+    },
+    {
+      code: "ORDER",
+      name: "수주",
+    },
+    {
+      code: "SALES",
+      name: "매출",
+    },
+    {
+      code: "CONTRACT_FAILURE",
+      name: "계약실패",
+    },
+    {
+      code: "CONTRACT_SUSPENSION",
+      name: "계약진행보류",
+    },
+    {
+      code: "CONTRACT_IN_PROGRESS",
+      name: "계약중",
+    },
+  ];
+  const endUsers = [
+    {
+      code: "cust1",
+      name: "고객1",
+    },
+    {
+      code: "cust2",
+      name: "고객2",
+    },
+    {
+      code: "cust3",
+      name: "고객3",
+    },
+    {
+      code: "cust4",
+      name: "고객4",
+    },
+  ];
+
+  const responsiblePersons = [
+    {
+      code: "respo1",
+      name: "담당자1",
+    },
+    {
+      code: "respo2",
+      name: "담당자2",
+    },
+    {
+      code: "respo3",
+      name: "담당자3",
+    },
+    {
+      code: "respo4",
+      name: "담당자4",
+    },
+  ];
+
+  const handleExpectedSalesDateChange = (startDate: Date | null) => {
+    setExpectedSalesDate(startDate);
   };
+
   const handlePageRefetch = useCallback(() => {
     setEndDate(null);
     setStartDate(null);
@@ -126,23 +231,41 @@ function TechdWrite() {
     setEnableQuery(true);
     setRefetchGroupTemplate(true);
   }, [methods, setEnableQuery, setCurrentPage, setRefetchGroupTemplate]);
-  const handleDeleteSelectedTemplateModalOpen = () => {};
   const handleFormSubmit = methods.handleSubmit(
-    ({ regDate, search, templateChannel }) => {
-      if (regDateOption === "select" && !!regDate[0] && !!regDate[1]) {
-        setStartDate(`${format(regDate[0], "yyyy-MM-dd")} 00:00:00.000`);
-        setEndDate(`${format(regDate[1], "yyyy-MM-dd")} 23:59:59.999`);
+    ({
+      // sendDate,
+      sendChannel,
+      searchType,
+      sortType,
+      receiveStatusType,
+      keyword,
+    }) => {
+      if (searchType === "name") {
+        setName(keyword);
+      } else if (searchType === "phone") {
+        setPhone(keyword);
       } else {
-        setStartDate(null);
-        setEndDate(null);
+        setName(keyword);
+        setPhone(keyword);
       }
-      setTemplateName(search);
-      setTemplateChannel(templateChannel);
+      setCurrentPage(1);
+      setChannelType(sendChannel);
+      setResult(receiveStatusType);
+      setAutoType(sortType);
       setEnableQuery(true);
     }
   );
-  const handleTemplateGroupChange = (groupTemplate: TemplateGroup | null) => {
-    setSelectedTemplateGroup(groupTemplate);
+  const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleFormSubmit();
+    }
+  };
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    methods.setValue("keyword", e.target.value);
+  };
+
+  const handleSendChannelChange = (e: ChangeEvent<HTMLInputElement>) => {
+    methods.setValue("sendChannel", e.target.value);
   };
 
   useOutsideClick({
@@ -163,15 +286,14 @@ function TechdWrite() {
     setCheckedItems(templates?.length ? templates?.map(() => false) : [false]);
   }, [templates]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <VStack align="stretch" spacing={2}>
       <CustomCard isHeader="기술지원 등록" />
       <HStack align="flex-start" spacing={2}>
-        <GroupTreePanel
-          isRefetch={refetchGroupTemplate}
-          onChange={handleTemplateGroupChange}
-          onRefetch={setRefetchGroupTemplate}
-        />
         <Box
           as="form"
           flex={1}
@@ -188,57 +310,221 @@ function TechdWrite() {
               gap={1}
               headerTitle={
                 <Flex>
-                  <Text> 목록</Text>
+                  <Text>등록 내용</Text>
                 </Flex>
               }
             >
               <FormProvider {...methods}>
                 <InfoBox>
                   <Flex>
-                    <InfoElement flex={4} label="템플릿 그룹">
-                      <Text fontSize="sm">
-                        {selectedTemplateGroup?.groupTemplateName ?? "전체"}
-                      </Text>
+                    <InfoElement labelWidth="120px" flex={1} label="담당자">
+                      <CustomSelect
+                        codes={responsiblePersons}
+                        placeholder="전체"
+                        size="sm"
+                        {...methods.register("sortType", {
+                          // onChange: (e) => handleSendChannelChange(e),
+                        })}
+                      />
                     </InfoElement>
-                    <InfoElement flex={8} label="등록일">
-                      <RangeDatePicker
-                        name="regDate"
-                        option={regDateOption}
-                        setOption={setRegDateOption}
-                        setStartDate={setStartDate}
-                        setEndDate={setEndDate}
+                    <InfoElement labelWidth="120px" flex={1} label="(부)담당자">
+                      <CustomSelect
+                        codes={responsiblePersons}
+                        placeholder="전체"
+                        size="sm"
+                        {...methods.register("sortType", {
+                          // onChange: (e) => handleSendChannelChange(e),
+                        })}
+                      />
+                    </InfoElement>
+                    <InfoElement labelWidth="120px" flex={1} label="매출처">
+                      <CustomSelect
+                        codes={responsiblePersons}
+                        placeholder="전체"
+                        size="sm"
+                        {...methods.register("sortType", {
+                          // onChange: (e) => handleSendChannelChange(e),
+                        })}
+                      />
+                    </InfoElement>
+                    <InfoElement
+                      labelWidth="120px"
+                      flex={1}
+                      label="매출처 담당자"
+                    >
+                      <CustomSelect
+                        codes={responsiblePersons}
+                        placeholder="전체"
+                        size="sm"
+                        {...methods.register("sortType", {
+                          // onChange: (e) => handleSendChannelChange(e),
+                        })}
                       />
                     </InfoElement>
                   </Flex>
                   <Flex>
-                    <InfoElement flex={4} label="판매방식">
+                    <InfoElement labelWidth="120px" flex={1} label="엔드유저">
                       <CustomSelect
-                        codes={templateChannelOption}
+                        codes={endUsers}
                         placeholder="전체"
                         size="sm"
-                        {...methods.register("templateChannel")}
+                        {...methods.register("sendChannel", {
+                          onChange: (e) => handleSendChannelChange(e),
+                        })}
                       />
                     </InfoElement>
-                    <InfoElement flex={8} label="키워드">
-                      <Input
-                        placeholder="검색어 입력"
+                    <InfoElement labelWidth="120px" flex={1} label="진행단계">
+                      <CustomSelect
+                        codes={stages}
+                        placeholder="전체"
                         size="sm"
-                        {...methods.register("search")}
+                        {...methods.register("sendChannel", {
+                          onChange: (e) => handleSendChannelChange(e),
+                        })}
+                      />
+                    </InfoElement>
+                    <InfoElement labelWidth="120px" flex={1} label="가능성">
+                      <InputGroup height="34px">
+                        <Input
+                          {...(methods.register("keyword"),
+                          {
+                            onChange: (e) => handleSearchChange(e),
+                            onKeyPress: (e) => handleOnKeyPress(e),
+                          })}
+                        />
+                        <InputRightAddon height="34px" borderColor="gray.400">
+                          %
+                        </InputRightAddon>
+                      </InputGroup>
+                    </InfoElement>
+                    <InfoElement labelWidth="120px" flex={1} label="계약구분">
+                      <CustomSelect
+                        codes={contractTypes}
+                        placeholder="전체"
+                        size="sm"
+                        {...methods.register("sendChannel", {
+                          onChange: (e) => handleSendChannelChange(e),
+                        })}
+                      />
+                    </InfoElement>
+                  </Flex>
+                  <Flex>
+                    <InfoElement labelWidth="120px" flex={1} label="매출예정일">
+                      <Flex
+                        align="center"
+                        // bg={isDisabled ? "gray.100" : "white"}
+                        borderColor="gray.400"
+                        borderRadius="xl"
+                        borderWidth={1}
+                        gap={1}
+                        height="34px"
+                        overflow="hidden"
+                        // pointerEvents={isDisabled ? "none" : "inherit"}
+                        px={3}
+                        // width="150px"
+                      >
+                        <ScheduleIcon
+                          color="gray.700"
+                          // {isDisabled ? "gray.500" : "gray.700"}
+                          // flexShrink={0}
+                        />
+                        <ReactDatePicker
+                          customInput={<CustomInput />}
+                          dateFormat={"yyyy-MM-dd"}
+                          dropdownMode="select"
+                          locale={ko}
+                          placeholderText="YYYY-MM-DD"
+                          selected={expectedSalesDate}
+                          showMonthDropdown
+                          showPopperArrow={true}
+                          showYearDropdown
+                          onChange={handleExpectedSalesDateChange}
+                        />
+                      </Flex>
+                    </InfoElement>
+                    <InfoElement labelWidth="120px" flex={1} label="판매방식">
+                      <CustomSelect
+                        codes={salesMethod}
+                        placeholder="전체"
+                        size="sm"
+                        {...methods.register("sendChannel", {
+                          onChange: (e) => handleSendChannelChange(e),
+                        })}
+                      />
+                    </InfoElement>
+                    <InfoElement
+                      labelWidth="120px"
+                      flex={1}
+                      label="유지보수대상"
+                    >
+                      <CustomSelect
+                        codes={contractTypes}
+                        placeholder="전체"
+                        size="sm"
+                        {...methods.register("sendChannel", {
+                          onChange: (e) => handleSendChannelChange(e),
+                        })}
+                      />
+                    </InfoElement>
+                    <InfoElement labelWidth="120px" flex={1} label="예상 매출">
+                      <InputGroup height="34px">
+                        <Input
+                          size="sm"
+                          {...(methods.register("keyword"),
+                          {
+                            onChange: (e) => handleSearchChange(e),
+                            onKeyPress: (e) => handleOnKeyPress(e),
+                          })}
+                        />
+                        <InputRightAddon height="34px" borderColor="gray.400">
+                          원
+                        </InputRightAddon>
+                      </InputGroup>
+                    </InfoElement>
+                  </Flex>
+                  <Flex>
+                    <InfoElement
+                      flex={1}
+                      label={
+                        <Text alignItems="center">
+                          <Text height="100%">영업기회명</Text>
+                        </Text>
+                      }
+                      labelWidth="120px"
+                    >
+                      <Input
+                        size="sm"
+                        {...(methods.register("keyword"),
+                        {
+                          onChange: (e) => handleSearchChange(e),
+                          onKeyPress: (e) => handleOnKeyPress(e),
+                        })}
+                      />
+                    </InfoElement>
+                    <InfoElement
+                      labelWidth="120px"
+                      flex={1}
+                      label={
+                        <Box>
+                          <Text>카테고리</Text>
+                          <Text>(제품회사명)</Text>
+                        </Box>
+                      }
+                    >
+                      <Input
+                        size="sm"
+                        {...(methods.register("keyword"),
+                        {
+                          onChange: (e) => handleSearchChange(e),
+                          onKeyPress: (e) => handleOnKeyPress(e),
+                        })}
                       />
                     </InfoElement>
                   </Flex>
                 </InfoBox>
-                <Flex justify="flex-end">
-                  <Button
-                    isLoading={isTemplatesLoading}
-                    variant="primaryBlue"
-                    onClick={handleFormSubmit}
-                  >
-                    조회
-                  </Button>
-                </Flex>
               </FormProvider>
             </CollapseSection>
+
             <Flex
               backgroundColor="white"
               borderBottomRadius="12px"
@@ -249,163 +535,23 @@ function TechdWrite() {
               height="100%"
               p={3}
             >
-              <HStack>
-                <Text fontSize="xs" fontWeight="bold">
-                  검색결과 : {totalCount ?? 0} 건
-                </Text>
-                <Flex flex={1} gap={2} justifyContent="flex-end">
-                  <Button
-                    size="sm"
-                    type="button"
-                    variant="secondaryBlue"
-                    onClick={handleAddTemplateModalOpen}
-                  >
-                    등록
-                  </Button>
-                  <ExcelFileDownload
-                    url={template(
-                      "/excel?" +
-                        (templateName ? "&templateName=" + templateName : "") +
-                        (templateChannel
-                          ? "&templateChannel=" + templateChannel
-                          : "") +
-                        (selectedTemplateGroup?.groupTemplateId
-                          ? "&groupTemplateId=" +
-                            selectedTemplateGroup?.groupTemplateId
-                          : "") +
-                        (startDate ? "&startDate=" + startDate : "") +
-                        (endDate ? "&endDate=" + endDate : "")
-                    )}
-                  />
-                </Flex>
-              </HStack>
-              <Box
-                borderLeftWidth={1}
-                borderRadius="12px"
-                borderRightWidth={1}
-                borderTopWidth={1}
-                overflow="hidden"
-                height="100%"
-              >
-                <Flex
-                  alignItems="center"
-                  backgroundColor="gray.100"
-                  borderBottomWidth={1}
-                  flex={1}
-                  fontSize="sm"
-                  fontWeight="500"
-                  justifyContent="space-between"
+              <Flex justifyContent="flex-end" gap={2}>
+                <Button variant="secondaryGray" onClick={handleFormSubmit}>
+                  목록
+                </Button>
+                <Button
+                  isLoading={true}
+                  variant="primaryBlue"
+                  onClick={handleFormSubmit}
                 >
-                  <Checkbox
-                    isChecked={allChecked}
-                    isIndeterminate={isIndeterminate}
-                    px={4}
-                    py={2}
-                    textAlign="left"
-                    onChange={(e) => handleCheckboxCheckAll(e)}
-                  />
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    판매방식
-                  </Text>
-                  <Text flex={4} px={4} py={2} textAlign="center">
-                    명
-                  </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    등록일
-                  </Text>
-                </Flex>
-                <Flex flexDirection="column" fontSize="sm">
-                  {isTemplatesLoading ? (
-                    Array.from({ length: batchSize }).map((_, i) => (
-                      <Flex
-                        alignItems="center"
-                        borderBottomWidth={1}
-                        height="38px"
-                        justifyContent="space-between"
-                        key={
-                          templates?.[i].templateId +
-                          "-" +
-                          i +
-                          "-templates-skeleton"
-                        }
-                      >
-                        <Skeleton mx={4} my={2} height="16px" width="16px" />
-                        <Skeleton flex={1} height="20px" mx={4} my={2} />
-                        <Skeleton flex={4} height="20px" mx={4} my={2} />
-                        <Skeleton flex={1} height="20px" mx={4} my={2} />
-                      </Flex>
-                    ))
-                  ) : !!totalCount ? (
-                    templates?.map((template: any, i: number) => (
-                      <Flex
-                        alignItems="center"
-                        borderBottomWidth={1}
-                        flex={1}
-                        fontSize="sm"
-                        height="37px"
-                        justifyContent="space-between"
-                        key={template.templateId + "-" + i}
-                        width="100%"
-                        _hover={{
-                          backgroundColor: "gray.50",
-                        }}
-                      >
-                        <Checkbox
-                          isChecked={checkedItems[i]}
-                          px={4}
-                          py={2}
-                          textAlign="left"
-                          onChange={() => handleCheckboxCheck(i)}
-                        />
-                        <Text
-                          color="primary.500"
-                          cursor="pointer"
-                          flex={4}
-                          px={4}
-                          py={2}
-                          textAlign="left"
-                          _hover={{
-                            textDecoration: "underline",
-                          }}
-                          onClick={() =>
-                            handleChangeTemplateModalData(template.templateId)
-                          }
-                        >
-                          {template.templateName}
-                        </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {format(
-                            new Date(template.createDate ?? ""),
-                            "yyyy-MM-dd"
-                          )}
-                        </Text>
-                      </Flex>
-                    ))
-                  ) : (
-                    <Flex
-                      alignItems="center"
-                      borderBottomWidth={1}
-                      flex={1}
-                      fontSize="sm"
-                      justifyContent="center"
-                      p={4}
-                    >
-                      <Text>조회된 템플릿이 없습니다.</Text>
-                    </Flex>
-                  )}
-                </Flex>
-              </Box>
-              <PaginationButtons
-                batchSize={batchSize}
-                data={templates ?? []}
-                isAllChecked={allChecked}
-                isIndeterminate={isIndeterminate}
-                isRefetch={refetchGroupTemplate}
-                pageLength={pageLength}
-                pagination={pagination}
-                onPageChange={handlePageChange}
-                onBatchSizeChange={handleBatchSizeChange}
-                onSelectionDelete={handleDeleteSelectedTemplateModalOpen}
+                  등록
+                </Button>
+              </Flex>
+              <Editor
+                previewStyle="vertical"
+                height="756px"
+                initialEditType="wysiwyg"
+                useCommandShortcut={true}
               />
             </Flex>
           </Flex>

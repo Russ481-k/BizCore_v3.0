@@ -56,7 +56,7 @@ const CustomInput = forwardRef(({ ...inputProps }: inputPropsType, ref) => {
   );
 });
 
-function MessageTemplate() {
+function SoppWrite() {
   const currentRef = useRef<HTMLDivElement>(null);
   const { isOpen, onClose } = useDisclosure();
 
@@ -561,4 +561,4 @@ function MessageTemplate() {
   );
 }
 
-export default MessageTemplate;
+export default SoppWrite;
