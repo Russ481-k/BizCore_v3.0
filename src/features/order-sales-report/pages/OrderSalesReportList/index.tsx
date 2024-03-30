@@ -239,7 +239,7 @@ function OrderSalesReportList() {
                 </InfoElement>
               </Flex>
               <Flex>
-                <InfoElement flex={1} label=" 채널">
+                <InfoElement flex={1} label=" 판매방식">
                   <CustomSelect
                     codes={sendChannelOption}
                     placeholder="전체"
@@ -313,7 +313,7 @@ function OrderSalesReportList() {
                   justifyContent="space-between"
                 >
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    채널
+                    판매방식
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
                     구분

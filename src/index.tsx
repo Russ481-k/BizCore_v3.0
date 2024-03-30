@@ -11,6 +11,7 @@ import "assets/font/fontawesome/css/fontawesome.css";
 import "assets/font/fontawesome/css/solid.css";
 import "assets/font/pretendard/pretendard.css";
 import "assets/css/react-datepicker.css";
+import "assets/css/toast-ui.css";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

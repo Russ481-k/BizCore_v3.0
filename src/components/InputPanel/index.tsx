@@ -564,7 +564,7 @@ function InputPanel({
               </Flex>
             </InfoElement>
             {isAlarmTalk && (
-              <InfoElement label="카카오톡 채널" required>
+              <InfoElement label="판매방식" required>
                 <Flex alignItems="center" gap={1} width="100%">
                   <Flex
                     alignItems="end"
@@ -584,10 +584,7 @@ function InputPanel({
                     display="none"
                     {...methods?.register("templateCode")}
                   />
-                  <TipText
-                    size="sm"
-                    text="카카오페이 플러스친구 ID를 선택하세요."
-                  />
+                  <TipText size="sm" text="ID를 선택하세요." />
                 </Flex>
               </InfoElement>
             )}

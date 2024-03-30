@@ -56,7 +56,7 @@ function TopBar({ isFold, tabIndex, onMenuClick }: TopBarProps) {
           }}
           as={motion.div}
         >
-          <Link to="/">
+          <Link to="/dashboard">
             <Image
               as={motion.img}
               float="left"

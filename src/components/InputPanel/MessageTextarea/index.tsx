@@ -79,15 +79,7 @@ function MessageTextarea({
           disabled={isAlarmTalk || isDisabled}
           fontSize="xs"
           minHeight="200px"
-          placeholder={
-            isAlarmTalk
-              ? "카카오 알림톡 내용을 추가하세요."
-              : `내용을 입력하세요.
-[단문 (SMS)] 90bytes 이하인 경우
-[장문 (LMS)] 90bytes 초과인 경우
-[멀티 (MMS)] 이미지 첨부의 경우
-자동으로 전환됩니다.`
-          }
+          placeholder={""}
           size="sm"
           width="100%"
           {...register("messageContents", {

@@ -329,7 +329,7 @@ function ImportTemplateModal({
               <Flex flexDirection="column" gap={3}>
                 <InfoBox>
                   {!isAlarmTalk && (
-                    <InfoElement label="채널" labelWidth="130px">
+                    <InfoElement label="판매방식" labelWidth="130px">
                       <CustomSelect
                         codes={templateChannelOption}
                         placeholder="전체"
@@ -370,7 +370,7 @@ function ImportTemplateModal({
                   >
                     {!isAlarmTalk && (
                       <Text flex={1} px={4} py={2} textAlign="center">
-                        채널
+                        판매방식
                       </Text>
                     )}
                     <Text
@@ -569,7 +569,7 @@ function ImportTemplateModal({
               <Flex alignItems="center" flexDirection="column" gap={3}>
                 <InfoBox>
                   {!isAlarmTalk && (
-                    <InfoElement label="채널" labelWidth="130px">
+                    <InfoElement label="판매방식" labelWidth="130px">
                       <ChannelTag
                         channelType={selectedTemplate?.templateChannel ?? ""}
                       />

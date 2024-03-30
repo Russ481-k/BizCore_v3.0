@@ -283,7 +283,7 @@ function MessageTemplate() {
                     </InfoElement>
                   </Flex>
                   <Flex>
-                    <InfoElement flex={4} label="채널">
+                    <InfoElement flex={4} label="판매방식">
                       <CustomSelect
                         codes={templateChannelOption}
                         placeholder="전체"
@@ -377,7 +377,7 @@ function MessageTemplate() {
                     onChange={(e) => handleCheckboxCheckAll(e)}
                   />
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    채널
+                    판매방식
                   </Text>
                   <Text flex={4} px={4} py={2} textAlign="center">
                     명

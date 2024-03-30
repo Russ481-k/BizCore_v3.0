@@ -35,17 +35,17 @@ function TechdList() {
     keyword: string | null;
   }>({ mode: "onChange" });
 
-  const [autoType, setAutoType] = useState<string | null>(null);
-  const [channelType, setChannelType] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [endSendDate, setEndSendDate] = useState<string | null>(null);
+  const [, setAutoType] = useState<string | null>(null);
+  const [, setChannelType] = useState<string | null>(null);
+  const [, setCurrentPage] = useState<number>(1);
+  const [, setEndSendDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
-  const [name, setName] = useState<string | null>(null);
+  const [, setName] = useState<string | null>(null);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [phone, setPhone] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
+  const [, setPhone] = useState<string | null>(null);
+  const [, setResult] = useState<string | null>(null);
   const [sendDateOption, setSendDateOption] = useState<"all" | "select">("all");
-  const [startSendDate, setStartSendDate] = useState<string | null>(null);
+  const [, setStartSendDate] = useState<string | null>(null);
 
   const sendChannelOption = [
     {
@@ -227,7 +227,7 @@ function TechdList() {
                 </InfoElement>
               </Flex>
               <Flex>
-                <InfoElement flex={1} label=" 채널">
+                <InfoElement flex={1} label=" 판매방식">
                   <CustomSelect
                     codes={sendChannelOption}
                     placeholder="전체"
@@ -301,7 +301,7 @@ function TechdList() {
                   justifyContent="space-between"
                 >
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    채널
+                    판매방식
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
                     구분
