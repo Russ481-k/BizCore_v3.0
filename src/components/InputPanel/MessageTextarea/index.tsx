@@ -93,7 +93,7 @@ function MessageTextarea({
           {...register("messageContents", {
             required: {
               value: true,
-              message: "메시지 내용을 입력하세요.",
+              message: " 내용을 입력하세요.",
             },
             onBlur: (e) => {
               setValue(

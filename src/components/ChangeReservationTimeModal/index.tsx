@@ -87,10 +87,10 @@ function ChangeReservationTimeModal({
       onClose();
       return toast({
         render: () => (
-          <ToastMessage title="수신 대상자 누락 오류" type="ERROR">
+          <ToastMessage title=" 대상자 누락 오류" type="ERROR">
             <Text>
-              수신 대상자가 존재하지 않습니다. 메시지 관리의 수신 대상자
-              선택에서 수신 대상자를 추가하세요.
+              대상자가 존재하지 않습니다. 관리의 대상자 선택에서 대상자를
+              추가하세요.
             </Text>
           </ToastMessage>
         ),

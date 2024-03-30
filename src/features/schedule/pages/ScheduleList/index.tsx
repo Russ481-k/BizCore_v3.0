@@ -98,11 +98,11 @@ function ScheduleList() {
   const searchTypeOption = [
     {
       code: "name",
-      name: "이름(수신자)",
+      name: "이름(자)",
     },
     {
       code: "phone",
-      name: "수신(휴대)번호",
+      name: "번호",
     },
   ];
   const receiveStatusTypeOption = [
@@ -185,14 +185,14 @@ function ScheduleList() {
   }, [isEnableQuery]);
 
   return (
-    <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader="안내  현황" />
+    <VStack align="stretch" spacing={2}>
+      <CustomCard isHeader="일정 조회" />
       <Box>
-        <CollapseSection headerTitle="안내  목록" borderBottomRadius={0}>
+        <CollapseSection headerTitle="상세 검색" borderBottomRadius={0}>
           <FormProvider {...methods}>
             <InfoBox>
               <Flex>
-                <InfoElement label="일">
+                <InfoElement label="날짜">
                   <RangeDatePicker
                     name="sendDate"
                     option={sendDateOption}
@@ -213,7 +213,7 @@ function ScheduleList() {
                     })}
                   />
                 </InfoElement>
-                <InfoElement flex={1} label="수신상태">
+                <InfoElement flex={1} label="상태">
                   <Flex gap={3} width="100%">
                     <CustomSelect
                       codes={receiveStatusTypeOption}
@@ -310,13 +310,13 @@ function ScheduleList() {
                     이름
                   </Text>
                   <Text flex={2} px={4} py={2} textAlign="center">
-                    수신(휴대)번호
+                    번호
                   </Text>
                   <Text flex={5} px={4} py={2} textAlign="center">
-                    메시지 내용
+                    내용
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    수신상태
+                    상태
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
                     일
@@ -383,7 +383,7 @@ function ScheduleList() {
                         />
                       </Flex>
                     ))}
-                  {true ? (
+                  {false ? (
                     <Flex
                       alignItems="center"
                       borderBottomWidth={1}

@@ -9,7 +9,7 @@ export interface GetConsultsParams {
   callerNo: string | null;
   startSendDate: string | null;
   endSendDate: string | null;
-  callType: "S" | "R" | null; // S:발신 / R:수신
+  callType: "S" | "R" | null; // S:발신 / R:
   sendType: "A" | "C" | null; // A:안내 / C:문자상담
   isResult: boolean | null; // false:체크 / null:미체크
   targetColumn: "all" | "receiverNo" | "message";
@@ -27,7 +27,9 @@ export interface GetConsultsResponse {
   };
   message: string;
 }
-export function getConsultsAPI(params: GetConsultsParams): Promise<GetConsultsResponse> {
+export function getConsultsAPI(
+  params: GetConsultsParams
+): Promise<GetConsultsResponse> {
   return requestApi<GetConsultsResponse>({
     url: consultations(""),
     method: "GET",
@@ -55,7 +57,9 @@ export interface GetConsultResponse {
   data: ConsultData;
   message: string;
 }
-export function getConsultAPI(params: GetConsultParams): Promise<GetConsultResponse> {
+export function getConsultAPI(
+  params: GetConsultParams
+): Promise<GetConsultResponse> {
   return requestApi<GetConsultResponse>({
     url: consultations(`/${params.masterId}`),
     method: "GET",

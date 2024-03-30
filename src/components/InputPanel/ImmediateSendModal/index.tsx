@@ -35,10 +35,10 @@ function ImmediateSendModal({
       onClose();
       return toast({
         render: () => (
-          <ToastMessage title="수신 대상자 누락 오류" type="ERROR">
+          <ToastMessage title=" 대상자 누락 오류" type="ERROR">
             <Text>
-              수신 대상자가 존재하지 않습니다. 메시지 관리의 수신 대상자
-              선택에서 수신 대상자를 추가하세요.
+              대상자가 존재하지 않습니다. 관리의 대상자 선택에서 대상자를
+              추가하세요.
             </Text>
           </ToastMessage>
         ),
@@ -55,10 +55,8 @@ function ImmediateSendModal({
           <Flex>
             <QuestionMarkIcon color="primary.800" mr={2} />
             <Flex flexDirection="column">
-              <Text fontSize="14px">
-                문자 메시지를 즉시 하면 취소할 수 없습니다.
-              </Text>
-              <Text fontSize="14px">문자 메시지를 즉시 하시겠습니까?</Text>
+              <Text fontSize="14px">문자 를 즉시 하면 취소할 수 없습니다.</Text>
+              <Text fontSize="14px">문자 를 즉시 하시겠습니까?</Text>
             </Flex>
           </Flex>
         </ModalBody>

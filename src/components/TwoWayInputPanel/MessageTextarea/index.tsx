@@ -1,4 +1,11 @@
-import { Box, Flex, FormControl, FormErrorMessage, Text, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -36,10 +43,18 @@ function MessageTextarea({
 
   return (
     <Box>
-      <Flex flexDirection="row" justifyContent="space-between" mb={1} width="100%">
+      <Flex
+        flexDirection="row"
+        justifyContent="space-between"
+        mb={1}
+        width="100%"
+      >
         <ChannelTag channelType={channel} hasTooltip />
         <Flex alignItems="end" lineHeight={1}>
-          <Text color={contentsByteCount > 2000 ? "red" : "black"} fontSize="xs">
+          <Text
+            color={contentsByteCount > 2000 ? "red" : "black"}
+            fontSize="xs"
+          >
             {contentsByteCount}
           </Text>
           {isDisabled ? (
@@ -68,10 +83,13 @@ function MessageTextarea({
           {...register("messageContents", {
             required: {
               value: true,
-              message: "메시지 내용을 입력하세요.",
+              message: " 내용을 입력하세요.",
             },
             onBlur: (e) => {
-              setValue("messageContents", (e.target.value = handleContentsBlur(e.target.value)));
+              setValue(
+                "messageContents",
+                (e.target.value = handleContentsBlur(e.target.value))
+              );
             },
             onChange: (e) => handleContentsChange(e.target.value),
           })}

@@ -236,9 +236,9 @@ function MessageTemplate() {
   }, [templates]);
 
   return (
-    <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader=" 관리" />
-      <HStack align="flex-start" spacing={3}>
+    <VStack align="stretch" spacing={2}>
+      <CustomCard isHeader=" 견적 작성" />
+      <HStack align="flex-start" spacing={2}>
         <GroupTreePanel
           isRefetch={refetchGroupTemplate}
           onChange={handleTemplateGroupChange}

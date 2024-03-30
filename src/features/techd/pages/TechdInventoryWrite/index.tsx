@@ -124,9 +124,9 @@ function TechdInventoryWrite() {
   }, [isEnableQuery]);
 
   return (
-    <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader=" 관리" />
-      <HStack align="flex-start" spacing={3}>
+    <VStack align="stretch" spacing={2}>
+      <CustomCard isHeader="재고 등록" />
+      <HStack align="flex-start" spacing={2}>
         <GroupTreePanel
           isRefetch={refetchGroupTemplate}
           onChange={handleTemplateGroupChange}

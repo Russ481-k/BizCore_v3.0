@@ -48,8 +48,8 @@ import {
 import {
   TechdListPage,
   TechdWritePage,
-  TechdMaintenanceListPage,
-  TechdMaintenanceWritePage,
+  TechdMaintenanceContPage,
+  TechdMaintenanceBuyPage,
   TechdInventoryListPage,
   TechdInventoryWritePage,
 } from "routes/techd";
@@ -141,12 +141,12 @@ function Router() {
               <Route element={<TechdListPage />} path="list" />
               <Route element={<TechdWritePage />} path="write" />
               <Route
-                element={<TechdMaintenanceListPage />}
-                path="maintenance-list"
+                element={<TechdMaintenanceContPage />}
+                path="maintenance-cont"
               />
               <Route
-                element={<TechdMaintenanceWritePage />}
-                path="maintenance-write"
+                element={<TechdMaintenanceBuyPage />}
+                path="maintenance-buy"
               />
               <Route
                 element={<TechdInventoryListPage />}

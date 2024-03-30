@@ -5,8 +5,8 @@
 export { default as TechdInventoryWrite } from "./pages/TechdInventoryWrite";
 export { default as TechdInventoryList } from "./pages/TechdInventoryList";
 export { default as TechdList } from "./pages/TechdList";
-export { default as TechdMaintenanceList } from "./pages/TechdMaintenanceList";
-export { default as TechdMaintenanceWrite } from "./pages/TechdMaintenanceWrite";
+export { default as TechdMaintenanceCont } from "./pages/TechdMaintenanceCont";
+export { default as TechdMaintenanceBuy } from "./pages/TechdMaintenanceBuy";
 export { default as TechdWrite } from "./pages/TechdWrite";
 
 /* hooks */

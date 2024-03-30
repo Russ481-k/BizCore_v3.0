@@ -8,7 +8,11 @@ interface ImageUploaderProps {
   isAlarmTalk?: boolean;
   isDisabled?: boolean;
   isTwoWay?: boolean;
-  onChange?: (imageContents: File, url: string | null, index: number | null) => void;
+  onChange?: (
+    imageContents: File,
+    url: string | null,
+    index: number | null
+  ) => void;
   removeImageFile?: (index: number) => void;
 }
 function ImageUploader({
@@ -31,7 +35,10 @@ function ImageUploader({
     }
   };
   const handleImagesUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files![0].type === "image/jpeg" || e.target.files![0].type === "image/jpg") {
+    if (
+      e.target.files![0].type === "image/jpeg" ||
+      e.target.files![0].type === "image/jpg"
+    ) {
       if (e.target.files![0].size <= 300000) {
         onChange?.(e.target.files![0], null, imageId);
       } else {
@@ -40,7 +47,8 @@ function ImageUploader({
             <ToastMessage title="이미지 크기 오류" type="ERROR">
               선택하신 사진 이미지의 크기가 제한된 크기(300KB)를 초과하였습니다.
               <br />
-              이미지 파일의 크기(300KB 이하)를 조절하시거나 다른 파일을 선택하세요.
+              이미지 파일의 크기(300KB 이하)를 조절하시거나 다른 파일을
+              선택하세요.
             </ToastMessage>
           ),
           duration: 5000,
@@ -50,8 +58,8 @@ function ImageUploader({
       toast({
         render: () => (
           <ToastMessage title="이미지 형식 오류" type="ERROR">
-            지원되는 이미지 파일 형식 (jpg, jpeg)이 아닙니다. 파일 형식을 확인하신 후 다시 사진
-            이미지를 선택하여 등록하세요.
+            지원되는 이미지 파일 형식 (jpg, jpeg)이 아닙니다. 파일 형식을
+            확인하신 후 다시 사진 이미지를 선택하여 등록하세요.
           </ToastMessage>
         ),
         duration: 5000,
@@ -109,12 +117,18 @@ function ImageUploader({
       {isAlarmTalk ? (
         <TipText
           size="sm"
-          text="800 x 400 사이즈의 이미지를 사용하세요. 이미지 첨부 시 메시지 내용은
+          text="800 x 400 사이즈의 이미지를 사용하세요. 이미지 첨부 시  내용은
         400자(800bytes)로 제한됩니다."
         />
       ) : (
         <>
-          <Flex alignItems="center" as="form" encType="multipart/form-data" gap={2} width="100%">
+          <Flex
+            alignItems="center"
+            as="form"
+            encType="multipart/form-data"
+            gap={2}
+            width="100%"
+          >
             <Input
               accept="image/jpeg, image/jpg"
               hidden

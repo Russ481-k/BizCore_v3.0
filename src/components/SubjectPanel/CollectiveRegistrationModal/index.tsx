@@ -161,7 +161,7 @@ function CollectiveRegistrationModal({
   return (
     <CustomModal isOpen onClose={() => setOpen(false)}>
       <ModalContent minW="900px">
-        <ModalHeader>수신 대상자 일괄 등록</ModalHeader>
+        <ModalHeader> 대상자 일괄 등록</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex direction="column" gap={3} height="200px">

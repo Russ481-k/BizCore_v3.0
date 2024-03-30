@@ -49,8 +49,8 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
   //           <ToastMessage title=" 발신번호 변경 완료" type="SUCCESS">
   //             <Text> 발신번호 변경을 완료하였습니다.</Text>
   //             <Text>
-  //               메시지 내용을 확인하신 다음 수신 대상자를 선택하여
-  //               메시지를 하세요.
+  //                내용을 확인하신 다음  대상자를 선택하여
+  //               를 하세요.
   //             </Text>
   //           </ToastMessage>
   //         ),
@@ -154,7 +154,7 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
                     overflowY="auto"
                     width="280px"
                   >
-                    {true ? (
+                    {false ? (
                       <>
                         <Box
                           // backgroundColor={
@@ -209,7 +209,7 @@ function AutoTestModal({ onClose }: AutoTestModalProps) {
                 <Divider my={2} />
                 <TipText
                   size="sm"
-                  text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다."
+                  text="자의 단말기 설정에 따라 다르게 보일 수 있습니다."
                 />
               </Box>
             </Flex>

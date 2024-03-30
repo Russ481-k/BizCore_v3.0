@@ -19,12 +19,13 @@ function CustomCard({
       borderRadius="12px"
       borderWidth="1px"
       color="gray.800"
-      p={3}
+      px={3}
+      py={2}
       w="100%"
       {...props}
     >
       {isHeader ? (
-        <Text color="black" fontSize="xl" fontWeight="600">
+        <Text color="black" fontSize="lg" fontWeight="600">
           {isHeader}
         </Text>
       ) : (

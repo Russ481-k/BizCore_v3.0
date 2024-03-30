@@ -73,21 +73,31 @@ function UserManage() {
   const [addUserModalOpen, setAddUserModalOpen] = useState<boolean>(false);
   const [batchSize, setBatchSize] = useState<number>(20);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [getDeptGroupsEnabled, setGetDeptGroupsEnabled] = useState<boolean>(false);
+  const [getDeptGroupsEnabled, setGetDeptGroupsEnabled] =
+    useState<boolean>(false);
   const [getUserEnabled, setGetUserEnabled] = useState<boolean>(false);
   const [getUsersEnabled, setGetUsersEnabled] = useState<boolean>(false);
-  const [getSendCountTotalEnabled, setGetSendCountTotalEnabled] = useState<boolean>(false);
-  const [manageUserModalOpen, setManageUserModalOpen] = useState<boolean>(false);
+  const [getSendCountTotalEnabled, setGetSendCountTotalEnabled] =
+    useState<boolean>(false);
+  const [manageUserModalOpen, setManageUserModalOpen] =
+    useState<boolean>(false);
   const [permissionOptions, setPermissionOptions] = useState<Option[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
-  const [searchPermissionId, setSearchPermissionId] = useState<number | null>(null);
-  const [searchPermissionOptions, setSearchPermissionOptions] = useState<Option[]>([]);
+  const [searchPermissionId, setSearchPermissionId] = useState<number | null>(
+    null
+  );
+  const [searchPermissionOptions, setSearchPermissionOptions] = useState<
+    Option[]
+  >([]);
   const [searchStatus, setSearchStatus] = useState<string[]>(["W", "D", "E"]);
   const [searchTargetColumn, setSearchTargetColumn] = useState<string>("all");
   const [selectedDept, setSelectedDept] = useState<Department | null>(null);
-  const [selectedDeptGroup, setSelectedDeptGroup] = useState<DepartmentGroup>(DEPARTMENT_GROUP.ALL);
+  const [selectedDeptGroup, setSelectedDeptGroup] = useState<DepartmentGroup>(
+    DEPARTMENT_GROUP.ALL
+  );
   const [selectedUser, setSelectedUser] = useState<UserListItem | null>(null);
-  const [sendDetailModalOpen, setSendDetailModalOpen] = useState<boolean>(false);
+  const [sendDetailModalOpen, setSendDetailModalOpen] =
+    useState<boolean>(false);
   const [sortBy, setSortBy] = useState<keyof UserListItem>("userId");
   const [sortedUsersData, setSortedUsersData] = useState<UserListItem[]>([]);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -144,21 +154,23 @@ function UserManage() {
       },
     }
   );
-  const { data: sendCountTotalData, refetch: refetchSendCountTotal } = useGetSendCountTotal(
-    {
-      userIdx: selectedUser?.userIdx ?? null,
-    },
-    {
-      enabled: getSendCountTotalEnabled,
-      retry: 0,
-      onSettled: () => {
-        setGetSendCountTotalEnabled(false);
+  const { data: sendCountTotalData, refetch: refetchSendCountTotal } =
+    useGetSendCountTotal(
+      {
+        userIdx: selectedUser?.userIdx ?? null,
       },
-    }
-  );
+      {
+        enabled: getSendCountTotalEnabled,
+        retry: 0,
+        onSettled: () => {
+          setGetSendCountTotalEnabled(false);
+        },
+      }
+    );
 
   const handleSearchFormSubmit = handleSubmit((data) => {
-    const permissionIdParams = data.permissionId === "0" ? null : Number(data.permissionId);
+    const permissionIdParams =
+      data.permissionId === "0" ? null : Number(data.permissionId);
     setSearchStatus(data.status);
     setSearchPermissionId(permissionIdParams ?? null);
     setSearchTargetColumn(data.targetColumn);
@@ -293,14 +305,14 @@ function UserManage() {
   }, [myProfile, mySendData]);
 
   return (
-    <VStack align="stretch" spacing={3}>
+    <VStack align="stretch" spacing={2}>
       <CustomCard isHeader="운영자 관리" />
       <CustomCard>
         {/* TODO: 추후 새올시스템 연동시 연결 */}
         <TimelineIcon boxSize={4} me={1} />
         <Text fontSize="sm">마지막 연동 일시: 2023년 8월 21일 11시 00분</Text>
       </CustomCard>
-      <HStack alignItems="flex-start" spacing={3}>
+      <HStack alignItems="flex-start" spacing={2}>
         <Box flex="0 0 300px">
           <DeptGroupsTreePannel
             deptGroupsData={deptGroupsData}
@@ -328,11 +340,13 @@ function UserManage() {
           </CustomCard> */}
           <Box>
             <CollapseSection headerTitle="운영자 목록" borderBottomRadius={0}>
-              <VStack align="stretch" as="form" spacing={3}>
+              <VStack align="stretch" as="form" spacing={2}>
                 <InfoBox>
                   <InfoElement label="선택부서">
                     <Text fontSize="sm">
-                      {selectedDept ? selectedDept.deptName : selectedDeptGroup.groupName}
+                      {selectedDept
+                        ? selectedDept.deptName
+                        : selectedDeptGroup.groupName}
                     </Text>
                   </InfoElement>
                   <Flex>
@@ -349,7 +363,10 @@ function UserManage() {
                             <HStack spacing={4}>
                               {USERS_OPTION.STATUS.map((option: Option) => {
                                 return (
-                                  <Checkbox key={`state-${option.code}`} value={option.code}>
+                                  <Checkbox
+                                    key={`state-${option.code}`}
+                                    value={option.code}
+                                  >
                                     {option.name}
                                   </Checkbox>
                                 );
@@ -375,19 +392,28 @@ function UserManage() {
                         size="sm"
                         {...register("targetColumn")}
                       />
-                      <Input ms={2} size="sm" flex={1} {...register("keyword")} />
+                      <Input
+                        ms={2}
+                        size="sm"
+                        flex={1}
+                        {...register("keyword")}
+                      />
                     </Flex>
                   </InfoElement>
                 </InfoBox>
                 <Flex justify="flex-end">
-                  <Button type="submit" variant="primaryBlue" onClick={handleSearchFormSubmit}>
+                  <Button
+                    type="submit"
+                    variant="primaryBlue"
+                    onClick={handleSearchFormSubmit}
+                  >
                     조회
                   </Button>
                 </Flex>
               </VStack>
             </CollapseSection>
             <Section borderTopRadius={0} borderTopWidth={0}>
-              <VStack align="stretch" spacing={3}>
+              <VStack align="stretch" spacing={2}>
                 <Flex align="flex-end" justify="space-between">
                   <Text fontSize="xs" fontWeight="bold">
                     조회수 : {totalCount} 명
@@ -397,7 +423,9 @@ function UserManage() {
                       엑셀 다운로드
                     </Button>
                     <Button
-                      isDisabled={selectedDeptGroup !== DEPARTMENT_GROUP.ADDITION}
+                      isDisabled={
+                        selectedDeptGroup !== DEPARTMENT_GROUP.ADDITION
+                      }
                       size="sm"
                       type="button"
                       variant="primaryBlue"
@@ -445,11 +473,16 @@ function UserManage() {
                       {usersData && usersData.length > 0 ? (
                         usersData.map((user, i) => (
                           <Tr key={`user-${user.userIdx}`}>
-                            <Td>{totalCount && totalCount - batchSize * (currentPage - 1) - i}</Td>
+                            <Td>
+                              {totalCount &&
+                                totalCount - batchSize * (currentPage - 1) - i}
+                            </Td>
                             <Td>
                               <Button
                                 variant="link"
-                                onClick={() => handleManageUserButtonClick(user)}
+                                onClick={() =>
+                                  handleManageUserButtonClick(user)
+                                }
                               >
                                 {user.userId}
                               </Button>
@@ -467,25 +500,55 @@ function UserManage() {
                               </Text>
                             </Td>
                             <Td>{user.authName ?? "-"}</Td>
-                            <Td>{user.isSmsUnlimited ? "무제한" : user.smsLimitCount ?? "-"}</Td>
-                            <Td>{user.isLmsUnlimited ? "무제한" : user.lmsLimitCount ?? "-"}</Td>
-                            <Td>{user.isMmsUnlimited ? "무제한" : user.mmsLimitCount ?? "-"}</Td>
-                            <Td>{user.isKktUnlimited ? "무제한" : user.kktLimitCount ?? "-"}</Td>
-                            <Td>{user.isCrsUnlimited ? "무제한" : user.crsLimitCount ?? "-"}</Td>
+                            <Td>
+                              {user.isSmsUnlimited
+                                ? "무제한"
+                                : user.smsLimitCount ?? "-"}
+                            </Td>
+                            <Td>
+                              {user.isLmsUnlimited
+                                ? "무제한"
+                                : user.lmsLimitCount ?? "-"}
+                            </Td>
+                            <Td>
+                              {user.isMmsUnlimited
+                                ? "무제한"
+                                : user.mmsLimitCount ?? "-"}
+                            </Td>
+                            <Td>
+                              {user.isKktUnlimited
+                                ? "무제한"
+                                : user.kktLimitCount ?? "-"}
+                            </Td>
+                            <Td>
+                              {user.isCrsUnlimited
+                                ? "무제한"
+                                : user.crsLimitCount ?? "-"}
+                            </Td>
                             <Td py={0}>
                               <IconButton
                                 aria-label="당월 량 상세"
                                 icon={<SendIcon boxSize={4} />}
                                 variant="transparent"
                                 size="sm"
-                                onClick={() => handleSendDetailButtonClick(user)}
+                                onClick={() =>
+                                  handleSendDetailButtonClick(user)
+                                }
                               />
                             </Td>
-                            <Td>{convertCodeToName(USERS_OPTION.STATUS, user.status)}</Td>
+                            <Td>
+                              {convertCodeToName(
+                                USERS_OPTION.STATUS,
+                                user.status
+                              )}
+                            </Td>
                           </Tr>
                         ))
                       ) : (
-                        <NoDataTr colspan={13} text="조회된 운영자가 없습니다." />
+                        <NoDataTr
+                          colspan={13}
+                          text="조회된 운영자가 없습니다."
+                        />
                       )}
                     </Tbody>
                   </Table>

@@ -95,7 +95,7 @@ function TopBar({ isFold, tabIndex, onMenuClick }: TopBarProps) {
         <Flex align="center" gap={3}>
           <AlarmButton
             count={0}
-            header="수신 메시지"
+            header=" "
             icon={<TopBarTwoWayIcon color="gray.700" />}
             onClick={() => {
               console.log("AlarmButtonTest");

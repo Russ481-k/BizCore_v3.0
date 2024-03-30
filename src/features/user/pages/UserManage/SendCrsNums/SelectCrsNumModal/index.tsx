@@ -67,10 +67,10 @@ function SelectCrsNumModal({
   return (
     <CustomModal isOpen={isOpen} onClose={onClose}>
       <ModalContent minW="740px">
-        <ModalHeader> 메시지 발신번호 목록</ModalHeader>
+        <ModalHeader> 발신번호 목록</ModalHeader>
         <ModalCloseButton type="button" />
         <ModalBody>
-          <VStack align="stretch" spacing={3}>
+          <VStack align="stretch" spacing={2}>
             {/* <Flex align="center" justify="space-between">
               <CustomSelect codes={USERS_OPTION.CRS_USE} maxW={100} size="sm" />
               <Flex align="center" gap={2}>
@@ -113,7 +113,9 @@ function SelectCrsNumModal({
                               variant="primaryBlue"
                               size="sm"
                               isDisabled={bizNumbers.includes(item.bizNumber)}
-                              onClick={() => handleUseButtonClick(item.bizNumber)}
+                              onClick={() =>
+                                handleUseButtonClick(item.bizNumber)
+                              }
                             >
                               사용
                             </Button>

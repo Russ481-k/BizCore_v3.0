@@ -288,7 +288,7 @@ function SubjectPanel({ isDisabled, isReset, onChange }: SubjectPanelProps) {
     <CollapseSection
       flexDirection="column"
       gap={2}
-      headerTitle="수신 대상자 선택"
+      headerTitle=" 대상자 선택"
       mb={5}
       width="100%"
     >
@@ -488,7 +488,7 @@ function SubjectPanel({ isDisabled, isReset, onChange }: SubjectPanelProps) {
                   );
                 })
               ) : (
-                <NoDataTr colspan={9} text="수신 대상자를 등록하세요." />
+                <NoDataTr colspan={9} text=" 대상자를 등록하세요." />
               )}
               {(isIndeterminate || allChecked) && (
                 <Tr>

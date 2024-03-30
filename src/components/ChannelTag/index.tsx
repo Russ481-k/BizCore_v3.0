@@ -30,7 +30,7 @@ function ChannelTag({ channelType, hasTooltip }: ChannelTagProps) {
           label={
             <Text>
               장문 (LMS) 문자로 자동 전환하였습니다. <br />
-              2,000bytes까지 메시지 내용을 입력 가능합니다.
+              2,000bytes까지 내용을 입력 가능합니다.
             </Text>
           }
           py={1}
@@ -69,7 +69,7 @@ function ChannelTag({ channelType, hasTooltip }: ChannelTagProps) {
           label={
             <Text>
               멀티 (MMS) 문자로 자동 전환하였습니다. <br />
-              2,000bytes까지 메시지 내용을 입력 가능합니다.
+              2,000bytes까지 내용을 입력 가능합니다.
             </Text>
           }
           p={2}

@@ -35,7 +35,7 @@ import DeleteTemplateModal from "./DeleteTemplateModal";
 import GroupTreePanel from "./GroupTreePanel";
 import SaveTemplateModal from "./SaveTemplateModal";
 
-function MessageTemplate() {
+function ContWrite() {
   const toast = useToast();
   const currentRef = useRef<HTMLDivElement>(null);
   const { isOpen, onClose } = useDisclosure();
@@ -236,9 +236,9 @@ function MessageTemplate() {
   }, [templates]);
 
   return (
-    <VStack align="stretch" spacing={3}>
-      <CustomCard isHeader=" 관리" />
-      <HStack align="flex-start" spacing={3}>
+    <VStack align="stretch" spacing={2}>
+      <CustomCard isHeader="계약 등록" />
+      <HStack align="flex-start" spacing={2}>
         <GroupTreePanel
           isRefetch={refetchGroupTemplate}
           onChange={handleTemplateGroupChange}
@@ -511,4 +511,4 @@ function MessageTemplate() {
   );
 }
 
-export default MessageTemplate;
+export default ContWrite;

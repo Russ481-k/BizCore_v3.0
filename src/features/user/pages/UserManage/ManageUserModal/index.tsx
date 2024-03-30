@@ -630,11 +630,11 @@ function ManageUserModal({
                       <VStack align="stretch" spacing={2}>
                         <Flex align="flex-end" justify="space-between">
                           <Text fontWeight="600" size="xl">
-                            메시지 권한
+                            권한
                           </Text>
                           <TipText
                             size="sm"
-                            text=" 메시지를 사용하기 위해  발신번호가  등록되어야 합니다."
+                            text=" 를 사용하기 위해  발신번호가  등록되어야 합니다."
                           />
                         </Flex>
                         <InfoBox>
@@ -651,7 +651,7 @@ function ManageUserModal({
                                 </Text>
                                 <QuestionMarkTooltip
                                   placement="bottom-start"
-                                  text=" 메시지에서 되는 회수는 월 량에서 제외됩니다."
+                                  text=" 에서 되는 회수는 월 량에서 제외됩니다."
                                 />
                               </>
                             }

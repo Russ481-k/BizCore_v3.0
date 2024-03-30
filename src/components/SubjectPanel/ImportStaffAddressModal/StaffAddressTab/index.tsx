@@ -237,7 +237,7 @@ function StaffAddressTab({
               variant="secondaryBlue"
               onClick={handleAddAddressButtonClick}
             >
-              선택한 수신 대상자 추가 {`>>`}
+              선택한 대상자 추가 {`>>`}
             </Button>
           </Flex>
           <Box
@@ -347,11 +347,7 @@ function StaffAddressTab({
           />
         </Flex>
       </CollapseSection>
-      <CollapseSection
-        flex={5}
-        flexDirection="column"
-        headerTitle="수신 대상자"
-      >
+      <CollapseSection flex={5} flexDirection="column" headerTitle=" 대상자">
         <Flex flexDirection="column" gap={3} height="530px" overflowY="hidden">
           <Text fontSize="14px">조회수 : {addressData?.length ?? 0}명</Text>
           <Box
@@ -409,7 +405,7 @@ function StaffAddressTab({
                 >
                   <Text fontSize="12px" m={3}>
                     <WarningIcon color="primary.700" mr={1} />
-                    {`왼편의 연락처 목록에서 수신 대상자를 
+                    {`왼편의 연락처 목록에서  대상자를 
                           선택하여 추가하세요.`}
                   </Text>
                 </Flex>

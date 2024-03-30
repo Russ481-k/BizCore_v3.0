@@ -253,7 +253,7 @@ function EmergencyStaffAddressSetUpTab({
               variant="secondaryBlue"
               onClick={handleAddAddressButtonClick}
             >
-              선택한 수신 대상자 추가 {`>>`}
+              선택한 대상자 추가 {`>>`}
             </Button>
           </Flex>
           <Box
@@ -473,7 +473,7 @@ function EmergencyStaffAddressSetUpTab({
                 >
                   <Text fontSize="12px" m={3}>
                     <WarningIcon color="primary.700" mr={1} />
-                    {`왼편의 연락처 목록에서 수신 대상자를 
+                    {`왼편의 연락처 목록에서  대상자를 
                           선택하여 추가하세요.`}
                   </Text>
                 </Flex>

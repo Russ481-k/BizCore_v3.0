@@ -97,7 +97,7 @@ function PreviewPanel({
       <Divider />
       <TipText
         size="sm"
-        text="수신자의 단말기 설정에 따라 다르게 보일 수 있습니다."
+        text="자의 단말기 설정에 따라 다르게 보일 수 있습니다."
       />
     </Section>
   );

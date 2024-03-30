@@ -50,7 +50,11 @@ interface TwoWayInputPanelProps {
   onChannelChange?: (channel: string) => void;
   onContextChange: (context: string) => void;
   onDisabled?: (disabled: boolean) => void;
-  onImagesChange?: (imageContents: File, url: string | null, index: number | null) => void;
+  onImagesChange?: (
+    imageContents: File,
+    url: string | null,
+    index: number | null
+  ) => void;
   onTitleChange?: (title: string) => void;
   onWiredPhoneNumberChange?: (wiredPhoneNumber: string) => void;
   removeImageFile?: (index: number) => void;
@@ -89,11 +93,15 @@ function TwoWayInputPanel({
   const [channel, setChannel] = useState<string>("SMS");
   const [contentsByteCount, setContentsByteCount] = useState<number>(0);
   const [contentsStringLimit, setContentsStringLimit] = useState<number>(0);
-  const [immediateSendModalData, setImmediateSendModalData] = useState<SendData | null>(null);
+  const [immediateSendModalData, setImmediateSendModalData] =
+    useState<SendData | null>(null);
   const [isAutoTestModalOpen, setAutoTestModalOpen] = useState<boolean>(false);
-  const [isOpenSendTelNumberModal, setOpenSendTelNumberModal] = useState<boolean>(false);
-  const [replacementInfoModalOpen, setReplacementInfoModalOpen] = useState<boolean>(false);
-  const [reservationTimeModalData, setReservationTimeModalData] = useState<SendData | null>(null);
+  const [isOpenSendTelNumberModal, setOpenSendTelNumberModal] =
+    useState<boolean>(false);
+  const [replacementInfoModalOpen, setReplacementInfoModalOpen] =
+    useState<boolean>(false);
+  const [reservationTimeModalData, setReservationTimeModalData] =
+    useState<SendData | null>(null);
   const [reset, setReset] = useState<boolean>(false);
   const [subjects, setSubjects] = useState<Subject[]>();
   const [toggleAuto, setToggleAuto] = useState<boolean>(true);
@@ -189,7 +197,10 @@ function TwoWayInputPanel({
       if (imageURL.slice(0, 4) === "blob") {
         return null;
       }
-      return imageURL?.slice(imageURL?.indexOf("/resources/") + 11, imageURL?.length);
+      return imageURL?.slice(
+        imageURL?.indexOf("/resources/") + 11,
+        imageURL?.length
+      );
     });
     return {
       id: null,
@@ -344,11 +355,13 @@ function TwoWayInputPanel({
   return (
     <FormProvider {...methods}>
       <Flex flex={1} flexDirection="column" gap={3} width="100%">
-        <CollapseSection flexDirection="column" gap={1} headerTitle=" 메시지 입력">
+        <CollapseSection flexDirection="column" gap={1} headerTitle="  입력">
           <InfoBox>
             <InfoElement label=" 발신번호" required>
               <Flex gap={2} justifyContent="space-between" width="100%">
-                <FormControl isInvalid={!!methods?.formState.errors.callingNumber}>
+                <FormControl
+                  isInvalid={!!methods?.formState.errors.callingNumber}
+                >
                   <Input
                     defaultValue={template?.wiredPhoneNumber}
                     isDisabled
@@ -419,7 +432,7 @@ function TwoWayInputPanel({
                 />
               </Flex>
             </InfoElement>
-            <InfoElement label="메시지 내용" required>
+            <InfoElement label=" 내용" required>
               <Flex flexDirection="column" gap={2} width="100%">
                 <MessageTextarea
                   channel={channel}
@@ -443,7 +456,10 @@ function TwoWayInputPanel({
                           특수문자
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent boxShadow="0px 4px 12px -3px" width="402px">
+                      <PopoverContent
+                        boxShadow="0px 4px 12px -3px"
+                        width="402px"
+                      >
                         <PopoverArrow />
                         <PopoverHeader>특수문자 입력</PopoverHeader>
                         <PopoverCloseButton />
@@ -463,7 +479,10 @@ function TwoWayInputPanel({
                           치환코드
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent boxShadow="0px 4px 12px -3px" width="162px">
+                      <PopoverContent
+                        boxShadow="0px 4px 12px -3px"
+                        width="162px"
+                      >
                         <PopoverArrow />
                         <PopoverHeader>치환코드 입력</PopoverHeader>
                         <PopoverCloseButton />
@@ -475,15 +494,19 @@ function TwoWayInputPanel({
                     <QuestionMarkIcon
                       color={toggleAuto ? "primary.400" : "primary.700"}
                       cursor="pointer"
-                      onClick={toggleAuto ? () => {} : handleReplacementInfoModalIconClick}
+                      onClick={
+                        toggleAuto
+                          ? () => {}
+                          : handleReplacementInfoModalIconClick
+                      }
                     />
                   </Flex>
                 </Flex>
                 <TipText
                   size="sm"
-                  text="내용이 90bytes가 넘으면 장문메시지로 자동변경됩니다. (단문
+                  text="내용이 90bytes가 넘으면 장문로 자동변경됩니다. (단문
                   90bytes, 장문 / 포토 2,000bytes) 문서 프로그램에서 작성한
-                  특수문자 등을 복사/붙여넣기 할 경우 수신자폰에서 깨짐 현상이
+                  특수문자 등을 복사/붙여넣기 할 경우 자폰에서 깨짐 현상이
                   발생 할 수 있습니다. 상단 [특수문자]버튼을 클릭하여 특수문자를
                   직접 입력해주세요."
                 />
@@ -503,7 +526,12 @@ function TwoWayInputPanel({
               type="submit"
               onClick={handleAutoTestButtonClick}
             />
-            <Input display="none" id="immediate-send" type="submit" onClick={handleImmediateSend} />
+            <Input
+              display="none"
+              id="immediate-send"
+              type="submit"
+              onClick={handleImmediateSend}
+            />
             <Input
               display="none"
               id="reserved-send"
@@ -512,7 +540,9 @@ function TwoWayInputPanel({
             />
           </InfoBox>
         </CollapseSection>
-        {subjectPanel && <SubjectPanel isReset={reset} onChange={handleChangeSubjects} />}
+        {subjectPanel && (
+          <SubjectPanel isReset={reset} onChange={handleChangeSubjects} />
+        )}
         {replacementInfoModalOpen && (
           <ReplacementCodeInfoModal setOpen={setReplacementInfoModalOpen} />
         )}
@@ -535,7 +565,9 @@ function TwoWayInputPanel({
             onClose={handleSendTelNumberModalClose}
           />
         )}
-        {isAutoTestModalOpen && <AutoTestModal onClose={handleAutoTestModalClose} />}
+        {isAutoTestModalOpen && (
+          <AutoTestModal onClose={handleAutoTestModalClose} />
+        )}
       </Flex>
     </FormProvider>
   );

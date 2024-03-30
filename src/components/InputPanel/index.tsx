@@ -65,7 +65,11 @@ interface InputPanelProps {
   onChannelChange?: (channel: string) => void;
   onContextChange: (context: string) => void;
   onDisabled?: (disabled: boolean) => void;
-  onImagesChange?: (imageContents: File, url: string | null, index: number | null) => void;
+  onImagesChange?: (
+    imageContents: File,
+    url: string | null,
+    index: number | null
+  ) => void;
   onSubjectCountChange?: (subjectCount: number) => void;
   onTitleChange?: (title: string) => void;
   onWiredPhoneNumberChange?: (wiredPhoneNumber: string) => void;
@@ -110,11 +114,15 @@ function InputPanel({
   const [channel, setChannel] = useState<string>("SMS");
   const [contentsByteCount, setContentsByteCount] = useState<number>(0);
   const [contentsStringLimit, setContentsStringLimit] = useState<number>(0);
-  const [immediateSendModalData, setImmediateSendModalData] = useState<SendData | null>(null);
-  const [importTemplateModalOpen, setImportTemplateModalOpen] = useState<boolean>(false);
+  const [immediateSendModalData, setImmediateSendModalData] =
+    useState<SendData | null>(null);
+  const [importTemplateModalOpen, setImportTemplateModalOpen] =
+    useState<boolean>(false);
   const [, setOpenConfirmModalData] = useState<Template | null>(null);
-  const [replacementInfoModalOpen, setReplacementInfoModalOpen] = useState<boolean>(false);
-  const [reservationTimeModalData, setReservationTimeModalData] = useState<SendData | null>(null);
+  const [replacementInfoModalOpen, setReplacementInfoModalOpen] =
+    useState<boolean>(false);
+  const [reservationTimeModalData, setReservationTimeModalData] =
+    useState<SendData | null>(null);
   const [reset, setReset] = useState<boolean>(false);
   const [subjects, setSubjects] = useState<Subject[]>();
   const [templateId, setTemplateId] = useState<number>(0);
@@ -231,7 +239,10 @@ function InputPanel({
       if (imageURL.slice(0, 4) === "blob") {
         return null;
       }
-      return imageURL?.slice(imageURL?.indexOf("/resources/") + 11, imageURL?.length);
+      return imageURL?.slice(
+        imageURL?.indexOf("/resources/") + 11,
+        imageURL?.length
+      );
     });
     return {
       id: null,
@@ -294,7 +305,9 @@ function InputPanel({
     (template: Template) => {
       onDisabled?.(false);
       onTitleChange?.(template.templateMsgTitle);
-      onWiredPhoneNumberChange?.(formatter.contactFormatter(template.wiredPhoneNumber ?? ""));
+      onWiredPhoneNumberChange?.(
+        formatter.contactFormatter(template.wiredPhoneNumber ?? "")
+      );
       getByteFromText(template.templateMsgContext, "contents");
       setTemplateId(template.templateId);
       if (contentsByteCount <= 2000) {
@@ -305,7 +318,8 @@ function InputPanel({
       methods?.setValue("templateCode", template.templateCode);
       methods?.setValue("messageContents", template.templateMsgContext);
       methods?.clearErrors("messageContents");
-      isAlarmTalk && methods?.setValue("alarmTalkChannel", template.yellowIdKey ?? "");
+      isAlarmTalk &&
+        methods?.setValue("alarmTalkChannel", template.yellowIdKey ?? "");
       resetFiles?.();
       template.files?.forEach((file, i) => {
         onImagesChange?.(
@@ -503,12 +517,14 @@ function InputPanel({
   return (
     <FormProvider {...methods}>
       <Flex flex={1} flexDirection="column" gap={3} width="100%">
-        <CollapseSection flexDirection="column" gap={1} headerTitle=" 메시지 입력">
+        <CollapseSection flexDirection="column" gap={1} headerTitle="  입력">
           <InfoBox>
             <InfoElement label="발신번호" required>
               <Flex gap={2} justifyContent="space-between" width="100%">
                 {!isAlarmTalk && (
-                  <FormControl isInvalid={!!methods?.formState.errors.callingNumber}>
+                  <FormControl
+                    isInvalid={!!methods?.formState.errors.callingNumber}
+                  >
                     <CustomSelect
                       codes={wiredPhoneNumbers}
                       defaultValue={template?.wiredPhoneNumber}
@@ -521,7 +537,8 @@ function InputPanel({
                           value: true,
                           message: "발신번호를 선택하세요.",
                         },
-                        onChange: (e) => handlePhoneNumberChange(e.target.value),
+                        onChange: (e) =>
+                          handlePhoneNumberChange(e.target.value),
                       })}
                     />
                     {methods?.formState.errors.callingNumber && (
@@ -549,7 +566,11 @@ function InputPanel({
             {isAlarmTalk && (
               <InfoElement label="카카오톡 채널" required>
                 <Flex alignItems="center" gap={1} width="100%">
-                  <Flex alignItems="end" justifyContent="space-between" lineHeight={1}>
+                  <Flex
+                    alignItems="end"
+                    justifyContent="space-between"
+                    lineHeight={1}
+                  >
                     <Flex />
                   </Flex>
                   <Input
@@ -559,18 +580,36 @@ function InputPanel({
                     width="50%"
                     {...methods?.register("alarmTalkChannel")}
                   />
-                  <Input display="none" {...methods?.register("templateCode")} />
-                  <TipText size="sm" text="카카오페이 플러스친구 ID를 선택하세요." />
+                  <Input
+                    display="none"
+                    {...methods?.register("templateCode")}
+                  />
+                  <TipText
+                    size="sm"
+                    text="카카오페이 플러스친구 ID를 선택하세요."
+                  />
                 </Flex>
               </InfoElement>
             )}
             {!isAlarmTalk && (
-              <InfoElement label="메시지 제목" width="100%">
-                <Flex alignItems="end" flexDirection="column" gap={1} width="100%">
-                  <Flex alignItems="end" justifyContent="space-between" lineHeight={1}>
+              <InfoElement label=" 제목" width="100%">
+                <Flex
+                  alignItems="end"
+                  flexDirection="column"
+                  gap={1}
+                  width="100%"
+                >
+                  <Flex
+                    alignItems="end"
+                    justifyContent="space-between"
+                    lineHeight={1}
+                  >
                     <Flex />
                     <Flex>
-                      <Text color={titleByteCount <= 30 ? "black" : "red"} fontSize="xs">
+                      <Text
+                        color={titleByteCount <= 30 ? "black" : "red"}
+                        fontSize="xs"
+                      >
                         {titleByteCount}
                       </Text>
                       <Text color="black" fontSize="xs">
@@ -581,7 +620,7 @@ function InputPanel({
                   <Input
                     defaultValue={template?.templateMsgTitle}
                     disabled={!watchCallingNumber && !isAlarmTalk}
-                    placeholder="메시지 제목을 입력하세요."
+                    placeholder=" 제목을 입력하세요."
                     size="sm"
                     width="100%"
                     {...methods?.register("title", {
@@ -595,14 +634,14 @@ function InputPanel({
                   />
                   <TipText
                     size="sm"
-                    text="단문(SMS)은 메시지 제목이 전송되지 않으며,  관리용으로만
-                    사용됩니다. 단문, 장문, 멀티 메시지의 제목 입력 없이 된
-                    경우 메시지 내용 앞 일부가 표시됩니다."
+                    text="단문(SMS)은  제목이 전송되지 않으며,  관리용으로만
+                    사용됩니다. 단문, 장문, 멀티 의 제목 입력 없이 된
+                    경우  내용 앞 일부가 표시됩니다."
                   />
                 </Flex>
               </InfoElement>
             )}
-            <InfoElement label="메시지 내용" required>
+            <InfoElement label=" 내용" required>
               <Flex flexDirection="column" gap={2} width="100%">
                 <MessageTextarea
                   channel={channel}
@@ -631,7 +670,10 @@ function InputPanel({
                               특수문자
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent boxShadow="0px 4px 12px -3px" width="402px">
+                          <PopoverContent
+                            boxShadow="0px 4px 12px -3px"
+                            width="402px"
+                          >
                             <PopoverArrow />
                             <PopoverHeader>특수문자 입력</PopoverHeader>
                             <PopoverCloseButton />
@@ -651,12 +693,17 @@ function InputPanel({
                               치환코드
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent boxShadow="0px 4px 12px -3px" width="162px">
+                          <PopoverContent
+                            boxShadow="0px 4px 12px -3px"
+                            width="162px"
+                          >
                             <PopoverArrow />
                             <PopoverHeader>치환코드 입력</PopoverHeader>
                             <PopoverCloseButton />
                             <PopoverBody p={0}>
-                              <ReplacementCodeList addSymbol={handleAddSymbol} />
+                              <ReplacementCodeList
+                                addSymbol={handleAddSymbol}
+                              />
                             </PopoverBody>
                           </PopoverContent>
                         </Popover>
@@ -669,9 +716,9 @@ function InputPanel({
                     </Flex>
                     <TipText
                       size="sm"
-                      text="내용이 90bytes가 넘으면 장문메시지로 자동변경됩니다. (단문
+                      text="내용이 90bytes가 넘으면 장문로 자동변경됩니다. (단문
                       90bytes, 장문 / 포토 2,000bytes) 문서 프로그램에서 작성한
-                      특수문자 등을 복사/붙여넣기 할 경우 수신자폰에서 깨짐
+                      특수문자 등을 복사/붙여넣기 할 경우 자폰에서 깨짐
                       현상이 발생 할 수 있습니다. 상단 [특수문자]버튼을 클릭하여
                       특수문자를 직접 입력해주세요."
                     />
@@ -709,17 +756,28 @@ function InputPanel({
                                   />
                                 </Td>
                                 <Td width="25%">
-                                  <Input size="sm" defaultValue={button.name ?? ""} />
+                                  <Input
+                                    size="sm"
+                                    defaultValue={button.name ?? ""}
+                                  />
                                 </Td>
                                 <Td width="50%">
                                   <Flex flexDirection="column" gap={2}>
                                     <Flex alignItems="center">
                                       <Text flex={1}>Mobile</Text>
-                                      <Input defaultValue={button.url ?? ""} flex={2} size="sm" />
+                                      <Input
+                                        defaultValue={button.url ?? ""}
+                                        flex={2}
+                                        size="sm"
+                                      />
                                     </Flex>
                                     <Flex alignItems="center">
                                       <Text flex={1}>PC(선택)</Text>
-                                      <Input defaultValue={button.pcUrl ?? ""} flex={2} size="sm" />
+                                      <Input
+                                        defaultValue={button.pcUrl ?? ""}
+                                        flex={2}
+                                        size="sm"
+                                      />
                                     </Flex>
                                   </Flex>
                                 </Td>
@@ -729,7 +787,10 @@ function InputPanel({
                       </Table>
                     </CustomTableContainer>
                   )}
-                  <TipText size="sm" text="버튼은 최대 5개까지 추가 가능합니다." />
+                  <TipText
+                    size="sm"
+                    text="버튼은 최대 5개까지 추가 가능합니다."
+                  />
                 </Box>
               </InfoElement>
             )}

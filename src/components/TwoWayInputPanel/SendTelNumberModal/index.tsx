@@ -55,7 +55,7 @@ function SendTelNumberModal({ onChange, onClose }: SendTelNumberModalProps) {
     },
     {
       code: "subject",
-      name: "메시지 제목",
+      name: " 제목",
     },
     {
       code: "createUser",

@@ -159,7 +159,7 @@ function MessageTextarea({
             {...register(name, {
               required: {
                 value: required ? true : false,
-                message: "메시지 내용을 입력하세요.",
+                message: " 내용을 입력하세요.",
               },
               onBlur: (e) => {
                 setValue(name, (e.target.value = onBlurMsg(e.target.value)));
@@ -197,11 +197,11 @@ function MessageTextarea({
         )}
         {hasHelperText && (
           <FormHelperText color="gray.800" fontSize="xs" lineHeight="1.125rem">
-            내용이 90bytes가 넘으면 장문메시지로 자동변경됩니다. (단문 90bytes,
-            장문 / 포토 2,000bytes)
+            내용이 90bytes가 넘으면 장문로 자동변경됩니다. (단문 90bytes, 장문 /
+            포토 2,000bytes)
             <br />
             문서 프로그램에서 작성한 특수문자 등을 복사/붙여넣기 할 경우
-            수신자폰에서 깨짐 현상이 발생 할 수 있습니다.
+            자폰에서 깨짐 현상이 발생 할 수 있습니다.
             <br />
             상단 [특수문자]버튼을 클릭하여 특수문자를 직접 입력해주세요.
           </FormHelperText>

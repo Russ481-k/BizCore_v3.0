@@ -277,7 +277,7 @@ function ImportAddressModal({ setOpen, onChange }: ImportAddressModalProps) {
                     variant="secondaryBlue"
                     onClick={handleAddAddressButtonClick}
                   >
-                    선택한 수신 대상자 추가 {`>>`}
+                    선택한 대상자 추가 {`>>`}
                   </Button>
                 </Flex>
                 <Box
@@ -410,7 +410,7 @@ function ImportAddressModal({ setOpen, onChange }: ImportAddressModalProps) {
             <CollapseSection
               flex={4}
               flexDirection="column"
-              headerTitle="수신 대상자"
+              headerTitle=" 대상자"
             >
               <Flex
                 flexDirection="column"
@@ -480,7 +480,7 @@ function ImportAddressModal({ setOpen, onChange }: ImportAddressModalProps) {
                       <Flex alignItems="center" height="100%" lineHeight={1.9}>
                         <Text fontSize="12px" m={3}>
                           <WarningIcon color="primary.700" mr={1} />
-                          {`왼편의 연락처 목록에서 수신 대상자를 
+                          {`왼편의 연락처 목록에서  대상자를 
                           선택하여 추가하세요.`}
                         </Text>
                       </Flex>
