@@ -113,17 +113,17 @@ function Login() {
           <Image alt="logo" src={require("assets/img/logo.png")} />
         </VStack>
         <VStack alignItems="flex-start" mt={12} spacing={2.5} w="100%">
-          <FormControl isInvalid={!!errors?.userId}>
+          <FormControl isInvalid={!!errors?.compId}>
             <Input
               placeholder="기업아이디"
               defaultValue={"vtek"}
               {...register("compId", {
-                required: message.compNo.login,
+                required: message.compId.login,
               })}
             />
-            {!!errors?.userId?.message && (
+            {!!errors?.compId?.message && (
               <FormErrorMessage mt={2}>
-                {errors?.userId?.message}
+                {errors?.compId?.message}
               </FormErrorMessage>
             )}
           </FormControl>
