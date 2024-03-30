@@ -1,40 +1,28 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   HStack,
   Input,
   Skeleton,
   Text,
-  useDisclosure,
-  useOutsideClick,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { format } from "date-fns";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { template } from "api/url";
 import {
   ChannelTag,
   CollapseSection,
   CustomCard,
   CustomSelect,
-  ExcelFileDownload,
   InfoBox,
   InfoElement,
   PaginationButtons,
   RangeDatePicker,
   Section,
-  ToastMessage,
 } from "components";
-import { useDeleteTemplate, useGetTemplatesBySearch } from "features/sopp";
-import TemplateGroup from "type/TemplateGroup";
-import DeleteTemplateModal from "./DeleteTemplateModal";
-import GroupTreePanel from "./GroupTreePanel";
-import SaveTemplateModal from "./SaveTemplateModal";
 import formatter from "libs/formatter";
 
 function OrderSalesReportList() {
@@ -47,17 +35,17 @@ function OrderSalesReportList() {
     keyword: string | null;
   }>({ mode: "onChange" });
 
-  const [autoType, setAutoType] = useState<string | null>(null);
-  const [channelType, setChannelType] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [endSendDate, setEndSendDate] = useState<string | null>(null);
+  const [, setAutoType] = useState<string | null>(null);
+  const [, setChannelType] = useState<string | null>(null);
+  const [, setCurrentPage] = useState<number>(1);
+  const [, setEndSendDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
-  const [name, setName] = useState<string | null>(null);
+  const [, setName] = useState<string | null>(null);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [phone, setPhone] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
+  const [, setPhone] = useState<string | null>(null);
+  const [, setResult] = useState<string | null>(null);
   const [sendDateOption, setSendDateOption] = useState<"all" | "select">("all");
-  const [startSendDate, setStartSendDate] = useState<string | null>(null);
+  const [, setStartSendDate] = useState<string | null>(null);
 
   const sendChannelOption = [
     {

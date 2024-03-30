@@ -1,7 +1,6 @@
 import { requestApi } from "api";
 import { users } from "api/url";
 import MyProfile from "type/MyProfile";
-import UserSendData from "type/UserSendData";
 
 export interface GetMyProfileResponse {
   status: string;
@@ -11,18 +10,6 @@ export interface GetMyProfileResponse {
 export function getMyProfileAPI(): Promise<GetMyProfileResponse> {
   return requestApi<GetMyProfileResponse>({
     url: users(`/current`),
-    method: "GET",
-  }).then((response) => response.data);
-}
-
-export interface GetMySendDataResponse {
-  status: string;
-  data: UserSendData;
-  message: string;
-}
-export function getMySendDataAPI(): Promise<GetMySendDataResponse> {
-  return requestApi<GetMySendDataResponse>({
-    url: users(`/send-count`),
     method: "GET",
   }).then((response) => response.data);
 }

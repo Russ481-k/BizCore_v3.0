@@ -2,7 +2,6 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import { CollapseSection } from "components";
-import { useGetAlarmTalkTemplateGroups } from "features/sopp";
 import TemplateGroup from "type/TemplateGroup";
 
 interface GroupTreePanelProps {
@@ -20,8 +19,6 @@ function GroupTreePanel({
     number | null
   >(null);
 
-  const { data: templateGroups, totalTemplateCount } =
-    useGetAlarmTalkTemplateGroups();
   const handleSelectTemplateGroup = (groupTemplate: TemplateGroup | null) => {
     onChange(groupTemplate);
     setSelectedTemplateGroupId(groupTemplate?.groupTemplateId ?? null);
@@ -49,9 +46,9 @@ function GroupTreePanel({
               width="100%"
               onClick={() => handleSelectTemplateGroup(null)}
             >
-              {`전체 (${totalTemplateCount ?? 0})`}
+              {`전체 (${0})`}
             </Button>
-            {templateGroups?.map((templateGroup, i) => (
+            {[]?.map((templateGroup: any, i: number) => (
               <Flex
                 align="center"
                 justify="flex-start"

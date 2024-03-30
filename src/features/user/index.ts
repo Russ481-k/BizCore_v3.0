@@ -42,7 +42,6 @@ export {
   authRefreshThunk,
   authLogoutThunk,
   getMyProfileThunk,
-  getMySendDataThunk,
 } from "./redux";
 
 export { USERS_OPTION, CHANNEL_OPTION } from "./fixture";

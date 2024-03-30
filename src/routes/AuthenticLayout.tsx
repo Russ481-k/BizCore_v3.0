@@ -2,15 +2,13 @@
 import { useCallback, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { getMySendDataThunk, useAuthLogoutKill } from "features/user";
+import { useAuthLogoutKill } from "features/user";
 import { ACCESSTOKEN_TIME_OUT } from "features/user/redux";
 import authService from "libs/authService";
 import { getCookie } from "storage/cookie";
-import { useAppDispatch, useAppSelector } from "storage/redux/hooks";
+import { useAppSelector } from "storage/redux/hooks";
 
 function AuthenticLayout() {
-  const dispatch = useAppDispatch();
-
   const accessToken = useAppSelector((state) => state.user.accessToken);
   const refreshToken = getCookie("refreshToken");
 
@@ -29,10 +27,6 @@ function AuthenticLayout() {
     });
   }, []);
 
-  const fetchSendData = useCallback(() => {
-    dispatch(getMySendDataThunk());
-  }, [dispatch]);
-
   useEffect(() => {
     if (!accessToken && refreshToken) {
       authService.silentRefresh();
@@ -47,13 +41,11 @@ function AuthenticLayout() {
 
   useEffect(() => {
     if (accessToken) {
-      const fetchSendDataInterval = setInterval(fetchSendData, 30000);
       const onRefreshTokenTimeOut = setTimeout(() => {
         authService.silentRefresh();
       }, ACCESSTOKEN_TIME_OUT);
       return () => {
         clearTimeout(onRefreshTokenTimeOut);
-        clearInterval(fetchSendDataInterval);
       };
     }
   }, [accessToken]);

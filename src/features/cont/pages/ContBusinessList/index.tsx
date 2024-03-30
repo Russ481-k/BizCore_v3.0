@@ -6,30 +6,23 @@ import {
   Input,
   Skeleton,
   Text,
-  useDisclosure,
-  useOutsideClick,
   VStack,
 } from "@chakra-ui/react";
 import { format } from "date-fns";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { alarmTalkTemplate } from "api/url";
 import {
   ChannelTag,
   CollapseSection,
   CustomCard,
   CustomSelect,
-  ExcelFileDownload,
   InfoBox,
   InfoElement,
   PaginationButtons,
   RangeDatePicker,
   Section,
 } from "components";
-import { useGetAlarmTalkTemplatesBySearch } from "features/sopp";
-import TemplateGroup from "type/TemplateGroup";
-import GroupTreePanel from "./GroupTreePanel";
 import formatter from "libs/formatter";
 
 function ContBusinessList() {
@@ -42,17 +35,17 @@ function ContBusinessList() {
     keyword: string | null;
   }>({ mode: "onChange" });
 
-  const [autoType, setAutoType] = useState<string | null>(null);
-  const [channelType, setChannelType] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [endSendDate, setEndSendDate] = useState<string | null>(null);
+  const [, setAutoType] = useState<string | null>(null);
+  const [, setChannelType] = useState<string | null>(null);
+  const [, setCurrentPage] = useState<number>(1);
+  const [, setEndSendDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
-  const [name, setName] = useState<string | null>(null);
+  const [, setName] = useState<string | null>(null);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [phone, setPhone] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
+  const [, setPhone] = useState<string | null>(null);
+  const [, setResult] = useState<string | null>(null);
   const [sendDateOption, setSendDateOption] = useState<"all" | "select">("all");
-  const [startSendDate, setStartSendDate] = useState<string | null>(null);
+  const [, setStartSendDate] = useState<string | null>(null);
 
   const sendChannelOption = [
     {

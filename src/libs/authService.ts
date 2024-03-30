@@ -3,7 +3,7 @@ import {
   authRefreshThunk,
   removeUserData,
 } from "features/user";
-import { getMyProfileThunk, getMySendDataThunk } from "features/user";
+import { getMyProfileThunk } from "features/user";
 import { store } from "storage/redux/store";
 import { getCookie } from "storage/cookie";
 
@@ -13,7 +13,6 @@ let silentRefreshPromise: Promise<void> | null = null;
 function authService() {
   const getMyData: () => void = () => {
     store.dispatch(getMyProfileThunk());
-    store.dispatch(getMySendDataThunk());
   };
   const removeAuthData: () => void = () => {
     store.dispatch(removeUserData());
@@ -27,6 +26,7 @@ function authService() {
     silentRefreshPromise = new Promise(async (resolve, reject) => {
       try {
         const refreshToken = getCookie("refreshToken");
+
         if (refreshToken) {
           const resultAction = await store.dispatch(
             authRefreshThunk({ refreshToken })

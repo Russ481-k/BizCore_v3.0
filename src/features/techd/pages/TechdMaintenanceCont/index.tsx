@@ -9,7 +9,6 @@ import {
   Text,
   useDisclosure,
   useOutsideClick,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { format } from "date-fns";
@@ -27,16 +26,12 @@ import {
   InfoElement,
   PaginationButtons,
   RangeDatePicker,
-  ToastMessage,
 } from "components";
-import { useDeleteTemplate, useGetTemplatesBySearch } from "features/sopp";
+import { useGetTemplatesBySearch } from "features/sopp";
 import TemplateGroup from "type/TemplateGroup";
-import DeleteTemplateModal from "./DeleteTemplateModal";
 import GroupTreePanel from "./GroupTreePanel";
-import SaveTemplateModal from "./SaveTemplateModal";
 
 function TechdMaintenanceCont() {
-  const toast = useToast();
   const currentRef = useRef<HTMLDivElement>(null);
   const { isOpen, onClose } = useDisclosure();
 
@@ -46,15 +41,12 @@ function TechdMaintenanceCont() {
     search: string;
   }>({ mode: "onChange" });
 
-  const [addTemplateModalOpen, setAddTemplateModalOpen] =
-    useState<boolean>(false);
+  const [, setAddTemplateModalOpen] = useState<boolean>(false);
   const [batchSize, setBatchSize] = useState<number>(10);
-  const [changeTemplateModalData, setChangeTemplateModalData] = useState<
-    number | null
-  >(null);
+  const [, setChangeTemplateModalData] = useState<number | null>(null);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([false]);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
-  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [, setDeleteModalOpen] = useState<boolean>(false);
   const [regDateOption, setRegDateOption] = useState<"all" | "select">("all");
   const [endDate, setEndDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(false);
@@ -66,8 +58,6 @@ function TechdMaintenanceCont() {
   const [templateChannel, setTemplateChannel] = useState<string | null>(null);
   const [templateName, setTemplateName] = useState<string | null>(null);
 
-  const { mutate: deleteTemplate, isLoading: isDeleteLoading } =
-    useDeleteTemplate();
   const {
     contents: templates,
     paging: pagination,
@@ -95,10 +85,6 @@ function TechdMaintenanceCont() {
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
-  const handleAddTemplateModalClose = () => {
-    setAddTemplateModalOpen(false);
-    handlePageRefetch();
-  };
   const handleAddTemplateModalOpen = () => {
     setAddTemplateModalOpen(true);
   };
@@ -106,10 +92,7 @@ function TechdMaintenanceCont() {
     setBatchSize(BatchSize);
     setEnableQuery(true);
   };
-  const handleChangeTemplateModalClose = () => {
-    setChangeTemplateModalData(null);
-    handlePageRefetch();
-  };
+
   const handleChangeTemplateModalData = (templateId: number) => {
     setChangeTemplateModalData(templateId);
   };
@@ -154,45 +137,7 @@ function TechdMaintenanceCont() {
   const handleDeleteSelectedTemplateModalOpen = () => {
     setDeleteModalOpen(true);
   };
-  const handleDeleteSelectedTemplateModalClose = () => {
-    setDeleteModalOpen(false);
-  };
-  const handleDeleteSelectTemplateModalConfirm = () => {
-    templates?.forEach((template: any, i: number) => {
-      if (checkedItems[i]) {
-        deleteTemplate(
-          { templateId: template.templateId },
-          {
-            onError: () => {
-              toast({
-                render: () => (
-                  <ToastMessage title=" 삭제 오류" type="ERROR">
-                    삭제 중 알 수 없는 오류가 발생하였습니다.
-                    <br />
-                    삭제를 다시 진행 하세요. 본 오류가 계속 발생하는 경우 시스템
-                    관리자에게 문의하기 바랍니다.
-                  </ToastMessage>
-                ),
-              });
-            },
-            onSuccess: () => {
-              toast({
-                render: () => (
-                  <ToastMessage title=" 삭제 완료" type="SUCCESS">
-                    을 정상적으로 삭제하였습니다.
-                  </ToastMessage>
-                ),
-              });
-              onClose();
-              handlePageRefetch();
-            },
-          }
-        );
-        setDeleteModalOpen(false);
-        setEnableQuery(true);
-      }
-    });
-  };
+
   const handleFormSubmit = methods.handleSubmit(
     ({ regDate, search, templateChannel }) => {
       if (regDateOption === "select" && !!regDate[0] && !!regDate[1]) {
@@ -219,12 +164,6 @@ function TechdMaintenanceCont() {
       }
     },
   });
-
-  useEffect(() => {
-    if (!isDeleteLoading) {
-      setEnableQuery(true);
-    }
-  }, [isDeleteLoading]);
 
   useEffect(() => {
     handlePageRefetch();
@@ -485,28 +424,7 @@ function TechdMaintenanceCont() {
             </Flex>
           </Flex>
         </Box>
-        {addTemplateModalOpen && (
-          <SaveTemplateModal
-            selectedTemplateGroupId={selectedTemplateGroup?.groupTemplateId}
-            isChangeTemplate={false}
-            onClose={handleAddTemplateModalClose}
-          />
-        )}
-        {changeTemplateModalData && (
-          <SaveTemplateModal
-            selectedTemplateGroupId={selectedTemplateGroup?.groupTemplateId}
-            isChangeTemplate={true}
-            templateId={changeTemplateModalData}
-            onClose={handleChangeTemplateModalClose}
-          />
-        )}
       </HStack>
-      {deleteModalOpen && (
-        <DeleteTemplateModal
-          onClose={handleDeleteSelectedTemplateModalClose}
-          onConfirm={handleDeleteSelectTemplateModalConfirm}
-        />
-      )}
     </VStack>
   );
 }

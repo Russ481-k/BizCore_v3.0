@@ -19,6 +19,17 @@ enum ViewType {
 }
 interface CalendarInfo {}
 
+interface Scadules {
+  id: string;
+  calendarId: string;
+  title: string;
+  category: string;
+  dueDateClass: string;
+  start: string;
+  end: string;
+  isReadOnly?: boolean;
+}
+
 function Calendar() {
   const [selectedView, setSelectedView] = useState<ViewType | undefined>(
     ViewType.MONTH
@@ -46,7 +57,7 @@ function Calendar() {
 
   // Especially avoid to declare the `template` prop inside the component.
 
-  const scadules: any = [
+  const scadules: Scadules[] = [
     {
       id: "1",
       calendarId: "0",

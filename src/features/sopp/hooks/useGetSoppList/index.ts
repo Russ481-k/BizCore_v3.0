@@ -3,7 +3,6 @@ import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
 import { ErrorResponse } from "api";
 
-import { getValidTemplateNameAPI } from "api/templates/template";
 import { getSoppList } from "api/sopp/list";
 
 function useGetSoppList(

@@ -19,30 +19,14 @@ export const auth = (path: string) =>
   `${API_URL}/api/auth${path}`.replace(/\/$/, "");
 export const sopp = (path: string) =>
   `${API_URL}/api/sopp${path}`.replace(/\/$/, "");
-export const addressGroup = (path: string) =>
-  `${API_URL}/api/address-group${path}`.replace(/\/$/, "");
-export const address = (path: string) =>
-  `${API_URL}/api/address${path}`.replace(/\/$/, "");
-export const alarmTalkTemplate = (path: string) =>
-  `${API_URL}/api/kakao-template${path}`.replace(/\/$/, "");
-export const alarmTalkTemplateGroup = (path: string) =>
-  `${API_URL}/api/kakao-template-group${path}`.replace(/\/$/, "");
-export const consultations = (path: string) =>
-  `${API_URL}/api/consultations${path}`.replace(/\/$/, "");
 export const department = (path: string) =>
   `${API_URL}/api/department${path}`.replace(/\/$/, "");
-export const messages = (path: string) =>
-  `${API_URL}/api/messages${path}`.replace(/\/$/, "");
 export const permission = (path: string) =>
   `${API_URL}/api/permission${path}`.replace(/\/$/, "");
-export const scenario = (path: string) =>
-  `${API_URL}/api/scenario${path}`.replace(/\/$/, "");
 export const templateGroup = (path: string) =>
   `${API_URL}/api/template-group${path}`.replace(/\/$/, "");
 export const template = (path: string) =>
   `${API_URL}/api/template${path}`.replace(/\/$/, "");
-export const twoway = (path: string) =>
-  `${API_URL}/api/twoway${path}`.replace(/\/$/, "");
 export const users = (path: string) =>
   `${API_URL}/api/users${path}`.replace(/\/$/, "");
 export const excel = (path: string) =>

@@ -8,8 +8,6 @@ import {
 } from "@chakra-ui/react";
 
 import { CaretIcon, Section } from "components";
-import BarChartPanel from "../BarChartPanel";
-import PieChartPanel from "../PieChartPanel";
 
 function SalesOpportunityStatus({ ...props }: BoxProps) {
   const {
@@ -39,10 +37,10 @@ function SalesOpportunityStatus({ ...props }: BoxProps) {
       <Collapse in={isSalesOpportunityStatusOpen}>
         <Flex gap={4}>
           <Flex flexDirection="column" minHeight="200px" width="40%">
-            <PieChartPanel data={[]} />
+            {/* <PieChartPanel data={[]} /> */}
           </Flex>
           <Flex flexDirection="column" minHeight="200px" width="60%">
-            <BarChartPanel data={[]} />
+            {/* <BarChartPanel data={[]} /> */}
           </Flex>
         </Flex>
       </Collapse>

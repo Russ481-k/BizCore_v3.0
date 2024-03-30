@@ -38,17 +38,17 @@ function SoppList() {
   const { data: soppList, isLoading } = useGetSoppList();
   const parsedSoppList = !!soppList ? JSON.parse(soppList) : [];
 
-  const [autoType, setAutoType] = useState<string | null>(null);
-  const [channelType, setChannelType] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [endSendDate, setEndSendDate] = useState<string | null>(null);
+  const [, setAutoType] = useState<string | null>(null);
+  const [, setChannelType] = useState<string | null>(null);
+  const [, setCurrentPage] = useState<number>(1);
+  const [, setEndSendDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
-  const [name, setName] = useState<string | null>(null);
+  const [, setName] = useState<string | null>(null);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [phone, setPhone] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
+  const [, setPhone] = useState<string | null>(null);
+  const [, setResult] = useState<string | null>(null);
   const [sendDateOption, setSendDateOption] = useState<"all" | "select">("all");
-  const [startSendDate, setStartSendDate] = useState<string | null>(null);
+  const [, setStartSendDate] = useState<string | null>(null);
 
   const salesMethod = [
     {
@@ -226,9 +226,7 @@ function SoppList() {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     methods.setValue("keyword", e.target.value);
   };
-  const handleSearchTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    methods.setValue("searchType", e.target.value);
-  };
+
   const handleSendChannelChange = (e: ChangeEvent<HTMLInputElement>) => {
     methods.setValue("sendChannel", e.target.value);
   };

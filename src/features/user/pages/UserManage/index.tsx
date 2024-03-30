@@ -53,8 +53,6 @@ import Option from "type/Option";
 import UserListItem from "type/UserListItem";
 import UserSendData from "type/UserSendData";
 import AddUserModal from "./AddUserModal";
-import ManageUserModal from "./ManageUserModal";
-import SendDetailModal from "./SendDetailModal";
 
 interface SearchForm {
   status: string[];
@@ -79,8 +77,6 @@ function UserManage() {
   const [getUsersEnabled, setGetUsersEnabled] = useState<boolean>(false);
   const [getSendCountTotalEnabled, setGetSendCountTotalEnabled] =
     useState<boolean>(false);
-  const [manageUserModalOpen, setManageUserModalOpen] =
-    useState<boolean>(false);
   const [permissionOptions, setPermissionOptions] = useState<Option[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [searchPermissionId, setSearchPermissionId] = useState<number | null>(
@@ -96,10 +92,7 @@ function UserManage() {
     DEPARTMENT_GROUP.ALL
   );
   const [selectedUser, setSelectedUser] = useState<UserListItem | null>(null);
-  const [sendDetailModalOpen, setSendDetailModalOpen] =
-    useState<boolean>(false);
   const [sortBy, setSortBy] = useState<keyof UserListItem>("userId");
-  const [sortedUsersData, setSortedUsersData] = useState<UserListItem[]>([]);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const {
@@ -234,12 +227,10 @@ function UserManage() {
 
   const handleManageUserButtonClick: (user: UserListItem) => void = (user) => {
     setSelectedUser(user);
-    setManageUserModalOpen(true);
   };
 
   const handleSendDetailButtonClick: (user: UserListItem) => void = (user) => {
     setSelectedUser(user);
-    setSendDetailModalOpen(true);
   };
 
   useEffect(() => {
@@ -266,13 +257,6 @@ function UserManage() {
       setSearchPermissionOptions(searchPermissionOptions);
     }
   }, [permissionData]);
-
-  useEffect(() => {
-    if (usersData) {
-      const sorted = handleSortedData(usersData);
-      setSortedUsersData(sorted);
-    }
-  }, [usersData, sortBy, sortOrder, handleSortedData]);
 
   useEffect(() => {
     if (selectedUser) {
@@ -573,28 +557,6 @@ function UserManage() {
         onRefetchPage={onRefetchPage}
         setModalOpen={setAddUserModalOpen}
       />
-      {selectedUser && sendCountTotalData && (
-        <SendDetailModal
-          isOpen={sendDetailModalOpen}
-          userData={userData}
-          sendData={sendCountTotalData}
-          userIdx={selectedUser.userIdx}
-          onRefetchPage={onRefetchPage}
-          setModalOpen={setSendDetailModalOpen}
-        />
-      )}
-      {selectedUser && (
-        <ManageUserModal
-          isModify={selectedUser.isBizCore ?? false}
-          isOpen={manageUserModalOpen}
-          permissionOptions={permissionOptions}
-          userData={userData}
-          userIdx={selectedUser.userIdx}
-          onRefetchPage={onRefetchPage}
-          setModalOpen={setManageUserModalOpen}
-          setSelectedUser={setSelectedUser}
-        />
-      )}
     </VStack>
   );
 }

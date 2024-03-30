@@ -12,7 +12,6 @@ import {
 import { add, format, set } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
 import {
   CustomModal,
@@ -51,8 +50,6 @@ function ChangeReservationTimeModal({
     sendDate: Date;
   }>();
   const toast = useToast();
-
-  const navigate = useNavigate();
 
   const [currentTime, setCurrentTime] = useState<string>();
 

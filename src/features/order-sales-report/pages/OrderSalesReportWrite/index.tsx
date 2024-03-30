@@ -14,7 +14,6 @@ import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { alarmTalkTemplate } from "api/url";
 import {
   CollapseSection,
   CustomCard,
@@ -24,7 +23,6 @@ import {
   PaginationButtons,
   RangeDatePicker,
 } from "components";
-import { useGetAlarmTalkTemplatesBySearch } from "features/sopp";
 import TemplateGroup from "type/TemplateGroup";
 import GroupTreePanel from "./GroupTreePanel";
 
@@ -38,8 +36,8 @@ function OrderSalesReportWrite() {
   }>({ mode: "onChange" });
 
   const [, setChangeTemplateModalData] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState<number | null>(1);
-  const [endDate, setEndDate] = useState<string | null>(null);
+  const [, setCurrentPage] = useState<number | null>(1);
+  const [, setEndDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
   const [batchSize, setBatchSize] = useState<number>(10);
   const [regDateOption, setRegDateOption] = useState<"all" | "select">("all");
@@ -47,28 +45,8 @@ function OrderSalesReportWrite() {
     useState<boolean>(false);
   const [selectedTemplateGroup, setSelectedTemplateGroup] =
     useState<TemplateGroup | null>(null);
-  const [startDate, setStartDate] = useState<string | null>(null);
-  const [templateName, setTemplateName] = useState<string | null>(null);
-
-  const {
-    contents: templates,
-    isLoading: isTemplatesLoading,
-    pageLength,
-    paging: pagination,
-    totalCount,
-  } = useGetAlarmTalkTemplatesBySearch(
-    {
-      groupTemplateId: selectedTemplateGroup?.groupTemplateId ?? null,
-      startDate,
-      endDate,
-      templateName,
-      currentPage,
-      pageSize: batchSize,
-    },
-    {
-      enabled: isEnableQuery,
-    }
-  );
+  const [, setStartDate] = useState<string | null>(null);
+  const [, setTemplateName] = useState<string | null>(null);
 
   const handleBatchSizeChange = (BatchSize: number) => {
     setBatchSize(BatchSize);
@@ -181,7 +159,7 @@ function OrderSalesReportWrite() {
                 </InfoBox>
                 <Flex justify="flex-end">
                   <Button
-                    isLoading={isTemplatesLoading}
+                    isLoading={true}
                     variant="primaryBlue"
                     onClick={handleFormSubmit}
                   >
@@ -202,21 +180,10 @@ function OrderSalesReportWrite() {
             >
               <HStack>
                 <Text fontSize="xs" fontWeight="bold">
-                  검색결과 : {totalCount ?? 0} 건
+                  검색결과 : {0} 건
                 </Text>
                 <Flex flex={1} gap={2} justifyContent="flex-end">
-                  <ExcelFileDownload
-                    url={alarmTalkTemplate(
-                      "/excel?" +
-                        (templateName ? "&templateName=" + templateName : "") +
-                        (selectedTemplateGroup?.groupTemplateId
-                          ? "&groupTemplateId=" +
-                            selectedTemplateGroup?.groupTemplateId
-                          : "") +
-                        (startDate ? "&startDate=" + startDate : "") +
-                        (endDate ? "&endDate=" + endDate : "")
-                    )}
-                  />
+                  <ExcelFileDownload url={`/api/v1//excel`} />
                 </Flex>
               </HStack>
               <Box
@@ -244,21 +211,21 @@ function OrderSalesReportWrite() {
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
-                  {isTemplatesLoading ? (
+                  {true ? (
                     Array.from({ length: batchSize }).map((_, i) => (
                       <Flex
                         alignItems="center"
                         borderBottomWidth={1}
                         height="38px"
                         justifyContent="space-between"
-                        key={templates?.[i].templateId + "-" + i + "-skeleton"}
+                        key={[]?.[i] + "-" + i + "-skeleton"}
                       >
                         <Skeleton flex={10} height="20px" mx={4} my={2} />
                         <Skeleton flex={4} height="20px" mx={4} my={2} />
                       </Flex>
                     ))
-                  ) : !!totalCount ? (
-                    templates?.map((template, i) => (
+                  ) : false ? (
+                    []?.map((template: any, i: number) => (
                       <Flex
                         alignItems="center"
                         borderBottomWidth={1}
@@ -312,10 +279,10 @@ function OrderSalesReportWrite() {
               </Box>
               <PaginationButtons
                 batchSize={batchSize}
-                data={templates ?? []}
+                data={[]}
                 isRefetch={refetchGroupTemplate}
-                pageLength={pageLength}
-                pagination={pagination}
+                pageLength={0}
+                pagination={undefined}
                 onPageChange={handlePageChange}
                 onBatchSizeChange={handleBatchSizeChange}
               />

@@ -16,6 +16,6 @@ export function authRefreshAPI(params: {
     url: auth("/refresh"),
     method: "POST",
     data: { refreshToken: params.refreshToken ?? null },
-    withJWT: false,
+    withJWT: true,
   }).then((response) => response.data);
 }
