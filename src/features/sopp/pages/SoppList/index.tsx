@@ -428,7 +428,7 @@ function SoppList() {
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
-                  {isLoading &&
+                  {isLoading ? (
                     Array.from({ length: pageSize }).map((_, i) => (
                       <Flex
                         alignItems="center"
@@ -517,8 +517,8 @@ function SoppList() {
                           textAlign="center"
                         />
                       </Flex>
-                    ))}
-                  {!parsedSoppList.length ? (
+                    ))
+                  ) : !parsedSoppList.length ? (
                     <Flex
                       alignItems="center"
                       borderBottomWidth={1}

@@ -24,7 +24,7 @@ import {
 } from "components";
 import formatter from "libs/formatter";
 import { useGetContList } from "features/cont";
-import Sales from "type/Sales";
+import Cont from "type/Cont";
 
 function ContList() {
   const methods = useForm<{
@@ -37,8 +37,7 @@ function ContList() {
   }>({ mode: "onChange" });
 
   const { data: contList, isLoading } = useGetContList();
-  console.log(!!contList ? JSON.parse(contList) : []);
-  const parsedContList: Sales[] = !!contList ? JSON.parse(contList) : [];
+  const parsedContList: Cont[] = !!contList ? JSON.parse(contList) : [];
 
   const [, setAutoType] = useState<string | null>(null);
   const [, setChannelType] = useState<string | null>(null);
@@ -395,32 +394,47 @@ function ContList() {
                   fontWeight="500"
                   justifyContent="space-between"
                 >
-                  <Text flex={2} px={4} py={2} textAlign="center">
+                  <Text flex={2} p={1} textAlign="center">
                     등록일
                   </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    일정 구분
+                  <Text flex={1} p={1} textAlign="center">
+                    판매방식
                   </Text>
-                  <Text flex={5} px={4} py={2} textAlign="center">
-                    일정 제목
+                  <Text flex={1} p={1} textAlign="center">
+                    계약방식
                   </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    일정 시작일
+                  <Text flex={5} p={1} textAlign="center">
+                    계약명
                   </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    고객사
+                  <Text flex={2} p={1} textAlign="center">
+                    매출처
                   </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
+                  <Text flex={2} p={1} textAlign="center">
+                    계약금액
+                  </Text>
+                  <Text flex={2} p={1} textAlign="center">
+                    매출이익
+                  </Text>
+                  <Text flex={1} p={1} textAlign="center">
                     담당자
                   </Text>
-                  <Text flex={4} px={4} py={2} textAlign="center">
-                    장소
+                  <Text flex={3} p={1} textAlign="center">
+                    카테고리(제품회사명)
                   </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    활동 형태
+                  <Text flex={2} p={1} textAlign="center">
+                    유지보수 시작일
                   </Text>
-                  <Text flex={8} px={4} py={2} textAlign="center">
-                    일정 설명
+                  <Text flex={2} p={1} textAlign="center">
+                    유지보수 만료일
+                  </Text>
+                  <Text flex={2} p={1} textAlign="center">
+                    유지보수 대상
+                  </Text>
+                  <Text flex={2} p={1} textAlign="center">
+                    계산서 발행일
+                  </Text>
+                  <Text flex={2} p={1} textAlign="center">
+                    판매일
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
@@ -450,7 +464,14 @@ function ContList() {
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={5}
+                          flex={1}
+                          height="20px"
+                          mx={4}
+                          my={2}
+                          textAlign="center"
+                        />
+                        <Skeleton
+                          flex={3}
                           height="20px"
                           mx={4}
                           my={2}
@@ -485,14 +506,35 @@ function ContList() {
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={1}
+                          flex={2}
                           height="20px"
                           mx={4}
                           my={2}
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={8}
+                          flex={2}
+                          height="20px"
+                          mx={4}
+                          my={2}
+                          textAlign="center"
+                        />
+                        <Skeleton
+                          flex={2}
+                          height="20px"
+                          mx={4}
+                          my={2}
+                          textAlign="center"
+                        />
+                        <Skeleton
+                          flex={2}
+                          height="20px"
+                          mx={4}
+                          my={2}
+                          textAlign="center"
+                        />
+                        <Skeleton
+                          flex={2}
                           height="20px"
                           mx={4}
                           my={2}
@@ -527,40 +569,78 @@ function ContList() {
                           backgroundColor: "gray.50",
                         }}
                       >
-                        <Text flex={2} px={4} py={2} textAlign="center">
+                        <Text flex={2} p={1} textAlign="center">
                           {format(new Date(cont.regDatetime), "yyyy-MM-dd")}
                         </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {cont.contType}
+                        <Text flex={1} p={1} textAlign="center">
+                          {cont.contTypeN}
                         </Text>
-                        <Text flex={5} px={4} py={2} textAlign="left">
+                        <Text flex={1} p={1} textAlign="left">
+                          {cont.cntrctMthN}
+                        </Text>
+                        <Text
+                          flex={5}
+                          overflow="hidden"
+                          p={2}
+                          textAlign="left"
+                          textOverflow="ellipsis"
+                          whiteSpace="nowrap"
+                        >
                           {cont.contTitle}
                         </Text>
                         <Text
                           flex={2}
                           overflow="hidden"
-                          px={4}
-                          py={2}
+                          p={2}
                           textAlign="left"
                           textOverflow="ellipsis"
                           whiteSpace="nowrap"
                         >
-                          {format(new Date(cont.contTo), "yyyy-MM-dd")}
+                          {cont.custName}
                         </Text>
-                        <Text flex={2} px={4} py={2} textAlign="left">
-                          {cont.custNo}
+                        <Text flex={2} p={1} textAlign="right">
+                          {cont.contAmt
+                            ? formatter.currencyFormatter(
+                                cont.contAmt.toString()
+                              ) + " 원"
+                            : "-"}
                         </Text>
-                        <Text flex={2} px={4} py={2} textAlign="center">
-                          {cont.userNo}
+                        <Text flex={2} p={1} textAlign="right">
+                          {cont.net_profit
+                            ? formatter.currencyFormatter(
+                                cont.net_profit.toString()
+                              ) + " 원"
+                            : "-"}
                         </Text>
-                        <Text flex={4} px={4} py={2} textAlign="left">
-                          {cont.contPlace}
+                        <Text flex={1} p={1} textAlign="center">
+                          {cont.userName}
                         </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {cont.contActive}
+                        <Text
+                          flex={3}
+                          overflow="hidden"
+                          p={2}
+                          textAlign="left"
+                          textOverflow="ellipsis"
+                          whiteSpace="nowrap"
+                        >
+                          {cont.categories}
                         </Text>
-                        <Text flex={8} px={4} py={2} textAlign="left">
-                          {cont.contDesc}
+                        <Text flex={2} p={1} textAlign="left">
+                          {format(new Date(cont.regDatetime), "yyyy-MM-dd")}
+                        </Text>
+                        <Text flex={2} p={1} textAlign="left">
+                          {format(new Date(cont.regDatetime), "yyyy-MM-dd")}
+                        </Text>
+                        <Text flex={2} p={1} textAlign="left">
+                          유지보수 대상 데이터
+                        </Text>
+                        <Text flex={2} p={1} textAlign="left">
+                          계산서 발행일 데이터
+                        </Text>
+                        <Text flex={2} p={1} textAlign="left">
+                          {cont.delivDate
+                            ? format(new Date(cont.delivDate), "yyyy-MM-dd")
+                            : ""}
                         </Text>
                       </Flex>
                     ))

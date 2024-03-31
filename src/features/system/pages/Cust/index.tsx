@@ -24,8 +24,9 @@ import {
 } from "components";
 import formatter from "libs/formatter";
 import { useGetCustList } from "features/system";
+import Cust from "type/Cust";
 
-function Cust() {
+function CustList() {
   const methods = useForm<{
     sendDate: [Date, Date] | null;
     sendChannel: string | null;
@@ -36,7 +37,7 @@ function Cust() {
   }>({ mode: "onChange" });
 
   const { data: custList, isLoading } = useGetCustList();
-  const parsedCustList = !!custList ? JSON.parse(custList) : [];
+  const parsedCustList: Cust[] = !!custList ? JSON.parse(custList) : [];
 
   const [, setAutoType] = useState<string | null>(null);
   const [, setChannelType] = useState<string | null>(null);
@@ -394,41 +395,29 @@ function Cust() {
                   justifyContent="space-between"
                 >
                   <Text flex={2} px={4} py={2} textAlign="center">
-                    등록 / 수정일
+                    거래처 번호
                   </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    판매방식
-                  </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    계약구분
-                  </Text>
-                  <Text flex={5} px={4} py={2} textAlign="center">
-                    영업기회명
+                  <Text flex={4} px={4} py={2} textAlign="center">
+                    거래처명
                   </Text>
                   <Text flex={2} px={4} py={2} textAlign="center">
-                    매출처
+                    대표자명
+                  </Text>
+                  <Text flex={3} px={4} py={2} textAlign="center">
+                    사업자번호
+                  </Text>
+                  <Text flex={4} px={4} py={2} textAlign="center">
+                    거래처이메일
+                  </Text>
+                  <Text flex={4} px={4} py={2} textAlign="center">
+                    계산서이메일
                   </Text>
                   <Text flex={2} px={4} py={2} textAlign="center">
-                    엔드유저
-                  </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    카테고리
-                  </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    담당사원
-                  </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    예상매출액
-                  </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    진행단계
-                  </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    매출예정일
+                    상세정보
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
-                  {isLoading &&
+                  {isLoading ? (
                     Array.from({ length: pageSize }).map((_, i) => (
                       <Flex
                         alignItems="center"
@@ -447,21 +436,7 @@ function Cust() {
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={5}
+                          flex={4}
                           height="20px"
                           mx={4}
                           my={2}
@@ -475,35 +450,21 @@ function Cust() {
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={2}
+                          flex={3}
                           height="20px"
                           mx={4}
                           my={2}
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={2}
+                          flex={4}
                           height="20px"
                           mx={4}
                           my={2}
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={1}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={2}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={2}
+                          flex={4}
                           height="20px"
                           mx={4}
                           my={2}
@@ -517,8 +478,8 @@ function Cust() {
                           textAlign="center"
                         />
                       </Flex>
-                    ))}
-                  {!parsedCustList.length ? (
+                    ))
+                  ) : !parsedCustList.length ? (
                     <Flex
                       alignItems="center"
                       borderBottomWidth={1}
@@ -546,46 +507,25 @@ function Cust() {
                         }}
                       >
                         <Text flex={2} px={4} py={2} textAlign="center">
-                          {format(new Date(cust.custRegDatetime), "yyyy-MM-dd")}
+                          {cust.custNo}
                         </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {cust.custSalesMethod}
-                        </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {cust.contractCategory}
-                        </Text>
-                        <Text
-                          flex={5}
-                          overflow="hidden"
-                          px={4}
-                          py={2}
-                          textAlign="left"
-                          textOverflow="ellipsis"
-                          whiteSpace="nowrap"
-                        >
-                          {cust.custTitle}
-                        </Text>
-                        <Text flex={2} px={4} py={2} textAlign="center">
+                        <Text flex={4} px={4} py={2} textAlign="left">
                           {cust.custName}
                         </Text>
                         <Text flex={2} px={4} py={2} textAlign="center">
-                          {cust.endUser}
+                          {cust.custBossname}
+                        </Text>
+                        <Text flex={3} px={4} py={2} textAlign="center">
+                          {cust.custVatno}
+                        </Text>
+                        <Text flex={4} px={4} py={2} textAlign="left">
+                          {cust.custEmail}
+                        </Text>
+                        <Text flex={4} px={4} py={2} textAlign="left">
+                          {cust.custVatemail}
                         </Text>
                         <Text flex={2} px={4} py={2} textAlign="center">
-                          {"카테고리"}
-                        </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {cust.userName}
-                        </Text>
-                        <Text flex={2} px={4} py={2} textAlign="right">
-                          {formatter.currencyFormatter(cust.custTargetAmt) +
-                            " 원"}
-                        </Text>
-                        <Text flex={2} px={4} py={2} textAlign="center">
-                          {cust.custProgressStage}
-                        </Text>
-                        <Text flex={2} px={4} py={2} textAlign="center">
-                          {format(new Date(cust.custTargetDate), "yyyy-MM-dd")}
+                          {"상세정보"}
                         </Text>
                       </Flex>
                     ))
@@ -619,4 +559,4 @@ function Cust() {
   );
 }
 
-export default Cust;
+export default CustList;

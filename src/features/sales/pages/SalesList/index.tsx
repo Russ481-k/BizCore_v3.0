@@ -37,7 +37,6 @@ function SalesList() {
   }>({ mode: "onChange" });
 
   const { data: salesList, isLoading } = useGetSalesList();
-  console.log(!!salesList ? JSON.parse(salesList) : []);
   const parsedSalesList: Sales[] = !!salesList ? JSON.parse(salesList) : [];
 
   const [, setAutoType] = useState<string | null>(null);
@@ -398,33 +397,33 @@ function SalesList() {
                   <Text flex={2} px={4} py={2} textAlign="center">
                     등록일
                   </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
-                    일정 구분
+                  <Text flex={5} px={4} py={2} textAlign="center">
+                    영업활동명
+                  </Text>
+                  <Text flex={2} px={4} py={2} textAlign="center">
+                    영업시작일
+                  </Text>
+                  <Text flex={2} px={4} py={2} textAlign="center">
+                    영업종료일
                   </Text>
                   <Text flex={5} px={4} py={2} textAlign="center">
-                    일정 제목
-                  </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    일정 시작일
-                  </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    고객사
-                  </Text>
-                  <Text flex={2} px={4} py={2} textAlign="center">
-                    담당자
-                  </Text>
-                  <Text flex={4} px={4} py={2} textAlign="center">
-                    장소
+                    영업기회명
                   </Text>
                   <Text flex={1} px={4} py={2} textAlign="center">
-                    활동 형태
+                    담당자
                   </Text>
-                  <Text flex={8} px={4} py={2} textAlign="center">
+                  <Text flex={3} px={4} py={2} textAlign="center">
+                    매출처
+                  </Text>
+                  <Text flex={3} px={4} py={2} textAlign="center">
+                    엔드유저
+                  </Text>
+                  <Text flex={3} px={4} py={2} textAlign="center">
                     일정 설명
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
-                  {isLoading &&
+                  {isLoading ? (
                     Array.from({ length: pageSize }).map((_, i) => (
                       <Flex
                         alignItems="center"
@@ -437,13 +436,6 @@ function SalesList() {
                       >
                         <Skeleton
                           flex={2}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={1}
                           height="20px"
                           mx={4}
                           my={2}
@@ -471,14 +463,7 @@ function SalesList() {
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={2}
-                          height="20px"
-                          mx={4}
-                          my={2}
-                          textAlign="center"
-                        />
-                        <Skeleton
-                          flex={4}
+                          flex={5}
                           height="20px"
                           mx={4}
                           my={2}
@@ -492,15 +477,29 @@ function SalesList() {
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={8}
+                          flex={3}
+                          height="20px"
+                          mx={4}
+                          my={2}
+                          textAlign="center"
+                        />
+                        <Skeleton
+                          flex={3}
+                          height="20px"
+                          mx={4}
+                          my={2}
+                          textAlign="center"
+                        />
+                        <Skeleton
+                          flex={3}
                           height="20px"
                           mx={4}
                           my={2}
                           textAlign="center"
                         />
                       </Flex>
-                    ))}
-                  {!parsedSalesList.length ? (
+                    ))
+                  ) : !parsedSalesList.length ? (
                     <Flex
                       alignItems="center"
                       borderBottomWidth={1}
@@ -530,14 +529,8 @@ function SalesList() {
                         <Text flex={2} px={4} py={2} textAlign="center">
                           {format(new Date(sales.regDatetime), "yyyy-MM-dd")}
                         </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
-                          {sales.salesType}
-                        </Text>
-                        <Text flex={5} px={4} py={2} textAlign="left">
-                          {sales.salesTitle}
-                        </Text>
                         <Text
-                          flex={2}
+                          flex={5}
                           overflow="hidden"
                           px={4}
                           py={2}
@@ -545,21 +538,41 @@ function SalesList() {
                           textOverflow="ellipsis"
                           whiteSpace="nowrap"
                         >
-                          {format(new Date(sales.salesTo), "yyyy-MM-dd")}
+                          {sales.salesTitle}
                         </Text>
                         <Text flex={2} px={4} py={2} textAlign="left">
-                          {sales.custNo}
+                          {format(
+                            new Date(sales.salesFrdatetime),
+                            "yyyy-MM-dd"
+                          )}
                         </Text>
-                        <Text flex={2} px={4} py={2} textAlign="center">
-                          {sales.userNo}
+                        <Text flex={2} px={4} py={2} textAlign="left">
+                          {format(
+                            new Date(sales.salesTodatetime),
+                            "yyyy-MM-dd"
+                          )}
                         </Text>
-                        <Text flex={4} px={4} py={2} textAlign="left">
-                          {sales.salesPlace}
+                        <Text
+                          flex={5}
+                          overflow="hidden"
+                          px={4}
+                          py={2}
+                          textAlign="left"
+                          textOverflow="ellipsis"
+                          whiteSpace="nowrap"
+                        >
+                          {sales.soppNo}
                         </Text>
                         <Text flex={1} px={4} py={2} textAlign="center">
-                          {sales.salesActive}
+                          {sales.userNo}
                         </Text>
-                        <Text flex={8} px={4} py={2} textAlign="left">
+                        <Text flex={3} px={4} py={2} textAlign="center">
+                          {sales.custNo}
+                        </Text>
+                        <Text flex={3} px={4} py={2} textAlign="center">
+                          {sales.ptncNo}
+                        </Text>
+                        <Text flex={3} px={4} py={2} textAlign="left">
                           {sales.salesDesc}
                         </Text>
                       </Flex>

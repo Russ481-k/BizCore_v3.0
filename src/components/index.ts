@@ -45,7 +45,6 @@ export { default as WarningIcon } from "./Icons/WarningIcon";
 
 //Modals
 export { default as ReplacementCodeInfoModal } from "./ReplacementCodeInfoModal";
-export { default as ViewImageModal } from "./ViewImageModal";
 
 //Sections
 export { default as CollapseSection } from "./CollapseSection";

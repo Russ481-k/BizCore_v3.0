@@ -1,72 +1,72 @@
-name: test server deploy
+# name: test server deploy
 
-defaults:
-  run:
-    shell: bash -ieo pipefail {0}
+# defaults:
+#   run:
+#     shell: bash -ieo pipefail {0}
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  build-and-deploy:
-    runs-on: [mobytech, dev]
+# jobs:
+#   build-and-deploy:
+#     runs-on: [mobytech, dev]
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
 
-      - name: nvm version check
-        run: nvm -v
+#       - name: nvm version check
+#         run: nvm -v
 
-      - name: Build with yarn
-        run: |
-          yarn
-          yarn build:test
-      - name: create nginx.conf
-        run: |
-          cat << EOF > ./.deploy/nginx.conf
-          server {
-            listen 3000;
-            server_name localhost;
+#       - name: Build with yarn
+#         run: |
+#           yarn
+#           yarn build:test
+#       - name: create nginx.conf
+#         run: |
+#           cat << EOF > ./.deploy/nginx.conf
+#           server {
+#             listen 3000;
+#             server_name localhost;
 
-            location / {
-              root /usr/share/nginx/html;
-              index index.html;
-              try_files \$uri /index.html;
-            }
-          }
-          EOF
+#             location / {
+#               root /usr/share/nginx/html;
+#               index index.html;
+#               try_files \$uri /index.html;
+#             }
+#           }
+#           EOF
 
-      - name: Build Docker image
-        run: docker build -t BizCore_frontend -f ./.deploy/Dockerfile .
+#       - name: Build Docker image
+#         run: docker build -t BizCore_frontend -f ./.deploy/Dockerfile .
 
-      - name: create docker-compose.yml
-        run: |
-          cat << EOF > docker-compose.yml
-          version: "3"
+#       - name: create docker-compose.yml
+#         run: |
+#           cat << EOF > docker-compose.yml
+#           version: "3"
 
-          networks:
-              dev:
-                  external: true
+#           networks:
+#               dev:
+#                   external: true
 
-          services:
-              BizCore_frontend:
-                  container_name: BizCore_frontend
-                  image: BizCore_frontend
-                  restart: always
-                  labels:
-                      - "traefik.enable=true"
-                      - "traefik.docker.network=dev"
-                      - "traefik.http.routers.BizCore_frontend.tls=true"
-                      - "traefik.http.routers.BizCore_frontend.rule=Host(\`dev.BizCore.co.kr\`)"
-                      - "traefik.http.routers.BizCore_frontend.tls.certresolver=myresolver"
-                      - "traefik.http.services.BizCore_frontend.loadbalancer.server.port=3000"
-                  networks:
-                      - dev
-          EOF
+#           services:
+#               BizCore_frontend:
+#                   container_name: BizCore_frontend
+#                   image: BizCore_frontend
+#                   restart: always
+#                   labels:
+#                       - "traefik.enable=true"
+#                       - "traefik.docker.network=dev"
+#                       - "traefik.http.routers.BizCore_frontend.tls=true"
+#                       - "traefik.http.routers.BizCore_frontend.rule=Host(\`dev.BizCore.co.kr\`)"
+#                       - "traefik.http.routers.BizCore_frontend.tls.certresolver=myresolver"
+#                       - "traefik.http.services.BizCore_frontend.loadbalancer.server.port=3000"
+#                   networks:
+#                       - dev
+#           EOF
 
-      - name: Run Docker container
-        run: |
-          docker-compose up -d
+#       - name: Run Docker container
+#         run: |
+#           docker-compose up -d

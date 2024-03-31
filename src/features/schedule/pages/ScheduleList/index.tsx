@@ -37,7 +37,6 @@ function SchedList() {
   }>({ mode: "onChange" });
 
   const { data: schedList, isLoading } = useGetSchedList();
-  console.log(!!schedList ? JSON.parse(schedList) : []);
   const parsedSchedList: Sched[] = !!schedList ? JSON.parse(schedList) : [];
 
   const [, setAutoType] = useState<string | null>(null);
@@ -398,7 +397,7 @@ function SchedList() {
                   <Text flex={2} px={4} py={2} textAlign="center">
                     등록일
                   </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
+                  <Text flex={2} px={4} py={2} textAlign="center">
                     일정 구분
                   </Text>
                   <Text flex={5} px={4} py={2} textAlign="center">
@@ -416,7 +415,7 @@ function SchedList() {
                   <Text flex={4} px={4} py={2} textAlign="center">
                     장소
                   </Text>
-                  <Text flex={1} px={4} py={2} textAlign="center">
+                  <Text flex={2} px={4} py={2} textAlign="center">
                     활동 형태
                   </Text>
                   <Text flex={8} px={4} py={2} textAlign="center">
@@ -424,7 +423,7 @@ function SchedList() {
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
-                  {isLoading &&
+                  {isLoading ? (
                     Array.from({ length: pageSize }).map((_, i) => (
                       <Flex
                         alignItems="center"
@@ -443,7 +442,7 @@ function SchedList() {
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={1}
+                          flex={2}
                           height="20px"
                           mx={4}
                           my={2}
@@ -485,7 +484,7 @@ function SchedList() {
                           textAlign="center"
                         />
                         <Skeleton
-                          flex={1}
+                          flex={2}
                           height="20px"
                           mx={4}
                           my={2}
@@ -499,8 +498,8 @@ function SchedList() {
                           textAlign="center"
                         />
                       </Flex>
-                    ))}
-                  {!parsedSchedList.length ? (
+                    ))
+                  ) : !parsedSchedList.length ? (
                     <Flex
                       alignItems="center"
                       borderBottomWidth={1}
@@ -530,7 +529,7 @@ function SchedList() {
                         <Text flex={2} px={4} py={2} textAlign="center">
                           {format(new Date(sched.regDatetime), "yyyy-MM-dd")}
                         </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
+                        <Text flex={2} px={4} py={2} textAlign="center">
                           {sched.schedType}
                         </Text>
                         <Text flex={5} px={4} py={2} textAlign="left">
@@ -556,7 +555,7 @@ function SchedList() {
                         <Text flex={4} px={4} py={2} textAlign="left">
                           {sched.schedPlace}
                         </Text>
-                        <Text flex={1} px={4} py={2} textAlign="center">
+                        <Text flex={2} px={4} py={2} textAlign="center">
                           {sched.schedActive}
                         </Text>
                         <Text flex={8} px={4} py={2} textAlign="left">
