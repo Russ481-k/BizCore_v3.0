@@ -28,7 +28,7 @@ export function authLogoutKillAPI(
   params: AuthLogoutKillParams
 ): Promise<AuthLogoutResponse> {
   return requestApi<AuthLogoutResponse>({
-    url: auth(`/logout/kill?requestFlag=${params.requestFlag}`),
+    url: auth(`/logout`),
     method: "POST",
     data: { refreshToken: params.refreshToken ?? null },
     withJWT: false,
