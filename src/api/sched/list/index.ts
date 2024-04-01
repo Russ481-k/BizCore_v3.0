@@ -1,27 +1,36 @@
 import { requestApi } from "api";
 import { sched } from "api/url";
+import Pagination from "type/Pagination";
 import Sched from "type/Sched";
+
+export interface SchedListParams {
+  currentPage: number;
+  pageSize: number;
+  sortBy: string;
+  sortOrder: string;
+}
 
 export interface SchedListResponse {
   status: string;
-  data: Sched[];
   message: string;
+  data: Sched[];
+  pagination: Pagination;
+  totalCount: number;
 }
 
-export function getSchedList(): Promise<SchedListResponse> {
-  //   params: {
-  //   compId: string;
-  //   userId: string;
-  //   password: string;
-  // }
+export function getSchedList(
+  params: SchedListParams
+): Promise<SchedListResponse> {
   return requestApi<SchedListResponse>({
     url: sched("/list"),
     method: "GET",
-    // data: {
-    //   compId: params.compId ?? null,
-    //   userId: params.userId ?? null,
-    //   password: params.password ?? null,
-    // },
+    params: {
+      currentPage: params.currentPage,
+      pageSize: params.pageSize,
+      sortBy: params.sortBy,
+      sortOrder: params.sortOrder,
+      
+    },
     withJWT: true,
   }).then((response) => response.data);
 }

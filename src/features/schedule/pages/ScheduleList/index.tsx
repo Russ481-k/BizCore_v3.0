@@ -25,6 +25,7 @@ import {
 import formatter from "libs/formatter";
 import { useGetSchedList } from "features/schedule";
 import Sched from "type/Sched";
+import Pagination from "type/Pagination";
 
 function SchedList() {
   const methods = useForm<{
@@ -36,20 +37,31 @@ function SchedList() {
     keyword: string | null;
   }>({ mode: "onChange" });
 
-  const { data: schedList, isLoading } = useGetSchedList();
-  const parsedSchedList: Sched[] = !!schedList ? JSON.parse(schedList) : [];
-
-  const [, setAutoType] = useState<string | null>(null);
-  const [, setChannelType] = useState<string | null>(null);
-  const [, setCurrentPage] = useState<number>(1);
-  const [, setEndSendDate] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
-  const [, setName] = useState<string | null>(null);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [, setPhone] = useState<string | null>(null);
-  const [, setResult] = useState<string | null>(null);
-  const [sendDateOption, setSendDateOption] = useState<"all" | "select">("all");
-  const [, setStartSendDate] = useState<string | null>(null);
+
+  const {
+    data: schedList,
+    pagination,
+    totalCount,
+    isLoading,
+  } = useGetSchedList(
+    {
+      currentPage: currentPage,
+      pageSize: pageSize,
+      sortBy: "regDatetime",
+      sortOrder: "desc",
+    },
+    { enabled: isEnableQuery }
+  );
+  const parsedSchedList: Sched[] = !!schedList
+    ? JSON.parse(schedList.toString())
+    : [];
+  const parsedPagination: Pagination = !!pagination
+    ? JSON.parse(pagination.toString())
+    : null;
+
 
   const salesMethod = [
     {
@@ -189,33 +201,8 @@ function SchedList() {
       receiveStatusType,
       keyword,
     }) => {
-      if (sendDateOption === "select") {
-        setStartSendDate(
-          sendDate?.[0]
-            ? `${format(sendDate[0], "yyyy-MM-dd")} 00:00:00.000`
-            : null
-        );
-        setEndSendDate(
-          sendDate?.[1]
-            ? `${format(sendDate[1], "yyyy-MM-dd")} 23:59:59.999`
-            : null
-        );
-      } else {
-        setStartSendDate(null);
-        setEndSendDate(null);
-      }
-      if (searchType === "name") {
-        setName(keyword);
-      } else if (searchType === "phone") {
-        setPhone(keyword);
-      } else {
-        setName(keyword);
-        setPhone(keyword);
-      }
       setCurrentPage(1);
-      setChannelType(sendChannel);
-      setResult(receiveStatusType);
-      setAutoType(sortType);
+
       setEnableQuery(true);
     }
   );
@@ -251,22 +238,22 @@ function SchedList() {
             <InfoBox>
               <Flex>
                 <InfoElement flex={1} label="등록/수정일">
-                  <RangeDatePicker
+                  {/* <RangeDatePicker
                     name="sendDate"
                     option={sendDateOption}
                     setOption={setSendDateOption}
                     setStartDate={setStartSendDate}
                     setEndDate={setEndSendDate}
-                  />
+                  /> */}
                 </InfoElement>
                 <InfoElement flex={1} label="매출예정일">
-                  <RangeDatePicker
+                  {/* <RangeDatePicker
                     name="sendDate"
                     option={sendDateOption}
                     setOption={setSendDateOption}
                     setStartDate={setStartSendDate}
                     setEndDate={setEndSendDate}
-                  />
+                  /> */}
                 </InfoElement>
               </Flex>
               <Flex>
@@ -370,7 +357,7 @@ function SchedList() {
             <Flex flexDirection="column" gap={2} width="100%">
               <HStack>
                 <Text fontSize="xs" fontWeight="bold">
-                  검색결과 : {parsedSchedList.length} 건
+                  검색결과 : {totalCount} 건
                 </Text>
                 <Flex flex={1} gap={2} justifyContent="flex-end">
                   <Button size="sm" type="button" variant="secondaryBlue">
@@ -570,19 +557,7 @@ function SchedList() {
             <PaginationButtons
               batchSize={pageSize}
               data={parsedSchedList}
-              pagination={{
-                offset: 10,
-                currentPage: 1,
-                pageSize: 10,
-                paged: true,
-                sort: {
-                  empty: false,
-                  sorted: true,
-                  unsorted: false,
-                },
-                unpaged: false,
-              }}
-              pageLength={10}
+              pagination={parsedPagination}
               onPageChange={handlePageChange}
               onBatchSizeChange={handleBatchSizeChange}
             />
