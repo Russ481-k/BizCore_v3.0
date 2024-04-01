@@ -24,7 +24,8 @@ import LogoutModal from "./LogoutModal";
 function Profile() {
   const myProfile = useAppSelector((state) => state.user.profile);
 
-  const [changeProfileModalOpen, setChangeProfileModalOpen] = useState<boolean>(false);
+  const [changeProfileModalOpen, setChangeProfileModalOpen] =
+    useState<boolean>(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
 
   const handleLogoutButtonClick = () => {
@@ -36,9 +37,7 @@ function Profile() {
   const onSubmitLogoutModal = () => {
     onCloseLogoutModal();
     authService.logout();
-    if (!myProfile.isBizCore) {
-      window.close();
-    }
+    window.close();
   };
   return (
     <>

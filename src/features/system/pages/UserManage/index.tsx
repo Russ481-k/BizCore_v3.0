@@ -48,10 +48,9 @@ import { DEPARTMENT_GROUP } from "libs/fixture";
 import { useAppSelector } from "storage/redux/hooks";
 import Department from "type/Department";
 import DepartmentGroup from "type/DepartmentGroup";
-import MyProfile from "type/MyProfile";
+import User from "type/User";
 import Option from "type/Option";
 import UserListItem from "type/UserListItem";
-import UserSendData from "type/UserSendData";
 import AddUserModal from "./AddUserModal";
 
 interface SearchForm {
@@ -137,7 +136,7 @@ function UserManage() {
   );
   const { data: userData, refetch: refetchUser } = useGetUser(
     {
-      userIdx: selectedUser?.userIdx ?? null,
+      userNo: selectedUser?.userNo ?? null,
     },
     {
       enabled: getUserEnabled,
@@ -150,7 +149,7 @@ function UserManage() {
   const { data: sendCountTotalData, refetch: refetchSendCountTotal } =
     useGetSendCountTotal(
       {
-        userIdx: selectedUser?.userIdx ?? null,
+        userNo: selectedUser?.userNo ?? null,
       },
       {
         enabled: getSendCountTotalEnabled,
@@ -267,9 +266,7 @@ function UserManage() {
   }, [selectedUser]);
 
   const myProfile = useAppSelector((state) => state.user.profile);
-  const mySendData = useAppSelector((state) => state.user.sendData);
-  const prevMyProfileRef = useRef<MyProfile | null>(null);
-  const prevMySendDataRef = useRef<UserSendData | null>(null);
+  const prevMyProfileRef = useRef<User | null>(null);
 
   useEffect(() => {
     prevMyProfileRef.current = myProfile;
@@ -278,15 +275,11 @@ function UserManage() {
 
   useEffect(() => {
     const prevMyProfile = prevMyProfileRef.current;
-    const prevMySendData = prevMySendDataRef.current;
-    if (
-      (prevMyProfile && myProfile !== prevMyProfile) ||
-      (prevMySendData && mySendData !== prevMySendData)
-    ) {
+    if (prevMyProfile && myProfile !== prevMyProfile) {
       onRefetchUsers();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [myProfile, mySendData]);
+  }, [myProfile]);
 
   return (
     <VStack align="stretch" spacing={2}>
@@ -456,7 +449,7 @@ function UserManage() {
                         sortedUsersData.map((user, i) => ( */}
                       {usersData && usersData.length > 0 ? (
                         usersData.map((user, i) => (
-                          <Tr key={`user-${user.userIdx}`}>
+                          <Tr key={`user-${user.userNo}`}>
                             <Td>
                               {totalCount &&
                                 totalCount - batchSize * (currentPage - 1) - i}

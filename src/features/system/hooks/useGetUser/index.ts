@@ -9,7 +9,7 @@ function useGetUser(
   options?: UseQueryOptions<GetUserResponse, AxiosError<ErrorResponse>>
 ) {
   const result = useQuery<GetUserResponse, AxiosError<ErrorResponse>>({
-    queryKey: ["user", params.userIdx],
+    queryKey: ["user", params.userNo],
     queryFn: () => getUserAPI(params),
     ...options,
   });

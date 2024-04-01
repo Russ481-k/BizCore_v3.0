@@ -37,7 +37,7 @@ function authService() {
             reject(new Error(message || "액세스 토큰 갱신 실패"));
           }
           if (authRefreshThunk.fulfilled.match(resultAction)) {
-            const profile = store.getState().user.profile.userIdx;
+            const profile = store.getState().user.profile.userNo;
             if (!profile) {
               getMyData();
             }
@@ -54,25 +54,11 @@ function authService() {
   };
   const logout: () => Promise<void> = async () => {
     const refreshToken = getCookie("refreshToken");
-    if (refreshToken) {
-      const resultAction = await store.dispatch(
-        authLogoutThunk({ refreshToken })
-      );
-      if (authLogoutThunk.rejected.match(resultAction)) {
-        const message = resultAction.payload?.message;
-        removeAuthData();
-        throw new Error(message || "로그아웃 실패");
-      }
-      window.location.href = "/login";
-      return;
-    } else {
-      removeAuthData();
-      throw new Error("리프레시 토큰 없음");
-    }
+    await store.dispatch(authLogoutThunk({ refreshToken }));
   };
   return {
     getMyData,
-    // silentRefresh,
+    silentRefresh,
     logout,
   };
 }

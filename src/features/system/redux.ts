@@ -4,8 +4,7 @@ import { authLoginAPI, AuthLoginResponse } from "api/auth/login";
 import { authLogoutAPI, AuthLogoutResponse } from "api/auth/logout";
 import { authRefreshAPI, AuthRefreshResponse } from "api/auth/refresh";
 import { getMyProfileAPI } from "api/users/current";
-import MyProfile from "type/MyProfile";
-import UserSendData from "type/UserSendData";
+import User from "type/User";
 import { removeRefreshTokenCookie, setRefreshTokenCookie } from "./storage";
 
 export const ACCESSTOKEN_TIME_OUT = 29 * 60 * 1000;
@@ -47,8 +46,6 @@ export const authRefreshThunk = createAsyncThunk<
 >(
   "auth/refresh",
   async (params: { refreshToken: string }, { rejectWithValue }) => {
-    alert("refreshToken" + params.refreshToken);
-
     try {
       const result = await authRefreshAPI(params);
       return result;
@@ -86,47 +83,30 @@ export const getMyProfileThunk = createAsyncThunk(
 
 interface UserState {
   accessToken: string | null;
-  profile: MyProfile;
-  sendData: UserSendData;
+  profile: User;
 }
 const initialState: UserState = {
   accessToken: null,
   profile: {
-    userIdx: 0,
+    userNo: 0,
+    compNo: 0,
     userId: "",
     userName: "",
-    deptName: "",
-    isBizCore: false,
-    positionName: "",
-    status: "",
-    authName: "",
-    wirelessPhoneNumber: "",
-  },
-  sendData: {
-    sendAuthorization: {
-      isSmsUse: false,
-      isLmsUse: false,
-      isMmsUse: false,
-      isKktUse: false,
-      isCrsUse: false,
-      isSmsUnlimited: false,
-      isLmsUnlimited: false,
-      isMmsUnlimited: false,
-      isKktUnlimited: false,
-      isCrsUnlimited: false,
-    },
-    sendCountRequest: {
-      smsLimitCount: null,
-      lmsLimitCount: null,
-      mmsLimitCount: null,
-      kktLimitCount: null,
-      crsLimitCount: null,
-      smsUseCount: null,
-      lmsUseCount: null,
-      mmsUseCount: null,
-      kktUseCount: null,
-      crsUseCount: null,
-    },
+    userPasswd: "",
+    userTel: "",
+    userEmail: "",
+    userOtp: 0,
+    userRole: "",
+    userCode: 0,
+    docRole: "",
+    userKey: "",
+    org_id: 0,
+    listDateFrom: "",
+    regDatetime: "",
+    modDatetime: "",
+    attrib: "",
+    userRank: "",
+    userDept: "",
   },
 };
 
@@ -138,7 +118,6 @@ export const { actions, reducer } = createSlice({
       removeRefreshTokenCookie();
       state.accessToken = null;
       state.profile = initialState.profile;
-      state.sendData = initialState.sendData;
     },
   },
   extraReducers: (builder) => {
@@ -174,15 +153,25 @@ export const { actions, reducer } = createSlice({
     });
     builder.addCase(getMyProfileThunk.fulfilled, (state, action) => {
       const data = action.payload.data;
-      state.profile.userIdx = data.userIdx;
+      state.profile.userNo = data.userNo;
+      state.profile.compNo = data.compNo;
       state.profile.userId = data.userId;
       state.profile.userName = data.userName;
-      state.profile.deptName = data.deptName;
-      state.profile.isBizCore = data.isBizCore;
-      state.profile.positionName = data.positionName;
-      state.profile.status = data.status;
-      state.profile.authName = data.authName;
-      state.profile.wirelessPhoneNumber = data.wirelessPhoneNumber;
+      state.profile.userPasswd = data.userPasswd;
+      state.profile.userTel = data.userTel;
+      state.profile.userEmail = data.userEmail;
+      state.profile.userOtp = data.userOtp;
+      state.profile.userRole = data.userRole;
+      state.profile.userCode = data.userCode;
+      state.profile.docRole = data.docRole;
+      state.profile.userKey = data.userKey;
+      state.profile.org_id = data.org_id;
+      state.profile.listDateFrom = data.listDateFrom;
+      state.profile.regDatetime = data.regDatetime;
+      state.profile.modDatetime = data.modDatetime;
+      state.profile.attrib = data.attrib;
+      state.profile.userRank = data.userRank;
+      state.profile.userDept = data.userDept;
     });
     builder.addCase(getMyProfileThunk.rejected, (state, action) => {
       state.profile = initialState.profile;

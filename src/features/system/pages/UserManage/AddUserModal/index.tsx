@@ -35,12 +35,11 @@ import pattern from "libs/pattern";
 import Department from "type/Department";
 import FieldNumber from "type/FieldNumbers";
 import Option from "type/Option";
-import SendAuth from "type/SendAuth";
-import SendCount from "type/SendCount";
 import SelectDeptModal from "../SelectDeptModal";
 import SendAuthCount from "../SendAuthCount";
 import SendCrsNums from "../SendCrsNums";
 import SendPhoneNums from "../SendPhoneNums";
+import User from "type/User";
 
 interface AddUserModalProps {
   isOpen: boolean;
@@ -58,37 +57,27 @@ interface AddUser {
   wirelessPhoneNumber?: string | null | undefined;
   wiredPhoneNumbers?: FieldNumber[] | undefined;
   crsPhoneNumbers?: FieldNumber[] | undefined;
-  sendAuthorization: SendAuth;
-  sendCountRequest: SendCount;
 }
-const addUserDefaultValues = {
+const addUserDefaultValues: User = {
+  userNo: 0,
+  compNo: 0,
   userId: "",
   userName: "",
-  positionCode: undefined,
-  deptCode: "",
-  permissionsId: undefined,
-  wirelessPhoneNumber: "",
-  wiredPhoneNumbers: [{ number: "" }],
-  crsPhoneNumbers: [{ number: "" }],
-  sendAuthorization: {
-    isSmsUse: true,
-    isLmsUse: true,
-    isMmsUse: true,
-    isKktUse: true,
-    isCrsUse: false,
-    isSmsUnlimited: false,
-    isLmsUnlimited: false,
-    isMmsUnlimited: false,
-    isKktUnlimited: false,
-    isCrsUnlimited: true,
-  },
-  sendCountRequest: {
-    smsLimitCount: 100,
-    lmsLimitCount: 100,
-    mmsLimitCount: 100,
-    kktLimitCount: 100,
-    crsLimitCount: null,
-  },
+  userPasswd: "",
+  userTel: "",
+  userEmail: "",
+  userOtp: 0,
+  userRole: "",
+  userCode: 0,
+  docRole: "",
+  userKey: "",
+  org_id: 0,
+  listDateFrom: "",
+  regDatetime: "",
+  modDatetime: "",
+  attrib: "",
+  userRank: "",
+  userDept: "",
 };
 
 const usedCrsService: boolean = true;
@@ -104,10 +93,6 @@ function AddUserModal({
   const methods = useForm<AddUser>({
     defaultValues: addUserDefaultValues,
     mode: "onBlur",
-  });
-  const watchSendAuthorization = useWatch({
-    control: methods.control,
-    name: "sendAuthorization",
   });
 
   const [changedDept, setChangedDept] = useState<Department | null>(
@@ -167,64 +152,64 @@ function AddUserModal({
       crsPhoneNumberParam = convertNumbersToJSON(data.crsPhoneNumbers);
     }
 
-    addUser(
-      {
-        userId: data.userId ?? null,
-        userName: data.userName ?? null,
-        positionName: positionNameParam ?? null,
-        deptCode: deptCodeParam ?? "0",
-        permissionsId: permissionIdParam ?? null,
-        wirelessPhoneNumber: data.wirelessPhoneNumber ?? null,
-        wiredPhoneNumber: wiredPhoneNumberParam ?? null,
-        wiredPhoneNumberPlus: wiredPhoneNumberPlusParam ?? null,
-        crsPhoneNumber: crsPhoneNumberParam ?? null,
-        isBizCore: true,
-        sendAuthorization: {
-          isSmsUse: data.sendAuthorization.isSmsUse,
-          isLmsUse: data.sendAuthorization.isLmsUse,
-          isMmsUse: data.sendAuthorization.isMmsUse,
-          isKktUse: data.sendAuthorization.isKktUse,
-          isCrsUse: data.sendAuthorization.isCrsUse,
-          isSmsUnlimited: data.sendAuthorization.isSmsUnlimited,
-          isLmsUnlimited: data.sendAuthorization.isLmsUnlimited,
-          isMmsUnlimited: data.sendAuthorization.isMmsUnlimited,
-          isKktUnlimited: data.sendAuthorization.isKktUnlimited,
-          isCrsUnlimited: data.sendAuthorization.isCrsUnlimited,
-        },
-        sendCountRequest: {
-          smsLimitCount: data.sendCountRequest.smsLimitCount,
-          lmsLimitCount: data.sendCountRequest.lmsLimitCount,
-          mmsLimitCount: data.sendCountRequest.mmsLimitCount,
-          kktLimitCount: data.sendCountRequest.kktLimitCount,
-          crsLimitCount: data.sendCountRequest.crsLimitCount,
-        },
-      },
-      {
-        onError: () => {
-          toast({
-            render: () => (
-              <ToastMessage title="운영자 등록 오류" type="ERROR">
-                운영자 등록 중 오류가 발생하였습니다.
-                <br />
-                운영자 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
-                시스템 관리자에게 문의하기 바랍니다.
-              </ToastMessage>
-            ),
-          });
-        },
-        onSuccess: () => {
-          toast({
-            render: () => (
-              <ToastMessage title="운영자 등록 완료" type="SUCCESS">
-                운영자를 정상적으로 등록하였습니다.
-              </ToastMessage>
-            ),
-          });
-          onClose();
-          onRefetchPage();
-        },
-      }
-    );
+    // addUser(
+    //   {
+    //     userId: data.userId ?? null,
+    //     userName: data.userName ?? null,
+    //     positionName: positionNameParam ?? null,
+    //     deptCode: deptCodeParam ?? "0",
+    //     permissionsId: permissionIdParam ?? null,
+    //     wirelessPhoneNumber: data.wirelessPhoneNumber ?? null,
+    //     wiredPhoneNumber: wiredPhoneNumberParam ?? null,
+    //     wiredPhoneNumberPlus: wiredPhoneNumberPlusParam ?? null,
+    //     crsPhoneNumber: crsPhoneNumberParam ?? null,
+    //     isBizCore: true,
+    //     sendAuthorization: {
+    //       isSmsUse: data.sendAuthorization.isSmsUse,
+    //       isLmsUse: data.sendAuthorization.isLmsUse,
+    //       isMmsUse: data.sendAuthorization.isMmsUse,
+    //       isKktUse: data.sendAuthorization.isKktUse,
+    //       isCrsUse: data.sendAuthorization.isCrsUse,
+    //       isSmsUnlimited: data.sendAuthorization.isSmsUnlimited,
+    //       isLmsUnlimited: data.sendAuthorization.isLmsUnlimited,
+    //       isMmsUnlimited: data.sendAuthorization.isMmsUnlimited,
+    //       isKktUnlimited: data.sendAuthorization.isKktUnlimited,
+    //       isCrsUnlimited: data.sendAuthorization.isCrsUnlimited,
+    //     },
+    //     sendCountRequest: {
+    //       smsLimitCount: data.sendCountRequest.smsLimitCount,
+    //       lmsLimitCount: data.sendCountRequest.lmsLimitCount,
+    //       mmsLimitCount: data.sendCountRequest.mmsLimitCount,
+    //       kktLimitCount: data.sendCountRequest.kktLimitCount,
+    //       crsLimitCount: data.sendCountRequest.crsLimitCount,
+    //     },
+    //   },
+    //   {
+    //     onError: () => {
+    //       toast({
+    //         render: () => (
+    //           <ToastMessage title="운영자 등록 오류" type="ERROR">
+    //             운영자 등록 중 오류가 발생하였습니다.
+    //             <br />
+    //             운영자 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
+    //             시스템 관리자에게 문의하기 바랍니다.
+    //           </ToastMessage>
+    //         ),
+    //       });
+    //     },
+    //     onSuccess: () => {
+    //       toast({
+    //         render: () => (
+    //           <ToastMessage title="운영자 등록 완료" type="SUCCESS">
+    //             운영자를 정상적으로 등록하였습니다.
+    //           </ToastMessage>
+    //         ),
+    //       });
+    //       onClose();
+    //       onRefetchPage();
+    //     },
+    //   }
+    // );
   });
 
   const onClose = () => {
@@ -239,20 +224,6 @@ function AddUserModal({
   useEffect(() => {
     setChangedDept(selectedDept);
   }, [selectedDept]);
-
-  useEffect(() => {
-    if (
-      !watchSendAuthorization.isSmsUse &&
-      !watchSendAuthorization.isLmsUse &&
-      !watchSendAuthorization.isMmsUse &&
-      !watchSendAuthorization.isKktUse
-    ) {
-      methods.resetField("wiredPhoneNumbers");
-    }
-    if (!watchSendAuthorization.isCrsUse) {
-      methods.resetField("crsPhoneNumbers");
-    }
-  }, [methods, watchSendAuthorization]);
 
   return (
     <>
@@ -476,14 +447,6 @@ function AddUserModal({
                         countName="kktLimitCount"
                       />
                     </InfoElement>
-                    {(watchSendAuthorization.isSmsUse ||
-                      watchSendAuthorization.isLmsUse ||
-                      watchSendAuthorization.isMmsUse ||
-                      watchSendAuthorization.isKktUse) && (
-                      <InfoElement label="발신번호">
-                        <SendPhoneNums registerName="wiredPhoneNumbers" />
-                      </InfoElement>
-                    )}
                   </InfoBox>
                 </VStack>
                 {usedCrsService && (
@@ -522,11 +485,6 @@ function AddUserModal({
                           countName="crsLimitCount"
                         />
                       </InfoElement>
-                      {watchSendAuthorization.isCrsUse && (
-                        <InfoElement label="발신번호">
-                          <SendCrsNums registerName="crsPhoneNumbers" />
-                        </InfoElement>
-                      )}
                     </InfoBox>
                   </VStack>
                 )}

@@ -1,11 +1,9 @@
 import { requestApi } from "api";
 import { users } from "api/url";
-import SendAuth from "type/SendAuth";
-import SendCount from "type/SendCount";
 import User from "type/User";
 
 export interface GetUserParams {
-  userIdx: number | null;
+  userNo: number | null;
 }
 export interface GetUserResponse {
   status: string;
@@ -14,7 +12,7 @@ export interface GetUserResponse {
 }
 export function getUserAPI(params: GetUserParams): Promise<GetUserResponse> {
   return requestApi<GetUserResponse>({
-    url: users(`/${params.userIdx}`),
+    url: users(`/${params.userNo}`),
     method: "GET",
   }).then((response) => response.data);
 }
@@ -28,100 +26,61 @@ export function addUserAPI(params: User): Promise<AddUserResponse> {
     url: users(""),
     method: "POST",
     data: {
-      userId: params.userId ?? null,
-      userName: params.userName ?? null,
-      positionName: params.positionName ?? null,
-      deptCode: params.deptCode ?? null,
-      permissionsId: params.permissionsId ?? null,
-      wirelessPhoneNumber: params.wirelessPhoneNumber ?? null,
-      wiredPhoneNumber: params.wiredPhoneNumber ?? null,
-      wiredPhoneNumberPlus: params.wiredPhoneNumberPlus ?? null,
-      crsPhoneNumber: params.crsPhoneNumber ?? null,
-      isBizCore: params.isBizCore ?? null,
-      sendAuthorization: {
-        isSmsUse: params.sendAuthorization.isSmsUse ?? null,
-        isLmsUse: params.sendAuthorization.isLmsUse ?? null,
-        isMmsUse: params.sendAuthorization.isMmsUse ?? null,
-        isKktUse: params.sendAuthorization.isKktUse ?? null,
-        isCrsUse: params.sendAuthorization.isCrsUse ?? null,
-        isSmsUnlimited: params.sendAuthorization.isSmsUnlimited ?? null,
-        isLmsUnlimited: params.sendAuthorization.isLmsUnlimited ?? null,
-        isMmsUnlimited: params.sendAuthorization.isMmsUnlimited ?? null,
-        isKktUnlimited: params.sendAuthorization.isKktUnlimited ?? null,
-        isCrsUnlimited: params.sendAuthorization.isCrsUnlimited ?? null,
-      },
-      sendCountRequest: {
-        smsLimitCount: params.sendCountRequest.smsLimitCount ?? null,
-        lmsLimitCount: params.sendCountRequest.lmsLimitCount ?? null,
-        mmsLimitCount: params.sendCountRequest.mmsLimitCount ?? null,
-        kktLimitCount: params.sendCountRequest.kktLimitCount ?? null,
-        crsLimitCount: params.sendCountRequest.crsLimitCount ?? null,
-      },
+      userNo: params.userNo,
+      compNo: params.compNo,
+      userId: params.userId,
+      userName: params.userName,
+      userPasswd: params.userPasswd,
+      userTel: params.userTel,
+      userEmail: params.userEmail,
+      userOtp: params.userOtp,
+      userRole: params.userRole,
+      userCode: params.userCode,
+      docRole: params.docRole,
+      userKey: params.userKey,
+      org_id: params.org_id,
+      listDateFrom: params.listDateFrom,
+      regDatetime: params.regDatetime,
+      modDatetime: params.modDatetime,
+      attrib: params.attrib,
+      userRank: params.userRank,
+      userDept: params.userDept,
     },
   }).then((response) => response.data);
 }
 
-export interface ChangeUserParams {
-  userIdx: number;
-  status: string;
-  userName: string | null;
-  positionName: string | null;
-  deptCode: string | null;
-  permissionsId: number | null;
-  wirelessPhoneNumber?: string | null;
-  wiredPhoneNumber?: string | null;
-  wiredPhoneNumberPlus?: string | null;
-  crsPhoneNumber?: string | null;
-  isBizCore?: boolean | null;
-  sendAuthorization: SendAuth;
-  sendCountRequest: SendCount;
-}
 export interface ChangeUserResponse {
   status: string;
   message: string;
 }
-export function changeUserAPI(
-  params: ChangeUserParams
-): Promise<ChangeUserResponse> {
+export function changeUserAPI(params: User): Promise<ChangeUserResponse> {
   return requestApi<ChangeUserResponse>({
-    url: users(`/${params.userIdx}`),
+    url: users(`/${params.userNo}`),
     method: "PUT",
     data: {
-      status: params.status ?? null,
-      userName: params.userName ?? null,
-      positionName: params.positionName ?? null,
-      deptCode: params.deptCode ?? null,
-      permissionsId: params.permissionsId ?? null,
-      wirelessPhoneNumber: params.wirelessPhoneNumber ?? null,
-      wiredPhoneNumber: params.wiredPhoneNumber ?? null,
-      wiredPhoneNumberPlus: params.wiredPhoneNumberPlus ?? null,
-      crsPhoneNumber: params.crsPhoneNumber ?? null,
-      isBizCore: params.isBizCore ?? null,
-      sendAuthorization: {
-        isSmsUse: params.sendAuthorization.isSmsUse ?? null,
-        isLmsUse: params.sendAuthorization.isLmsUse ?? null,
-        isMmsUse: params.sendAuthorization.isMmsUse ?? null,
-        isKktUse: params.sendAuthorization.isKktUse ?? null,
-        isCrsUse: params.sendAuthorization.isCrsUse ?? null,
-        isSmsUnlimited: params.sendAuthorization.isSmsUnlimited ?? null,
-        isLmsUnlimited: params.sendAuthorization.isLmsUnlimited ?? null,
-        isMmsUnlimited: params.sendAuthorization.isMmsUnlimited ?? null,
-        isKktUnlimited: params.sendAuthorization.isKktUnlimited ?? null,
-        isCrsUnlimited: params.sendAuthorization.isCrsUnlimited ?? null,
-      },
-      sendCountRequest: {
-        smsLimitCount: params.sendCountRequest.smsLimitCount ?? null,
-        lmsLimitCount: params.sendCountRequest.lmsLimitCount ?? null,
-        mmsLimitCount: params.sendCountRequest.mmsLimitCount ?? null,
-        kktLimitCount: params.sendCountRequest.kktLimitCount ?? null,
-        crsLimitCount: params.sendCountRequest.crsLimitCount ?? null,
-      },
+      userNo: params.userNo,
+      compNo: params.compNo,
+      userId: params.userId,
+      userName: params.userName,
+      userPasswd: params.userPasswd,
+      userTel: params.userTel,
+      userEmail: params.userEmail,
+      userOtp: params.userOtp,
+      userRole: params.userRole,
+      userCode: params.userCode,
+      docRole: params.docRole,
+      userKey: params.userKey,
+      org_id: params.org_id,
+      listDateFrom: params.listDateFrom,
+      attrib: params.attrib,
+      userRank: params.userRank,
+      userDept: params.userDept,
     },
   }).then((response) => response.data);
 }
 
 export interface DeleteUserParams {
-  userIdx: number;
+  userNo: number;
 }
 export interface DeleteUserResponse {
   status: string;
@@ -131,7 +90,7 @@ export function deleteUserAPI(
   params: DeleteUserParams
 ): Promise<DeleteUserResponse> {
   return requestApi<DeleteUserResponse>({
-    url: users(`/${params.userIdx}`),
+    url: users(`/${params.userNo}`),
     method: "DELETE",
   }).then((response) => response.data);
 }

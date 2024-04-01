@@ -1,24 +1,23 @@
-import SendAuth from "./SendAuth";
-import SendCount from "./SendCount";
-
 interface User {
-  status?: string;
-  userIdx?: number;
+  userNo: number;
+  compNo: number;
   userId: string;
   userName: string;
-  positionName: string | null;
-  deptCode: string | null;
-  deptName?: string | null;
-  permissionsId: number | null;
-  wirelessPhoneNumber?: string | null;
-  wiredPhoneNumber?: string | null;
-  wiredPhoneNumberPlus?: string | null;
-  crsPhoneNumber?: string | null;
-  isBizCore?: boolean | null;
-  ssoLoginId?: string;
-  password?: string;
-  sendAuthorization: SendAuth;
-  sendCountRequest: SendCount;
+  userPasswd: string | null;
+  userTel: string | null;
+  userEmail: string | null;
+  userOtp: number;
+  userRole: string;
+  userCode: number;
+  docRole: string;
+  userKey: string;
+  org_id: number;
+  listDateFrom: string | null;
+  regDatetime: string | null;
+  modDatetime: string | null;
+  attrib: string;
+  userRank: string;
+  userDept: string;
 }
 
 export default User;

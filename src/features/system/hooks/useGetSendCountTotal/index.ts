@@ -17,7 +17,7 @@ function useGetSendCountTotal(
 ) {
   const result = useQuery<GetSendCountTotalResponse, AxiosError<ErrorResponse>>(
     {
-      queryKey: ["send-count-total", params.userIdx],
+      queryKey: ["send-count-total", params.userNo],
       queryFn: () => getSendCountTotalAPI(params),
       ...options,
     }

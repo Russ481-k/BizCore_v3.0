@@ -27,28 +27,28 @@ function AuthenticLayout() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (!accessToken && refreshToken) {
-  //     authService.silentRefresh();
-  //   }
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-  //   window.addEventListener("load", handleAfterLoad);
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //     window.removeEventListener("load", handleAfterLoad);
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (!accessToken && refreshToken) {
+      authService.silentRefresh();
+    }
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("load", handleAfterLoad);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("load", handleAfterLoad);
+    };
+  }, []);
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     const onRefreshTokenTimeOut = setTimeout(() => {
-  //       authService.silentRefresh();
-  //     }, ACCESSTOKEN_TIME_OUT);
-  //     return () => {
-  //       clearTimeout(onRefreshTokenTimeOut);
-  //     };
-  //   }
-  // }, [accessToken]);
+  useEffect(() => {
+    if (accessToken) {
+      const onRefreshTokenTimeOut = setTimeout(() => {
+        authService.silentRefresh();
+      }, ACCESSTOKEN_TIME_OUT);
+      return () => {
+        clearTimeout(onRefreshTokenTimeOut);
+      };
+    }
+  }, [accessToken]);
 
   return <Outlet />;
 }

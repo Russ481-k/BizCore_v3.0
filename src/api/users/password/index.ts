@@ -22,7 +22,7 @@ export function checkInitialPwdAPI(
 }
 
 export interface ResetPwdParams {
-  userIdx: number;
+  userNo: number;
 }
 export interface ResetPwdResponse {
   status: string;
@@ -31,7 +31,7 @@ export interface ResetPwdResponse {
 }
 export function resetPwdAPI(params: ResetPwdParams): Promise<ResetPwdResponse> {
   return requestApi<ResetPwdResponse>({
-    url: users(`/password/reset/${params.userIdx}`),
+    url: users(`/password/reset/${params.userNo}`),
     method: "POST",
   }).then((response) => response.data);
 }

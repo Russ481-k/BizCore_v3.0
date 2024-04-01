@@ -18,7 +18,7 @@ export function authRefreshAPI(params: {
     headers: {
       Authorization: `Bearer ${params.refreshToken}`,
     },
-    // data: { refreshToken: params.refreshToken ?? null },
+    data: { refreshToken: params.refreshToken ?? null },
     withJWT: false,
   }).then((response) => response.data);
 }

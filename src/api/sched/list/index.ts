@@ -22,6 +22,6 @@ export function getSchedList(): Promise<SchedListResponse> {
     //   userId: params.userId ?? null,
     //   password: params.password ?? null,
     // },
-    withJWT: false,
+    withJWT: true,
   }).then((response) => response.data);
 }

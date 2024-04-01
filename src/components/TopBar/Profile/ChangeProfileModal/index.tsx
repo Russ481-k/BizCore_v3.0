@@ -36,17 +36,17 @@ import formatter from "libs/formatter";
 import message from "libs/message";
 import pattern from "libs/pattern";
 import { useAppDispatch } from "storage/redux/hooks";
-import MyProfile from "type/MyProfile";
+import User from "type/User";
 
 interface ChangeProfileModalProps {
   isOpen: boolean;
-  myProfile: MyProfile;
+  myProfile: User;
   setModalOpen: (open: boolean) => void;
 }
 
 interface ChangeProfile {
   userName: string;
-  wirelessPhoneNumber?: string | null;
+  userTel?: string | null;
 }
 
 function ChangeProfileModal({
@@ -57,7 +57,7 @@ function ChangeProfileModal({
   const dispatch = useAppDispatch();
   const toast = useToast();
 
-  const [defaultValues, setDefaultValues] = useState<MyProfile | null>();
+  const [defaultValues, setDefaultValues] = useState<User | null>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [changePwdModalOpen, setChangePwdModalOpen] = useState<boolean>(false);
@@ -69,11 +69,11 @@ function ChangeProfileModal({
   const { mutate: changeProfile } = useChangeMyProfile();
   const handleChangeButtonClick = methods.handleSubmit((data) => {
     const userNameParam = data.userName;
-    const wirelessPhoneNumberParam = data.wirelessPhoneNumber ?? "";
+    const userTelParam = data.userTel ?? "";
     changeProfile(
       {
         userName: userNameParam,
-        wirelessPhoneNumber: wirelessPhoneNumberParam,
+        userTel: userTelParam,
       },
       {
         onError: () => {
@@ -117,15 +117,25 @@ function ChangeProfileModal({
   useEffect(() => {
     if (myProfile) {
       setDefaultValues({
-        userIdx: myProfile.userIdx,
+        userNo: myProfile.userNo,
+        compNo: myProfile.compNo,
         userId: myProfile.userId,
         userName: myProfile.userName,
-        deptName: myProfile.deptName,
-        isBizCore: myProfile.isBizCore,
-        positionName: myProfile.positionName,
-        status: myProfile.status,
-        authName: myProfile.authName,
-        wirelessPhoneNumber: myProfile.wirelessPhoneNumber,
+        userPasswd: myProfile.userPasswd,
+        userTel: myProfile.userTel,
+        userEmail: myProfile.userEmail,
+        userOtp: myProfile.userOtp,
+        userRole: myProfile.userRole,
+        userCode: myProfile.userCode,
+        docRole: myProfile.docRole,
+        userKey: myProfile.userKey,
+        org_id: myProfile.org_id,
+        listDateFrom: myProfile.listDateFrom,
+        regDatetime: myProfile.regDatetime,
+        modDatetime: myProfile.modDatetime,
+        attrib: myProfile.attrib,
+        userRank: myProfile.userRank,
+        userDept: myProfile.userDept,
       });
     }
   }, [myProfile]);
@@ -134,7 +144,6 @@ function ChangeProfileModal({
     if (defaultValues) {
       methods.reset({
         userName: defaultValues.userName,
-        wirelessPhoneNumber: defaultValues.wirelessPhoneNumber,
       });
       setTimeout(() => {
         setIsLoading(false);
@@ -167,7 +176,7 @@ function ChangeProfileModal({
                       <InfoElement label="아이디">
                         <Text fontSize="sm">{defaultValues.userId}</Text>
                       </InfoElement>
-                      {defaultValues.isBizCore && (
+                      {
                         <InfoElement label="비밀번호">
                           <Button
                             size="sm"
@@ -177,7 +186,7 @@ function ChangeProfileModal({
                             비밀번호 변경
                           </Button>
                         </InfoElement>
-                      )}
+                      }
                       <InfoElement label="이름" required>
                         <FormControl
                           isInvalid={
@@ -188,7 +197,6 @@ function ChangeProfileModal({
                             <Input
                               maxW={240}
                               placeholder="이름을 입력하세요."
-                              readOnly={!defaultValues.isBizCore}
                               size="sm"
                               {...methods.register("userName", {
                                 required: message.userName.required,
@@ -206,27 +214,25 @@ function ChangeProfileModal({
                         </FormControl>
                       </InfoElement>
                       <InfoElement label="직급 (직책)">
-                        <Text fontSize="sm">{defaultValues.positionName}</Text>
+                        <Text fontSize="sm">{defaultValues.userRole}</Text>
                       </InfoElement>
                       <InfoElement label="부서">
-                        <Text fontSize="sm">{defaultValues.deptName}</Text>
+                        <Text fontSize="sm">{defaultValues.userDept}</Text>
                       </InfoElement>
                       <InfoElement label="권한">
-                        <Text fontSize="sm">{defaultValues.authName}</Text>
+                        <Text fontSize="sm">{defaultValues.userRank}</Text>
                       </InfoElement>
                       <InfoElement label="휴대폰 번호">
                         <FormControl
                           isInvalid={
-                            !!methods.formState.errors?.wirelessPhoneNumber
-                              ?.message
+                            !!methods.formState.errors?.userTel?.message
                           }
                         >
                           <Input
                             maxW={240}
                             placeholder="휴대폰 번호를 입력하세요."
-                            readOnly={!defaultValues.isBizCore}
                             size="sm"
-                            {...methods.register("wirelessPhoneNumber", {
+                            {...methods.register("userTel", {
                               validate: (v: string | null | undefined) => {
                                 if (v === "" || v === null || v === undefined)
                                   return true;
@@ -241,7 +247,7 @@ function ChangeProfileModal({
                               },
                               onBlur: (e) =>
                                 methods.setValue(
-                                  "wirelessPhoneNumber",
+                                  "userTel",
                                   formatter.contactFormatter(
                                     e.target.value
                                       .replace(/[^0-9]/g, "")
@@ -251,10 +257,7 @@ function ChangeProfileModal({
                             })}
                           />
                           <FormErrorMessage fontSize="xs" mt={1}>
-                            {
-                              methods.formState.errors?.wirelessPhoneNumber
-                                ?.message
-                            }
+                            {methods.formState.errors?.userTel?.message}
                           </FormErrorMessage>
                         </FormControl>
                       </InfoElement>

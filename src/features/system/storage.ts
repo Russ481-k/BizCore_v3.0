@@ -11,7 +11,7 @@ export const setRefreshTokenCookie = (refreshToken: string) => {
   const expires = getRefreshTokenExpireTime();
   setCookie("refreshToken", refreshToken, {
     expires,
-    path: "/",
+    path: "/dashboard",
     sameSite: "strict",
     // secure: true,
   });
@@ -19,7 +19,7 @@ export const setRefreshTokenCookie = (refreshToken: string) => {
 
 export const removeRefreshTokenCookie = () => {
   removeCookie("refreshToken", {
-    path: "/",
+    path: "/login",
     sameSite: "strict",
   });
 };

@@ -1,5 +1,5 @@
 interface UserListItem {
-  userIdx: number;
+  userNo: number;
   userId: string;
   userName: string;
   positionName: string;

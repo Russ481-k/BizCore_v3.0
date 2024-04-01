@@ -49,8 +49,7 @@ import { useAppSelector } from "storage/redux/hooks";
 import Department from "type/Department";
 import FieldNumber from "type/FieldNumbers";
 import Option from "type/Option";
-import SendAuth from "type/SendAuth";
-import SendCount from "type/SendCount";
+
 import User from "type/User";
 import UserListItem from "type/UserListItem";
 import SelectDeptModal from "../SelectDeptModal";
@@ -65,7 +64,7 @@ interface ManageUserModalProps {
   isOpen: boolean;
   permissionOptions: Option[];
   userData: User | undefined;
-  userIdx: number;
+  userNo: number;
   onRefetchPage: () => void;
   setModalOpen: (open: boolean) => void;
   setSelectedUser: React.Dispatch<React.SetStateAction<UserListItem | null>>;
@@ -82,8 +81,6 @@ interface ChangeUser {
   wirelessPhoneNumber?: string | null;
   wiredPhoneNumbers?: FieldNumber[] | undefined;
   crsPhoneNumbers?: FieldNumber[] | undefined;
-  sendAuthorization: SendAuth;
-  sendCountRequest: SendCount;
 }
 
 const usedCrsService: boolean = true;
@@ -93,13 +90,13 @@ function ManageUserModal({
   isOpen,
   permissionOptions,
   userData,
-  userIdx,
+  userNo,
   onRefetchPage,
   setModalOpen,
   setSelectedUser,
 }: ManageUserModalProps) {
   const toast = useToast();
-  const currentIdx = useAppSelector((state) => state.user.profile.userIdx);
+  const currentIdx = useAppSelector((state) => state.user.profile.userNo);
 
   const [changedDept, setChangedDept] = useState<Department | null>({
     deptCode: "",
@@ -115,10 +112,6 @@ function ManageUserModal({
 
   const methods = useForm<ChangeUser>({
     mode: "onBlur",
-  });
-  const watchSendAuthorization = useWatch({
-    control: methods.control,
-    name: "sendAuthorization",
   });
 
   const { mutate: changeUser } = useChangeUser();
@@ -155,74 +148,60 @@ function ManageUserModal({
     if (data?.crsPhoneNumbers && data.crsPhoneNumbers.length > 0) {
       crsPhoneNumberParam = convertNumbersToJSON(data.crsPhoneNumbers);
     }
-    changeUser(
-      {
-        userIdx: userIdx,
-        status: data.status,
-        userName: data.userName ?? null,
-        positionName: positionNameParam ?? null,
-        deptCode: deptCodeParam ?? "0",
-        permissionsId: permissionIdParam ?? null,
-        wirelessPhoneNumber: data.wirelessPhoneNumber ?? null,
-        wiredPhoneNumber: wiredPhoneNumberParam ?? null,
-        wiredPhoneNumberPlus: wiredPhoneNumberPlusParam ?? null,
-        crsPhoneNumber: crsPhoneNumberParam ?? null,
-        isBizCore: userData?.isBizCore,
-        sendAuthorization: {
-          isSmsUse: data.sendAuthorization.isSmsUse,
-          isLmsUse: data.sendAuthorization.isLmsUse,
-          isMmsUse: data.sendAuthorization.isMmsUse,
-          isKktUse: data.sendAuthorization.isKktUse,
-          isCrsUse: data.sendAuthorization.isCrsUse,
-          isSmsUnlimited: data.sendAuthorization.isSmsUnlimited,
-          isLmsUnlimited: data.sendAuthorization.isLmsUnlimited,
-          isMmsUnlimited: data.sendAuthorization.isMmsUnlimited,
-          isKktUnlimited: data.sendAuthorization.isKktUnlimited,
-          isCrsUnlimited: data.sendAuthorization.isCrsUnlimited,
-        },
-        sendCountRequest: {
-          smsLimitCount: data.sendCountRequest.smsLimitCount ?? null,
-          lmsLimitCount: data.sendCountRequest.lmsLimitCount ?? null,
-          mmsLimitCount: data.sendCountRequest.mmsLimitCount ?? null,
-          kktLimitCount: data.sendCountRequest.kktLimitCount ?? null,
-          crsLimitCount: data.sendCountRequest.crsLimitCount ?? null,
-        },
-      },
-      {
-        onError: () => {
-          toast({
-            render: () => (
-              <ToastMessage title="운영자 수정 오류" type="ERROR">
-                운영자 수정 중 오류가 발생하였습니다.
-                <br />
-                부서 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
-                시스템 관리자에게 문의하기 바랍니다.
-              </ToastMessage>
-            ),
-          });
-        },
-        onSuccess: () => {
-          toast({
-            render: () => (
-              <ToastMessage title="운영자 수정 완료" type="SUCCESS">
-                운영자를 정상적으로 수정하였습니다.
-              </ToastMessage>
-            ),
-          });
-          if (userIdx === currentIdx) {
-            authService.getMyData();
-          }
-          onClose();
-          onRefetchPage();
-        },
-      }
-    );
+    // changeUser(
+    //   {
+    //     userNo: userNo,
+    //     compNo: compNo,
+    //     userId: userId,
+    //     userName: userName,
+    //     userPasswd: userPasswd,
+    //     userTel: userTel,
+    //     userEmail: userEmail,
+    //     userOtp: userOtp,
+    //     userRole: userRole,
+    //     userCode: userCode,
+    //     docRole: docRole,
+    //     userKey: userKey,
+    //     org_id: org_id,
+    //     attrib: attrib,
+    //     userRank: userRank,
+    //     userDept: userDept,
+    //   },
+    //   {
+    //     onError: () => {
+    //       toast({
+    //         render: () => (
+    //           <ToastMessage title="운영자 수정 오류" type="ERROR">
+    //             운영자 수정 중 오류가 발생하였습니다.
+    //             <br />
+    //             부서 추가를 다시 진행 하세요. 본 오류가 계속 발생하는 경우
+    //             시스템 관리자에게 문의하기 바랍니다.
+    //           </ToastMessage>
+    //         ),
+    //       });
+    //     },
+    //     onSuccess: () => {
+    //       toast({
+    //         render: () => (
+    //           <ToastMessage title="운영자 수정 완료" type="SUCCESS">
+    //             운영자를 정상적으로 수정하였습니다.
+    //           </ToastMessage>
+    //         ),
+    //       });
+    //       if (userNo === currentIdx) {
+    //         authService.getMyData();
+    //       }
+    //       onClose();
+    //       onRefetchPage();
+    //     },
+    //   }
+    // );
   });
 
   const onDeleteUser = () => {
     deleteUser(
       {
-        userIdx,
+        userNo,
       },
       {
         onError: () => {
@@ -256,7 +235,7 @@ function ManageUserModal({
   const onResetPwd = () => {
     resetPwd(
       {
-        userIdx,
+        userNo,
       },
       {
         onError: () => {
@@ -291,66 +270,7 @@ function ManageUserModal({
   };
 
   useEffect(() => {
-    if (userData) {
-      setChangedDept({
-        deptCode: userData.deptCode ?? "",
-        deptName: userData.deptName ?? "부서 미지정",
-      });
-      const positionCodeValue = convertNameToCode(
-        USERS_OPTION.POSITION,
-        userData.positionName
-      );
-      let wiredPhoneNumbersValue: FieldNumber[] = [];
-      let crsPhoneNumbersValue: FieldNumber[] = [];
-
-      if (userData.wiredPhoneNumber !== null) {
-        const phoneObj = `{"phone0":"${userData.wiredPhoneNumber}"}`;
-        wiredPhoneNumbersValue = wiredPhoneNumbersValue.concat(
-          convertJSONToNumbers(phoneObj)
-        );
-        if (userData.wiredPhoneNumberPlus) {
-          wiredPhoneNumbersValue = wiredPhoneNumbersValue.concat(
-            convertJSONToNumbers(userData?.wiredPhoneNumberPlus)
-          );
-        }
-      }
-      if (userData.crsPhoneNumber) {
-        crsPhoneNumbersValue = crsPhoneNumbersValue.concat(
-          convertJSONToNumbers(userData.crsPhoneNumber)
-        );
-      }
-      setDefaultValues({
-        status: userData.status ?? "W",
-        userId: userData.userId,
-        userName: userData.userName,
-        positionCode: positionCodeValue ?? "0",
-        deptCode: userData.deptCode,
-        deptName: userData.deptName ?? "부서 미지정",
-        permissionsId: userData.permissionsId,
-        wirelessPhoneNumber: userData.wirelessPhoneNumber,
-        wiredPhoneNumbers: wiredPhoneNumbersValue,
-        crsPhoneNumbers: crsPhoneNumbersValue,
-        sendAuthorization: {
-          isSmsUse: userData.sendAuthorization.isSmsUse,
-          isLmsUse: userData.sendAuthorization.isLmsUse,
-          isMmsUse: userData.sendAuthorization.isMmsUse,
-          isKktUse: userData.sendAuthorization.isKktUse,
-          isCrsUse: userData.sendAuthorization.isCrsUse,
-          isSmsUnlimited: userData.sendAuthorization.isSmsUnlimited ?? null,
-          isLmsUnlimited: userData.sendAuthorization.isLmsUnlimited ?? null,
-          isMmsUnlimited: userData.sendAuthorization.isMmsUnlimited ?? null,
-          isKktUnlimited: userData.sendAuthorization.isKktUnlimited ?? null,
-          isCrsUnlimited: userData.sendAuthorization.isCrsUnlimited ?? null,
-        },
-        sendCountRequest: {
-          smsLimitCount: userData.sendCountRequest?.smsLimitCount ?? null,
-          lmsLimitCount: userData.sendCountRequest?.lmsLimitCount ?? null,
-          mmsLimitCount: userData.sendCountRequest?.mmsLimitCount ?? null,
-          kktLimitCount: userData.sendCountRequest?.kktLimitCount ?? null,
-          crsLimitCount: userData.sendCountRequest?.crsLimitCount ?? null,
-        },
-      });
-    }
+    //TODO:UserData initialization
   }, [userData]);
 
   useEffect(() => {
@@ -616,14 +536,6 @@ function ManageUserModal({
                             countName="kktLimitCount"
                           />
                         </InfoElement>
-                        {(watchSendAuthorization.isSmsUse ||
-                          watchSendAuthorization.isLmsUse ||
-                          watchSendAuthorization.isMmsUse ||
-                          watchSendAuthorization.isKktUse) && (
-                          <InfoElement label="발신번호">
-                            <SendPhoneNums registerName="wiredPhoneNumbers" />
-                          </InfoElement>
-                        )}
                       </InfoBox>
                     </VStack>
                     {usedCrsService && (
@@ -662,11 +574,6 @@ function ManageUserModal({
                               countName="crsLimitCount"
                             />
                           </InfoElement>
-                          {watchSendAuthorization.isCrsUse && (
-                            <InfoElement label="발신번호">
-                              <SendCrsNums registerName="crsPhoneNumbers" />
-                            </InfoElement>
-                          )}
                         </InfoBox>
                       </VStack>
                     )}

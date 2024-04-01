@@ -244,7 +244,7 @@ function ContList() {
 
   return (
     <VStack align="stretch" spacing={2}>
-      <CustomCard isHeader="영업기회 조회" />
+      <CustomCard isHeader="계약 조회" />
       <Box>
         <CollapseSection headerTitle="상세 검색" borderBottomRadius={0}>
           <FormProvider {...methods}>

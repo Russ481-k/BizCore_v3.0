@@ -21,7 +21,7 @@ export function getUserCrsAPI(): Promise<GetUserCrsResponse> {
 }
 
 export interface GetSendCountTotalParams {
-  userIdx: number | null;
+  userNo: number | null;
 }
 export interface GetSendCountTotalResponse {
   status: string;
@@ -32,7 +32,7 @@ export function getSendCountTotalAPI(
   params: GetSendCountTotalParams
 ): Promise<GetSendCountTotalResponse> {
   return requestApi<GetSendCountTotalResponse>({
-    url: users(`/send-count/total/${params.userIdx}`),
+    url: users(`/send-count/total/${params.userNo}`),
     method: "GET",
   }).then((response) => response.data);
 }

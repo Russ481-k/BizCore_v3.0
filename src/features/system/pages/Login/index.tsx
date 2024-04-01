@@ -18,6 +18,7 @@ import { authLoginThunk } from "features/system";
 import authService from "libs/authService";
 import message from "libs/message";
 import { useAppDispatch } from "storage/redux/hooks";
+import { setCookie } from "storage/cookie";
 
 interface LoginInterface {
   compId: string;
@@ -73,7 +74,7 @@ function Login() {
         message: message,
       });
       return;
-    } else {
+    } else if (authLoginThunk.fulfilled.match(resultAction)) {
       authService.getMyData();
       return navigate("/dashboard");
     }

@@ -1,22 +1,23 @@
 import { requestApi } from "api";
 import { users } from "api/url";
-import MyProfile from "type/MyProfile";
+import User from "type/User";
 
 export interface GetMyProfileResponse {
   status: string;
-  data: MyProfile;
+  data: User;
   message: string;
 }
 export function getMyProfileAPI(): Promise<GetMyProfileResponse> {
   return requestApi<GetMyProfileResponse>({
     url: users(`/current`),
     method: "GET",
+    withJWT: true,
   }).then((response) => response.data);
 }
 
 export interface ChangeMyProfileParams {
   userName: string;
-  wirelessPhoneNumber?: string;
+  userTel?: string;
 }
 export interface ChangeMyProfileResponse {
   status: string;
@@ -31,8 +32,9 @@ export function changeMyProfileAPI(
     method: "PUT",
     data: {
       userName: params.userName ?? null,
-      wirelessPhoneNumber: params.wirelessPhoneNumber ?? null,
+      userTel: params.userTel ?? null,
     },
+    withJWT: true,
   }).then((response) => response.data);
 }
 
@@ -53,5 +55,6 @@ export function changeMyPwdAPI(
     data: {
       password: params.password,
     },
+    withJWT: true,
   }).then((response) => response.data);
 }
