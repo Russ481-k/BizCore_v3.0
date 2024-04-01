@@ -128,13 +128,13 @@ function Calendar() {
             <InfoBox>
               <Flex>
                 <InfoElement label="날짜">
-                  <RangeDatePicker
+                      <RangeDatePicker
                     name="sendDate"
                     option={sendDateOption}
                     setOption={setSendDateOption}
                     setStartDate={setStartSendDate}
                     setEndDate={setEndSendDate}
-                  />
+                  /> 
                 </InfoElement>
               </Flex>
               <Flex>

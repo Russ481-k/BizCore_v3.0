@@ -131,8 +131,7 @@ function ContBusinessWrite() {
     methods.reset();
     setCurrentPage(1);
     setEnableQuery(true);
-    setRefetchGroupTemplate(true);
-  }, [methods, setEnableQuery, setCurrentPage, setRefetchGroupTemplate]);
+  }, [methods, setEnableQuery, setCurrentPage]);
   const handleDeleteSelectedTemplateModalOpen = () => {
     setDeleteModalOpen(true);
   };
@@ -410,7 +409,7 @@ function ContBusinessWrite() {
                 isAllChecked={allChecked}
                 isIndeterminate={isIndeterminate}
                 isRefetch={refetchGroupTemplate}
-                pageLength={pageLength}
+                totalPage={pageLength}
                 pagination={pagination}
                 onPageChange={handlePageChange}
                 onBatchSizeChange={handleBatchSizeChange}

@@ -124,8 +124,7 @@ function TechdMaintenanceBuy() {
     methods.reset();
     setCurrentPage(1);
     setEnableQuery(true);
-    setRefetchGroupTemplate(true);
-  }, [methods, setEnableQuery, setCurrentPage, setRefetchGroupTemplate]);
+  }, [methods, setEnableQuery, setCurrentPage]);
   const handleDeleteSelectedTemplateModalOpen = () => {};
 
   const handleFormSubmit = methods.handleSubmit(
@@ -159,10 +158,6 @@ function TechdMaintenanceBuy() {
     handlePageRefetch();
     methods.reset();
   }, [selectedTemplateGroup, methods, handlePageRefetch]);
-
-  useEffect(() => {
-    setCheckedItems(templates?.length ? templates?.map(() => false) : [false]);
-  }, [templates]);
 
   return (
     <VStack align="stretch" spacing={2}>
@@ -402,7 +397,7 @@ function TechdMaintenanceBuy() {
                 isAllChecked={allChecked}
                 isIndeterminate={isIndeterminate}
                 isRefetch={refetchGroupTemplate}
-                pageLength={pageLength}
+                totalPage={pageLength}
                 pagination={pagination}
                 onPageChange={handlePageChange}
                 onBatchSizeChange={handleBatchSizeChange}

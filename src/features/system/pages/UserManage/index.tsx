@@ -533,7 +533,7 @@ function UserManage() {
                 <PaginationButtons
                   batchSize={batchSize}
                   data={usersData ?? []}
-                  pageLength={pageLength}
+                  totalPage={pageLength}
                   pagination={pagination}
                   onBatchSizeChange={handleBatchSizeChange}
                   onPageChange={handlePageChange}

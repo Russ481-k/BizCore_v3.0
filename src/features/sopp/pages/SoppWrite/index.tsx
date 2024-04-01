@@ -69,17 +69,10 @@ function SoppWrite() {
     keyword: string | null;
   }>({ mode: "onChange" });
 
-  const [, setAutoType] = useState<string | null>(null);
   const [batchSize, setBatchSize] = useState<number>(10);
-  const [, setChannelType] = useState<string | null>(null);
-  const [, setCheckedItems] = useState<boolean[]>([false]);
   const [currentPage, setCurrentPage] = useState<number | null>(1);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(false);
-  const [, setName] = useState<string | null>(null);
-  const [, setPhone] = useState<string | null>(null);
-  const [, setRefetchGroupTemplate] = useState<boolean>(false);
-  const [, setResult] = useState<string | null>(null);
   const [selectedTemplateGroup] = useState<TemplateGroup | null>(null);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [expectedSalesDate, setExpectedSalesDate] = useState<Date | null>(null);
@@ -229,8 +222,7 @@ function SoppWrite() {
     methods.reset();
     setCurrentPage(1);
     setEnableQuery(true);
-    setRefetchGroupTemplate(true);
-  }, [methods, setEnableQuery, setCurrentPage, setRefetchGroupTemplate]);
+  }, [methods, setEnableQuery, setCurrentPage]);
   const handleFormSubmit = methods.handleSubmit(
     ({
       // sendDate,
@@ -240,18 +232,7 @@ function SoppWrite() {
       receiveStatusType,
       keyword,
     }) => {
-      if (searchType === "name") {
-        setName(keyword);
-      } else if (searchType === "phone") {
-        setPhone(keyword);
-      } else {
-        setName(keyword);
-        setPhone(keyword);
-      }
       setCurrentPage(1);
-      setChannelType(sendChannel);
-      setResult(receiveStatusType);
-      setAutoType(sortType);
       setEnableQuery(true);
     }
   );
@@ -281,10 +262,6 @@ function SoppWrite() {
     handlePageRefetch();
     methods.reset();
   }, [selectedTemplateGroup, methods, handlePageRefetch]);
-
-  useEffect(() => {
-    setCheckedItems(templates?.length ? templates?.map(() => false) : [false]);
-  }, [templates]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

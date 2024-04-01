@@ -281,7 +281,7 @@ function TechdInventoryWrite() {
                 batchSize={batchSize}
                 data={[]}
                 isRefetch={refetchGroupTemplate}
-                pageLength={0}
+                totalPage={10}
                 pagination={undefined}
                 onPageChange={handlePageChange}
                 onBatchSizeChange={handleBatchSizeChange}

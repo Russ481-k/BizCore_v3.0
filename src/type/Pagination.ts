@@ -1,14 +1,12 @@
 interface Pagination {
-  offset: number;
   currentPage: number;
   pageSize: number;
-  paged: boolean;
-  sort: {
+  sort?: {
     empty: boolean;
     sorted: boolean;
     unsorted: boolean;
   };
-  unpaged: boolean;
+  totalPage: number;
 }
 
 export default Pagination;

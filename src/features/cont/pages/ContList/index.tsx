@@ -39,17 +39,9 @@ function ContList() {
   const { data: contList, isLoading } = useGetContList();
   const parsedContList: Cont[] = !!contList ? JSON.parse(contList) : [];
 
-  const [, setAutoType] = useState<string | null>(null);
-  const [, setChannelType] = useState<string | null>(null);
   const [, setCurrentPage] = useState<number>(1);
-  const [, setEndSendDate] = useState<string | null>(null);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
-  const [, setName] = useState<string | null>(null);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [, setPhone] = useState<string | null>(null);
-  const [, setResult] = useState<string | null>(null);
-  const [sendDateOption, setSendDateOption] = useState<"all" | "select">("all");
-  const [, setStartSendDate] = useState<string | null>(null);
 
   const contMethod = [
     {
@@ -189,33 +181,7 @@ function ContList() {
       receiveStatusType,
       keyword,
     }) => {
-      if (sendDateOption === "select") {
-        setStartSendDate(
-          sendDate?.[0]
-            ? `${format(sendDate[0], "yyyy-MM-dd")} 00:00:00.000`
-            : null
-        );
-        setEndSendDate(
-          sendDate?.[1]
-            ? `${format(sendDate[1], "yyyy-MM-dd")} 23:59:59.999`
-            : null
-        );
-      } else {
-        setStartSendDate(null);
-        setEndSendDate(null);
-      }
-      if (searchType === "name") {
-        setName(keyword);
-      } else if (searchType === "phone") {
-        setPhone(keyword);
-      } else {
-        setName(keyword);
-        setPhone(keyword);
-      }
       setCurrentPage(1);
-      setChannelType(sendChannel);
-      setResult(receiveStatusType);
-      setAutoType(sortType);
       setEnableQuery(true);
     }
   );
@@ -251,22 +217,22 @@ function ContList() {
             <InfoBox>
               <Flex>
                 <InfoElement flex={1} label="등록/수정일">
-                  <RangeDatePicker
+                  {/* <RangeDatePicker
                     name="sendDate"
                     option={sendDateOption}
                     setOption={setSendDateOption}
                     setStartDate={setStartSendDate}
                     setEndDate={setEndSendDate}
-                  />
+                  /> */}
                 </InfoElement>
                 <InfoElement flex={1} label="매출예정일">
-                  <RangeDatePicker
+                  {/* <RangeDatePicker
                     name="sendDate"
                     option={sendDateOption}
                     setOption={setSendDateOption}
                     setStartDate={setStartSendDate}
                     setEndDate={setEndSendDate}
-                  />
+                  /> */}
                 </InfoElement>
               </Flex>
               <Flex>
@@ -652,18 +618,16 @@ function ContList() {
               batchSize={pageSize}
               data={parsedContList}
               pagination={{
-                offset: 10,
                 currentPage: 1,
                 pageSize: 10,
-                paged: true,
                 sort: {
                   empty: false,
                   sorted: true,
                   unsorted: false,
                 },
-                unpaged: false,
+                totalPage: 10,
               }}
-              pageLength={10}
+              totalPage={10}
               onPageChange={handlePageChange}
               onBatchSizeChange={handleBatchSizeChange}
             />

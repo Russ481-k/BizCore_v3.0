@@ -12,7 +12,7 @@ interface PaginationButtonsProps {
   isLoading?: boolean;
   isIndeterminate?: boolean;
   isRefetch?: boolean;
-  pageLength?: number;
+  totalPage?: number;
   pagination?: Pagination;
   onBatchSizeChange?: (batchSize: number) => void;
   onPageChange?: (page: number) => void;
@@ -26,7 +26,7 @@ const PaginationButtons = ({
   isLoading,
   isIndeterminate,
   isRefetch,
-  pageLength,
+  totalPage,
   pagination,
   onBatchSizeChange,
   onPageChange,
@@ -181,7 +181,7 @@ const PaginationButtons = ({
 
   useEffect(() => {
     if (!!pagination) {
-      let totalPageCount = pageLength ?? 1;
+      let totalPageCount = pagination.totalPage ?? 1;
       let pageCount = [];
       for (let count = 2; count < totalPageCount + 1; count++) {
         pageCount.push(count);
@@ -197,13 +197,13 @@ const PaginationButtons = ({
     //     pageCount.push(count);
     //   }
     //   setPageList([1, ...pageCount]);
-    // }.
-    if (!!pageLength) {
-      if (currentPage > pageLength) {
+    // }
+    if (!!totalPage) {
+      if (currentPage > totalPage) {
         onPageChange?.(currentPage - 1);
       }
     }
-  }, [currentPage, data, pagination, pageLength, getValues, onPageChange]);
+  }, [currentPage, data, pagination, totalPage, getValues, onPageChange]);
 
   useEffect(() => {
     if (isRefetch) {
