@@ -92,7 +92,6 @@ const initialState: UserState = {
     compNo: 0,
     userId: "",
     userName: "",
-    userPasswd: "",
     userTel: "",
     userEmail: "",
     userOtp: 0,
@@ -157,7 +156,6 @@ export const { actions, reducer } = createSlice({
       state.profile.compNo = data.compNo;
       state.profile.userId = data.userId;
       state.profile.userName = data.userName;
-      state.profile.userPasswd = data.userPasswd;
       state.profile.userTel = data.userTel;
       state.profile.userEmail = data.userEmail;
       state.profile.userOtp = data.userOtp;

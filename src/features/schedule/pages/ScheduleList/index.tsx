@@ -4,12 +4,13 @@ import {
   Flex,
   HStack,
   Input,
+  Portal,
   Skeleton,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { format } from "date-fns";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import {
@@ -23,45 +24,82 @@ import {
   Section,
 } from "components";
 import formatter from "libs/formatter";
-import { useGetSchedList } from "features/schedule";
+import { useGetSchedList, useGetUsers } from "features/schedule";
 import Sched from "type/Sched";
 import Pagination from "type/Pagination";
+import CustomAutoComplete from "components/CustomAutoComplete";
 
 function SchedList() {
   const methods = useForm<{
-    sendDate: [Date, Date] | null;
-    sendChannel: string | null;
-    searchType: string | null;
-    sortType: string | null;
-    receiveStatusType: string | null;
+    startDate: [Date, Date] | null;
+    regDate: [Date, Date] | null;
+    user: string | null;
+    sopp: string | null;
+    cust: string | null;
+    schedType: string | null;
+    schedCatagory: string | null;
     keyword: string | null;
   }>({ mode: "onChange" });
-
+  const ref = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isEnableQuery, setEnableQuery] = useState<boolean>(true);
   const [pageSize, setPageSize] = useState<number>(10);
+  const [regDateOption, setRegDateOption] = useState<"all" | "select">("all");
+  const [startDateOption, setStartDateOption] = useState<"all" | "select">(
+    "all"
+  );
+  const [scheduleStartDateStart, setScheduleStartDateStart] = useState<
+    string | null
+  >(null);
+  const [scheduleStartDateEnd, setScheduleStartDateEnd] = useState<
+    string | null
+  >(null);
+  const [scheduleRegDateStart, setScheduleRegDateStart] = useState<
+    string | null
+  >(null);
+  const [scheduleRegDateEnd, setScheduleRegDateEnd] = useState<string | null>(
+    null
+  );
+  const [autoCompleteUsersNameKeyword, setAutoCompleteUsersNameKeyword] =
+    useState<string | null>(null);
 
-  const {
-    data: schedList,
-    pagination,
-    totalCount,
-    isLoading,
-  } = useGetSchedList(
+  // const {
+  //   data: schedList,
+  //   pagination,
+  //   totalCount,
+  //   isLoading,
+  // } = useGetSchedList(
+  //   {
+  //     currentPage: currentPage,
+  //     pageSize: pageSize,
+  //     sortBy: "regDatetime",
+  //     sortOrder: "desc",
+  //   },
+  //   { enabled: isEnableQuery }
+  // );
+
+  const { data: compAllUsers } = useGetUsers(
     {
-      currentPage: currentPage,
-      pageSize: pageSize,
-      sortBy: "regDatetime",
-      sortOrder: "desc",
+      deptCode: null,
+      status: null,
+      permissionId: null,
+      keyword: null,
+      targetColumn: null,
+      isBizCore: null,
+      currentPage: null,
+      pageSize: null,
+      compNo: 100002,
     },
     { enabled: isEnableQuery }
   );
-  const parsedSchedList: Sched[] = !!schedList
-    ? JSON.parse(schedList.toString())
-    : [];
-  const parsedPagination: Pagination = !!pagination
-    ? JSON.parse(pagination.toString())
-    : null;
-
+  // const parsedSchedList: Sched[] = !!schedList
+  //   ? JSON.parse(schedList.toString())
+  //   : [];
+  const parsedSchedList: Sched[] = [];
+  // const parsedPagination: Pagination = !!pagination
+  //   ? JSON.parse(pagination.toString())
+  //   : null;
+  const parsedPagination = null;
 
   const salesMethod = [
     {
@@ -150,24 +188,30 @@ function SchedList() {
     },
   ];
 
-  const responsiblePersons = [
-    {
-      code: "respo1",
-      name: "담당자1",
-    },
-    {
-      code: "respo2",
-      name: "담당자2",
-    },
-    {
-      code: "respo3",
-      name: "담당자3",
-    },
-    {
-      code: "respo4",
-      name: "담당자4",
-    },
-  ];
+  const responsiblePersons = compAllUsers?.map((user) => ({
+    code: user.userNo.toString(),
+    name: user.userName,
+  }));
+  console.log(methods.getValues("user"));
+
+  // [
+  //   {
+  //     code: "respo1",
+  //     name: "담당자1",
+  //   },
+  //   {
+  //     code: "respo2",
+  //     name: "담당자2",
+  //   },
+  //   {
+  //     code: "respo3",
+  //     name: "담당자3",
+  //   },
+  //   {
+  //     code: "respo4",
+  //     name: "담당자4",
+  //   },
+  // ];
 
   const vendors = [
     {
@@ -193,14 +237,7 @@ function SchedList() {
     setEnableQuery(true);
   };
   const handleFormSubmit = methods.handleSubmit(
-    ({
-      sendDate,
-      sendChannel,
-      searchType,
-      sortType,
-      receiveStatusType,
-      keyword,
-    }) => {
+    ({ startDate, regDate, user, cust, schedType, schedCatagory, keyword }) => {
       setCurrentPage(1);
 
       setEnableQuery(true);
@@ -211,13 +248,25 @@ function SchedList() {
       handleFormSubmit();
     }
   };
+  const handleCustChange = (e: ChangeEvent<HTMLInputElement>) => {
+    methods.setValue("cust", e.target.value);
+  };
+  const handleSchedCatagoryChange = (e: ChangeEvent<HTMLInputElement>) => {
+    methods.setValue("schedCatagory", e.target.value);
+  };
+  const handleSchedTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    methods.setValue("schedType", e.target.value);
+  };
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     methods.setValue("keyword", e.target.value);
   };
-
-  const handleSendChannelChange = (e: ChangeEvent<HTMLInputElement>) => {
-    methods.setValue("sendChannel", e.target.value);
+  const handleSoppChange = (e: ChangeEvent<HTMLInputElement>) => {
+    methods.setValue("sopp", e.target.value);
   };
+  const handleAutoCompleteUserChange = (e: ChangeEvent<HTMLInputElement>) => {
+    methods.setValue("user", e.target.value);
+  };
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     setEnableQuery(true);
@@ -237,105 +286,85 @@ function SchedList() {
           <FormProvider {...methods}>
             <InfoBox>
               <Flex>
-                <InfoElement flex={1} label="등록/수정일">
-                  {/* <RangeDatePicker
-                    name="sendDate"
-                    option={sendDateOption}
-                    setOption={setSendDateOption}
-                    setStartDate={setStartSendDate}
-                    setEndDate={setEndSendDate}
-                  /> */}
+                <InfoElement flex={1} labelWidth={"100px"} label="일정 시작일">
+                  <RangeDatePicker
+                    name="startDate"
+                    option={startDateOption}
+                    setOption={setStartDateOption}
+                    setStartDate={setScheduleStartDateStart}
+                    setEndDate={setScheduleStartDateEnd}
+                  />
                 </InfoElement>
-                <InfoElement flex={1} label="매출예정일">
-                  {/* <RangeDatePicker
-                    name="sendDate"
-                    option={sendDateOption}
-                    setOption={setSendDateOption}
-                    setStartDate={setStartSendDate}
-                    setEndDate={setEndSendDate}
-                  /> */}
+                <InfoElement flex={1} labelWidth={"100px"} label="일정 등록일">
+                  <RangeDatePicker
+                    name="regDate"
+                    option={regDateOption}
+                    setOption={setRegDateOption}
+                    setStartDate={setScheduleRegDateStart}
+                    setEndDate={setScheduleRegDateEnd}
+                  />
                 </InfoElement>
               </Flex>
               <Flex>
-                <InfoElement flex={1} label="판매방식">
-                  <CustomSelect
-                    codes={salesMethod}
-                    placeholder="전체"
+                <InfoElement flex={1} labelWidth={"100px"} label="담당사원">
+                  <CustomAutoComplete
+                    codes={responsiblePersons ?? []}
+                    placeholder="선택"
                     size="sm"
-                    {...methods.register("sendChannel", {
-                      onChange: (e) => handleSendChannelChange(e),
+                    {...methods.register("user", {
+                      onChange: (e) => handleAutoCompleteUserChange(e),
                     })}
                   />
                 </InfoElement>
-                <InfoElement flex={1} label="계약구분">
+                <InfoElement flex={1} labelWidth={"100px"} label="활동형태">
                   <CustomSelect
-                    codes={contractTypes}
+                    codes={responsiblePersons ?? []}
                     placeholder="전체"
                     size="sm"
-                    {...methods.register("sendChannel", {
-                      onChange: (e) => handleSendChannelChange(e),
+                    {...methods.register("schedCatagory", {
+                      onChange: (e) => handleSchedCatagoryChange(e),
                     })}
                   />
                 </InfoElement>
-                <InfoElement flex={1} label="진행단계">
+                <InfoElement flex={1} labelWidth={"100px"} label="매출처">
                   <CustomSelect
                     codes={stages}
                     placeholder="전체"
                     size="sm"
-                    {...methods.register("sendChannel", {
-                      onChange: (e) => handleSendChannelChange(e),
+                    {...methods.register("cust", {
+                      onChange: (e) => handleCustChange(e),
                     })}
                   />
                 </InfoElement>
-                <InfoElement flex={1} label="엔드유저">
+                <InfoElement flex={1} labelWidth={"100px"} label="일정구분">
                   <CustomSelect
                     codes={endUsers}
                     placeholder="전체"
                     size="sm"
-                    {...methods.register("sendChannel", {
-                      onChange: (e) => handleSendChannelChange(e),
+                    {...methods.register("schedType", {
+                      onChange: (e) => handleSchedTypeChange(e),
                     })}
                   />
                 </InfoElement>
               </Flex>
               <Flex>
-                <InfoElement flex={1} label="영업기회명">
+                <InfoElement flex={1} labelWidth={"100px"} label="영업기회">
+                  <CustomSelect
+                    codes={contractTypes}
+                    placeholder="전체"
+                    size="sm"
+                    {...methods.register("sopp", {
+                      onChange: (e) => handleSoppChange(e),
+                    })}
+                  />
+                </InfoElement>
+                <InfoElement flex={1} labelWidth={"100px"} label="키워드">
                   <Input
                     size="sm"
                     {...(methods.register("keyword"),
                     {
                       onChange: (e) => handleSearchChange(e),
                       onKeyPress: (e) => handleOnKeyPress(e),
-                    })}
-                  />
-                </InfoElement>
-                <InfoElement flex={1} label="카테고리(제품회사명)">
-                  <Input
-                    size="sm"
-                    {...(methods.register("keyword"),
-                    {
-                      onChange: (e) => handleSearchChange(e),
-                      onKeyPress: (e) => handleOnKeyPress(e),
-                    })}
-                  />
-                </InfoElement>
-                <InfoElement flex={1} label="담당자">
-                  <CustomSelect
-                    codes={responsiblePersons}
-                    placeholder="전체"
-                    size="sm"
-                    {...methods.register("sortType", {
-                      // onChange: (e) => handleSendChannelChange(e),
-                    })}
-                  />
-                </InfoElement>
-                <InfoElement flex={1} label="거래처">
-                  <CustomSelect
-                    codes={vendors}
-                    placeholder="전체"
-                    size="sm"
-                    {...methods.register("receiveStatusType", {
-                      // onChange: (e) => handleSearchTypeChange(e),
                     })}
                   />
                 </InfoElement>
@@ -357,7 +386,7 @@ function SchedList() {
             <Flex flexDirection="column" gap={2} width="100%">
               <HStack>
                 <Text fontSize="xs" fontWeight="bold">
-                  검색결과 : {totalCount} 건
+                  {/* 검색결과 : {totalCount} 건 */}
                 </Text>
                 <Flex flex={1} gap={2} justifyContent="flex-end">
                   <Button size="sm" type="button" variant="secondaryBlue">
@@ -410,7 +439,7 @@ function SchedList() {
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
-                  {isLoading ? (
+                  {true ? (
                     Array.from({ length: pageSize }).map((_, i) => (
                       <Flex
                         alignItems="center"
@@ -554,13 +583,13 @@ function SchedList() {
                 </Flex>
               </Box>
             </Flex>
-            <PaginationButtons
+            {/* <PaginationButtons
               batchSize={pageSize}
               data={parsedSchedList}
               pagination={parsedPagination}
               onPageChange={handlePageChange}
               onBatchSizeChange={handleBatchSizeChange}
-            />
+            /> */}
           </Flex>
         </Section>
       </Box>

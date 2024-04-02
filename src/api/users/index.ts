@@ -1,26 +1,24 @@
 import { requestApi } from "api";
 import { users } from "api/url";
 import Pagination from "type/Pagination";
+import User from "type/User";
 import UserListItem from "type/UserListItem";
 
 export interface GetUsersParams {
   deptCode: string | null;
-  status: string[];
+  status: string[] | null;
   permissionId: number | null;
   keyword: string | null;
   targetColumn: string | null;
   isBizCore: boolean | null;
   currentPage?: number | null;
-  pageSize?: number;
+  pageSize?: number | null;
+  compNo?: number | null;
 }
+
 export interface GetUsersResponse {
   status: string;
-  data: {
-    contents: Array<UserListItem>;
-    paging: Pagination;
-    totalCount: number;
-    pageLength: number;
-  };
+  data: User[];
   message: string;
 }
 export function getUsersAPI(params: GetUsersParams): Promise<GetUsersResponse> {
@@ -35,10 +33,12 @@ export function getUsersAPI(params: GetUsersParams): Promise<GetUsersResponse> {
       targetColumn: params.targetColumn ?? null,
       isBizCore: params.isBizCore ?? null,
       currentPage: params.currentPage ?? null,
-      pageSize: params.pageSize ?? 10,
+      pageSize: params.pageSize ?? null,
+      compNo: params.compNo ?? null,
     },
     paramsSerializer: {
       indexes: null,
     },
+    withJWT: true,
   }).then((response) => response.data);
 }

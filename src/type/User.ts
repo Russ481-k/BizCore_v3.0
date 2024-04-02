@@ -3,7 +3,7 @@ interface User {
   compNo: number;
   userId: string;
   userName: string;
-  userPasswd: string | null;
+  userPasswd?: string;
   userTel: string | null;
   userEmail: string | null;
   userOtp: number;

@@ -11,11 +11,10 @@ import {
   ModalFooter,
   ModalHeader,
   Text,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import {
   CustomModal,
@@ -24,11 +23,9 @@ import {
   InfoElement,
   QuestionMarkTooltip,
   TipText,
-  ToastMessage,
   EditUserImage,
 } from "components";
-import { useAddUser, useGetValidUser, USERS_OPTION } from "features/system";
-import { convertCodeToName, convertNumbersToJSON } from "libs/converter";
+import { useGetValidUser, USERS_OPTION } from "features/system";
 import formatter from "libs/formatter";
 import message from "libs/message";
 import pattern from "libs/pattern";
@@ -37,8 +34,6 @@ import FieldNumber from "type/FieldNumbers";
 import Option from "type/Option";
 import SelectDeptModal from "../SelectDeptModal";
 import SendAuthCount from "../SendAuthCount";
-import SendCrsNums from "../SendCrsNums";
-import SendPhoneNums from "../SendPhoneNums";
 import User from "type/User";
 
 interface AddUserModalProps {
@@ -63,7 +58,6 @@ const addUserDefaultValues: User = {
   compNo: 0,
   userId: "",
   userName: "",
-  userPasswd: "",
   userTel: "",
   userEmail: "",
   userOtp: 0,
@@ -86,10 +80,8 @@ function AddUserModal({
   isOpen,
   permissionOptions,
   selectedDept,
-  onRefetchPage,
   setModalOpen,
 }: AddUserModalProps) {
-  const toast = useToast();
   const methods = useForm<AddUser>({
     defaultValues: addUserDefaultValues,
     mode: "onBlur",
@@ -130,28 +122,8 @@ function AddUserModal({
     }
   };
 
-  const { mutate: addUser } = useAddUser();
+  // const { mutate: addUser } = useAddUser();
   const handleSubmitButtonClick = methods.handleSubmit((data) => {
-    const deptCodeParam = changedDept?.deptCode;
-    const permissionIdParam = Number(data.permissionsId);
-    const positionNameParam = convertCodeToName(
-      USERS_OPTION.POSITION,
-      data.positionCode
-    );
-    const wiredPhoneNumberParam =
-      data?.wiredPhoneNumbers?.[0].number.toString();
-    let wiredPhoneNumberPlusParam = "";
-    let crsPhoneNumberParam = "";
-
-    if (data?.wiredPhoneNumbers && data.wiredPhoneNumbers.length > 1) {
-      wiredPhoneNumberPlusParam = convertNumbersToJSON(
-        data.wiredPhoneNumbers.slice(1)
-      );
-    }
-    if (data?.crsPhoneNumbers && data.crsPhoneNumbers.length > 0) {
-      crsPhoneNumberParam = convertNumbersToJSON(data.crsPhoneNumbers);
-    }
-
     // addUser(
     //   {
     //     userId: data.userId ?? null,

@@ -9,17 +9,7 @@ function useGetUsers(
   options?: UseQueryOptions<GetUsersResponse, AxiosError<ErrorResponse>>
 ) {
   const result = useQuery<GetUsersResponse, AxiosError<ErrorResponse>>({
-    queryKey: [
-      "users",
-      params.deptCode,
-      params.status,
-      params.permissionId,
-      params.keyword,
-      params.targetColumn,
-      params.isBizCore,
-      params.currentPage,
-      params.pageSize,
-    ],
+    queryKey: ["users", params.compNo],
     queryFn: () => getUsersAPI(params),
     ...options,
   });

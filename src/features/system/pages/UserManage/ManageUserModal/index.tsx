@@ -16,7 +16,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import {
   CustomModal,
@@ -29,23 +29,11 @@ import {
   TipText,
   ToastMessage,
 } from "components";
-import {
-  useChangeUser,
-  useDeleteUser,
-  useResetPwd,
-  USERS_OPTION,
-} from "features/system";
-import authService from "libs/authService";
-import {
-  convertCodeToName,
-  convertJSONToNumbers,
-  convertNameToCode,
-  convertNumbersToJSON,
-} from "libs/converter";
+import { useDeleteUser, useResetPwd, USERS_OPTION } from "features/system";
+import { convertCodeToName } from "libs/converter";
 import formatter from "libs/formatter";
 import message from "libs/message";
 import pattern from "libs/pattern";
-import { useAppSelector } from "storage/redux/hooks";
 import Department from "type/Department";
 import FieldNumber from "type/FieldNumbers";
 import Option from "type/Option";
@@ -54,8 +42,6 @@ import User from "type/User";
 import UserListItem from "type/UserListItem";
 import SelectDeptModal from "../SelectDeptModal";
 import SendAuthCount from "../SendAuthCount";
-import SendCrsNums from "../SendCrsNums";
-import SendPhoneNums from "../SendPhoneNums";
 import DeleteUserCheckModal from "./DeleteUserCheckModal";
 import ResetPwdModal from "./ResetPwdModal";
 
@@ -96,13 +82,12 @@ function ManageUserModal({
   setSelectedUser,
 }: ManageUserModalProps) {
   const toast = useToast();
-  const currentIdx = useAppSelector((state) => state.user.profile.userNo);
 
   const [changedDept, setChangedDept] = useState<Department | null>({
     deptCode: "",
     deptName: "부서 미지정",
   });
-  const [defaultValues, setDefaultValues] = useState<ChangeUser | null>();
+  const [defaultValues] = useState<ChangeUser | null>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [deleteCheckModalOpen, setDeleteCheckModalOpen] = useState(false);
@@ -114,7 +99,7 @@ function ManageUserModal({
     mode: "onBlur",
   });
 
-  const { mutate: changeUser } = useChangeUser();
+  // const { mutate: changeUser } = useChangeUser();
   const { mutate: deleteUser } = useDeleteUser();
   const { mutate: resetPwd } = useResetPwd();
 
@@ -129,25 +114,16 @@ function ManageUserModal({
   };
 
   const handleChangeButtonClick = methods.handleSubmit((data) => {
-    const positionNameParam = convertCodeToName(
-      USERS_OPTION.POSITION,
-      data.positionCode
-    );
-    const deptCodeParam = changedDept?.deptCode;
-    const permissionIdParam = Number(data.permissionsId);
-    const wiredPhoneNumberParam =
-      data?.wiredPhoneNumbers?.[0].number.toString();
-    let wiredPhoneNumberPlusParam = "";
-    let crsPhoneNumberParam = "";
-
-    if (data?.wiredPhoneNumbers && data.wiredPhoneNumbers.length > 1) {
-      wiredPhoneNumberPlusParam = convertNumbersToJSON(
-        data.wiredPhoneNumbers.slice(1)
-      );
-    }
-    if (data?.crsPhoneNumbers && data.crsPhoneNumbers.length > 0) {
-      crsPhoneNumberParam = convertNumbersToJSON(data.crsPhoneNumbers);
-    }
+    // let wiredPhoneNumberPlusParam = "";
+    // let crsPhoneNumberParam = "";
+    // if (data?.wiredPhoneNumbers && data.wiredPhoneNumbers.length > 1) {
+    //   wiredPhoneNumberPlusParam = convertNumbersToJSON(
+    //     data.wiredPhoneNumbers.slice(1)
+    //   );
+    // }
+    // if (data?.crsPhoneNumbers && data.crsPhoneNumbers.length > 0) {
+    //   crsPhoneNumberParam = convertNumbersToJSON(data.crsPhoneNumbers);
+    // }
     // changeUser(
     //   {
     //     userNo: userNo,

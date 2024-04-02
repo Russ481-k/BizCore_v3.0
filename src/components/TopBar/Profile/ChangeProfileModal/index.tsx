@@ -121,7 +121,6 @@ function ChangeProfileModal({
         compNo: myProfile.compNo,
         userId: myProfile.userId,
         userName: myProfile.userName,
-        userPasswd: myProfile.userPasswd,
         userTel: myProfile.userTel,
         userEmail: myProfile.userEmail,
         userOtp: myProfile.userOtp,

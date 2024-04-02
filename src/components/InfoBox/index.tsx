@@ -13,6 +13,7 @@ function InfoBox({ children, size, ...props }: InfoBoxProps & BoxProps) {
       borderWidth="1px"
       overflow="hidden"
       w="100%"
+      position="relative"
       sx={{
         "*": {
           fontSize: size || "sm",

@@ -19,10 +19,8 @@ import {
   InfoBox,
   InfoElement,
   PaginationButtons,
-  RangeDatePicker,
   Section,
 } from "components";
-import formatter from "libs/formatter";
 import { useGetTechdList } from "features/techd";
 import Techd from "type/Techd";
 

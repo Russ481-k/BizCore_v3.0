@@ -12,7 +12,7 @@ export interface GetUserResponse {
 }
 export function getUserAPI(params: GetUserParams): Promise<GetUserResponse> {
   return requestApi<GetUserResponse>({
-    url: users(`/${params.userNo}`),
+    url: users(`/user/${params.userNo}`),
     method: "GET",
   }).then((response) => response.data);
 }
@@ -23,14 +23,13 @@ export interface AddUserResponse {
 }
 export function addUserAPI(params: User): Promise<AddUserResponse> {
   return requestApi<AddUserResponse>({
-    url: users(""),
+    url: users("/user"),
     method: "POST",
     data: {
       userNo: params.userNo,
       compNo: params.compNo,
       userId: params.userId,
       userName: params.userName,
-      userPasswd: params.userPasswd,
       userTel: params.userTel,
       userEmail: params.userEmail,
       userOtp: params.userOtp,
@@ -55,7 +54,7 @@ export interface ChangeUserResponse {
 }
 export function changeUserAPI(params: User): Promise<ChangeUserResponse> {
   return requestApi<ChangeUserResponse>({
-    url: users(`/${params.userNo}`),
+    url: users(`/user/${params.userNo}`),
     method: "PUT",
     data: {
       userNo: params.userNo,
@@ -90,7 +89,7 @@ export function deleteUserAPI(
   params: DeleteUserParams
 ): Promise<DeleteUserResponse> {
   return requestApi<DeleteUserResponse>({
-    url: users(`/${params.userNo}`),
+    url: users(`/user/${params.userNo}`),
     method: "DELETE",
   }).then((response) => response.data);
 }
@@ -107,7 +106,7 @@ export function getValidUserAPI(
   params: GetValidUserParams
 ): Promise<GetValidUserResponse> {
   return requestApi<GetValidUserResponse>({
-    url: users(`/find/${params.userId}`),
+    url: users(`/user/find/${params.userId}`),
     method: "GET",
   }).then((response) => response.data);
 }

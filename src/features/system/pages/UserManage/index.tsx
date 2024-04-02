@@ -112,10 +112,10 @@ function UserManage() {
   });
   const { data: permissionData } = useGetPermission();
   const {
-    contents: usersData,
-    paging: pagination,
-    pageLength,
-    totalCount,
+    data: usersData,
+    // paging: pagination,
+    // pageLength,
+    // totalCount,
   } = useGetUsers(
     {
       deptCode: selectedDept?.deptCode ?? null,
@@ -393,7 +393,7 @@ function UserManage() {
               <VStack align="stretch" spacing={2}>
                 <Flex align="flex-end" justify="space-between">
                   <Text fontSize="xs" fontWeight="bold">
-                    조회수 : {totalCount} 명
+                    조회수 : {0} 명
                   </Text>
                   <Flex flex={1} gap={2} justify="flex-end">
                     <Button size="sm" type="button" variant="secondaryBlue">
@@ -449,77 +449,42 @@ function UserManage() {
                         sortedUsersData.map((user, i) => ( */}
                       {usersData && usersData.length > 0 ? (
                         usersData.map((user, i) => (
-                          <Tr key={`user-${user.userNo}`}>
-                            <Td>
-                              {totalCount &&
-                                totalCount - batchSize * (currentPage - 1) - i}
-                            </Td>
-                            <Td>
-                              <Button
-                                variant="link"
-                                onClick={() =>
-                                  handleManageUserButtonClick(user)
-                                }
-                              >
-                                {user.userId}
-                              </Button>
-                            </Td>
-                            <Td>{user.userName}</Td>
-                            <Td>{user.positionName}</Td>
-                            <Td>
-                              <Text
-                                maxW="100%"
-                                overflow="hidden"
-                                textOverflow="ellipsis"
-                                whiteSpace="nowrap"
-                              >
-                                {user.deptName}
-                              </Text>
-                            </Td>
-                            <Td>{user.authName ?? "-"}</Td>
-                            <Td>
-                              {user.isSmsUnlimited
-                                ? "무제한"
-                                : user.smsLimitCount ?? "-"}
-                            </Td>
-                            <Td>
-                              {user.isLmsUnlimited
-                                ? "무제한"
-                                : user.lmsLimitCount ?? "-"}
-                            </Td>
-                            <Td>
-                              {user.isMmsUnlimited
-                                ? "무제한"
-                                : user.mmsLimitCount ?? "-"}
-                            </Td>
-                            <Td>
-                              {user.isKktUnlimited
-                                ? "무제한"
-                                : user.kktLimitCount ?? "-"}
-                            </Td>
-                            <Td>
-                              {user.isCrsUnlimited
-                                ? "무제한"
-                                : user.crsLimitCount ?? "-"}
-                            </Td>
-                            <Td py={0}>
-                              <IconButton
-                                aria-label="당월 량 상세"
-                                icon={<SendIcon boxSize={4} />}
-                                variant="transparent"
-                                size="sm"
-                                onClick={() =>
-                                  handleSendDetailButtonClick(user)
-                                }
-                              />
-                            </Td>
-                            <Td>
-                              {convertCodeToName(
-                                USERS_OPTION.STATUS,
-                                user.status
-                              )}
-                            </Td>
-                          </Tr>
+                          <></>
+                          // <Tr key={`user-${user.userNo}`}>
+                          //   <Td>
+                          //     {totalCount &&
+                          //       totalCount - batchSize * (currentPage - 1) - i}
+                          //   </Td>
+                          //   <Td>
+                          //     <Button
+                          //       variant="link"
+                          //       onClick={() =>
+                          //         handleManageUserButtonClick(user)
+                          //       }
+                          //     >
+                          //       {user.userId}
+                          //     </Button>
+                          //   </Td>
+                          //   <Td>{user.userName}</Td>
+                          //   <Td>{user.positionName}</Td>
+                          //   <Td>
+                          //     <Text
+                          //       maxW="100%"
+                          //       overflow="hidden"
+                          //       textOverflow="ellipsis"
+                          //       whiteSpace="nowrap"
+                          //     >
+                          //       {user.deptName}
+                          //     </Text>
+                          //   </Td>
+                          //   <Td>{user.authName ?? "-"}</Td>
+                          //   <Td>
+                          //     {convertCodeToName(
+                          //       USERS_OPTION.STATUS,
+                          //       user.status
+                          //     )}
+                          //   </Td>
+                          // </Tr>
                         ))
                       ) : (
                         <NoDataTr
@@ -530,14 +495,14 @@ function UserManage() {
                     </Tbody>
                   </Table>
                 </CustomTableContainer>
-                <PaginationButtons
+                {/* <PaginationButtons
                   batchSize={batchSize}
                   data={usersData ?? []}
                   totalPage={pageLength}
                   pagination={pagination}
                   onBatchSizeChange={handleBatchSizeChange}
                   onPageChange={handlePageChange}
-                />
+                /> */}
               </VStack>
             </Section>
           </Box>
