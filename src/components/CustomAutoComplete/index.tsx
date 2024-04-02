@@ -21,7 +21,6 @@ const CustomAutoComplete = forwardRef<CustomAutoCompleteProps, "select">(
     });
     return (
       <Select
-        autoFocus
         ref={ref}
         isClearable={true}
         isSearchable={true}

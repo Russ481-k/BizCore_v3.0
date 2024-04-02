@@ -9,7 +9,7 @@ export interface GetMyProfileResponse {
 }
 export function getMyProfileAPI(): Promise<GetMyProfileResponse> {
   return requestApi<GetMyProfileResponse>({
-    url: users(`/current`),
+    url: users(`/user/current`),
     method: "GET",
     withJWT: true,
   }).then((response) => response.data);
@@ -28,7 +28,7 @@ export function changeMyProfileAPI(
   params: ChangeMyProfileParams
 ): Promise<ChangeMyProfileResponse> {
   return requestApi<ChangeMyProfileResponse>({
-    url: users(`/current`),
+    url: users(`/user/current`),
     method: "PUT",
     data: {
       userName: params.userName ?? null,
@@ -50,7 +50,7 @@ export function changeMyPwdAPI(
   params: ChangeMyPwdParams
 ): Promise<ChangeMyPwdResponse> {
   return requestApi<ChangeMyPwdResponse>({
-    url: users(`/current/password`),
+    url: users(`/user/current/password`),
     method: "POST",
     data: {
       password: params.password,

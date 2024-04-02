@@ -36,9 +36,6 @@ export function getUsersAPI(params: GetUsersParams): Promise<GetUsersResponse> {
       pageSize: params.pageSize ?? null,
       compNo: params.compNo ?? null,
     },
-    paramsSerializer: {
-      indexes: null,
-    },
     withJWT: true,
   }).then((response) => response.data);
 }

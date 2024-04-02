@@ -21,8 +21,8 @@ export const sopp = (path: string) =>
   `${API_URL}/api/sopp${path}`.replace(/\/$/, "");
 export const cont = (path: string) =>
   `${API_URL}/api/cont${path}`.replace(/\/$/, "");
-export const cust = (path: string) =>
-  `${API_URL}/api/cust${path}`.replace(/\/$/, "");
+export const custs = (path: string) =>
+  `${API_URL}/api/custs${path}`.replace(/\/$/, "");
 export const sales = (path: string) =>
   `${API_URL}/api/sales${path}`.replace(/\/$/, "");
 export const sched = (path: string) =>

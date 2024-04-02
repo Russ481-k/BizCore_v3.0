@@ -12,3 +12,4 @@ export { default as WorkLogWrite } from "./pages/WorkLogWrite";
 /* hooks */
 export { default as useGetSchedList } from "./hooks/useGetSchedList";
 export { default as useGetUsers } from "./hooks/useGetUsers";
+export { default as useGetCustList } from "./hooks/useGetCustList";

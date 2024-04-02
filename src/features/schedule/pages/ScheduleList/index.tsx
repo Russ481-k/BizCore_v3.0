@@ -24,10 +24,16 @@ import {
   Section,
 } from "components";
 import formatter from "libs/formatter";
-import { useGetSchedList, useGetUsers } from "features/schedule";
+import {
+  useGetSchedList,
+  useGetUsers,
+  useGetCustList,
+} from "features/schedule";
 import Sched from "type/Sched";
 import Pagination from "type/Pagination";
 import CustomAutoComplete from "components/CustomAutoComplete";
+import Cust from "type/Cust";
+import User from "type/User";
 
 function SchedList() {
   const methods = useForm<{
@@ -63,20 +69,28 @@ function SchedList() {
   const [autoCompleteUsersNameKeyword, setAutoCompleteUsersNameKeyword] =
     useState<string | null>(null);
 
-  // const {
-  //   data: schedList,
-  //   pagination,
-  //   totalCount,
-  //   isLoading,
-  // } = useGetSchedList(
-  //   {
-  //     currentPage: currentPage,
-  //     pageSize: pageSize,
-  //     sortBy: "regDatetime",
-  //     sortOrder: "desc",
-  //   },
-  //   { enabled: isEnableQuery }
-  // );
+  const {
+    data: schedList,
+    pagination,
+    totalCount,
+    isLoading,
+  } = useGetSchedList(
+    {
+      currentPage: currentPage,
+      pageSize: pageSize,
+      sortBy: "regDatetime",
+      sortOrder: "desc",
+    },
+    { enabled: isEnableQuery }
+  );
+
+  const parsedSchedList: Sched[] = !!schedList
+    ? JSON.parse(schedList.toString())
+    : [];
+
+  const parsedPagination: Pagination = !!pagination
+    ? JSON.parse(pagination.toString())
+    : null;
 
   const { data: compAllUsers } = useGetUsers(
     {
@@ -92,14 +106,29 @@ function SchedList() {
     },
     { enabled: isEnableQuery }
   );
-  // const parsedSchedList: Sched[] = !!schedList
-  //   ? JSON.parse(schedList.toString())
-  //   : [];
-  const parsedSchedList: Sched[] = [];
-  // const parsedPagination: Pagination = !!pagination
-  //   ? JSON.parse(pagination.toString())
-  //   : null;
-  const parsedPagination = null;
+  const parsedresponsiblePersons: User[] = !!compAllUsers
+    ? JSON.parse(compAllUsers.toString())
+    : null;
+
+  const responsiblePersonsCode = parsedresponsiblePersons?.map((user) => ({
+    code: user.userNo.toString(),
+    name: user.userName,
+  }));
+
+  const { data: custList } = useGetCustList(
+    {
+      compNo: 100002,
+    },
+    { enabled: isEnableQuery }
+  );
+  const parsedcustList: Cust[] = !!custList
+    ? JSON.parse(custList.toString())
+    : null;
+
+  const custListCode = parsedcustList?.map((cust) => ({
+    code: cust.custNo.toString(),
+    name: cust.custName,
+  }));
 
   const salesMethod = [
     {
@@ -188,50 +217,6 @@ function SchedList() {
     },
   ];
 
-  const responsiblePersons = compAllUsers?.map((user) => ({
-    code: user.userNo.toString(),
-    name: user.userName,
-  }));
-  console.log(methods.getValues("user"));
-
-  // [
-  //   {
-  //     code: "respo1",
-  //     name: "담당자1",
-  //   },
-  //   {
-  //     code: "respo2",
-  //     name: "담당자2",
-  //   },
-  //   {
-  //     code: "respo3",
-  //     name: "담당자3",
-  //   },
-  //   {
-  //     code: "respo4",
-  //     name: "담당자4",
-  //   },
-  // ];
-
-  const vendors = [
-    {
-      code: "vendor1",
-      name: "거래처1",
-    },
-    {
-      code: "vendor2",
-      name: "거래처2",
-    },
-    {
-      code: "vendor3",
-      name: "거래처3",
-    },
-    {
-      code: "vendor4",
-      name: "거래처4",
-    },
-  ];
-
   const handleBatchSizeChange = (pageSize: number) => {
     setPageSize(pageSize);
     setEnableQuery(true);
@@ -308,7 +293,7 @@ function SchedList() {
               <Flex>
                 <InfoElement flex={1} labelWidth={"100px"} label="담당사원">
                   <CustomAutoComplete
-                    codes={responsiblePersons ?? []}
+                    codes={responsiblePersonsCode ?? []}
                     placeholder="선택"
                     size="sm"
                     {...methods.register("user", {
@@ -318,7 +303,7 @@ function SchedList() {
                 </InfoElement>
                 <InfoElement flex={1} labelWidth={"100px"} label="활동형태">
                   <CustomSelect
-                    codes={responsiblePersons ?? []}
+                    codes={[]}
                     placeholder="전체"
                     size="sm"
                     {...methods.register("schedCatagory", {
@@ -327,12 +312,12 @@ function SchedList() {
                   />
                 </InfoElement>
                 <InfoElement flex={1} labelWidth={"100px"} label="매출처">
-                  <CustomSelect
-                    codes={stages}
-                    placeholder="전체"
+                  <CustomAutoComplete
+                    codes={custListCode ?? []}
+                    placeholder="선택"
                     size="sm"
                     {...methods.register("cust", {
-                      onChange: (e) => handleCustChange(e),
+                      onChange: (e) => handleAutoCompleteUserChange(e),
                     })}
                   />
                 </InfoElement>
@@ -372,7 +357,7 @@ function SchedList() {
             </InfoBox>
             <Flex justifyContent="flex-end">
               <Button
-                isLoading={true}
+                isLoading={isLoading}
                 variant="primaryBlue"
                 onClick={handleFormSubmit}
               >
@@ -386,7 +371,7 @@ function SchedList() {
             <Flex flexDirection="column" gap={2} width="100%">
               <HStack>
                 <Text fontSize="xs" fontWeight="bold">
-                  {/* 검색결과 : {totalCount} 건 */}
+                  검색결과 : {totalCount} 건
                 </Text>
                 <Flex flex={1} gap={2} justifyContent="flex-end">
                   <Button size="sm" type="button" variant="secondaryBlue">
@@ -439,7 +424,7 @@ function SchedList() {
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" fontSize="sm">
-                  {true ? (
+                  {isLoading ? (
                     Array.from({ length: pageSize }).map((_, i) => (
                       <Flex
                         alignItems="center"
@@ -583,13 +568,13 @@ function SchedList() {
                 </Flex>
               </Box>
             </Flex>
-            {/* <PaginationButtons
+            <PaginationButtons
               batchSize={pageSize}
               data={parsedSchedList}
               pagination={parsedPagination}
               onPageChange={handlePageChange}
               onBatchSizeChange={handleBatchSizeChange}
-            /> */}
+            />
           </Flex>
         </Section>
       </Box>

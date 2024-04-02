@@ -36,7 +36,9 @@ function CustList() {
     keyword: string | null;
   }>({ mode: "onChange" });
 
-  const { data: custList, isLoading } = useGetCustList();
+  const { data: custList, isLoading } = useGetCustList({
+    compNo: 100002,
+  });
   const parsedCustList: Cust[] = !!custList ? JSON.parse(custList) : [];
 
   const [, setCurrentPage] = useState<number>(1);
